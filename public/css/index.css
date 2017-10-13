@@ -46,7 +46,7 @@ h1 {
 .form{
     display:block;
     width: 800px;
-    height: 400;
+    height: 432px;
     margin:0 auto;
     margin-top: 450px;
 }
@@ -58,16 +58,21 @@ h1 {
     height: 35px;
 }
 .form__button{
-  box-shadow: rgb(0, 0, 0) 0px 6px 50px;
+  box-shadow: rgb(0, 0, 0) 0px -1px 30px;
   font-family: 'Erica one',cursive;
   background-color: #da3e3e;
   border-color:black;
   height: 45px;
   font-size: larger;
+  opacity:1;
+}
+.form__button:hover{
+  box-shadow: rgb(184, 170, 170) 0px -1px 30px;
+
 }
 .form__input{
     margin-bottom: 15px;
-    box-shadow: rgb(0, 0, 0) 0px 6px 50px;
+    box-shadow: rgb(0, 0, 0) 0px -1px 30px;
     height: 43px;
     border-radius: 29px;
     text-align: center;
@@ -76,17 +81,21 @@ h1 {
     width:200px;
     border: 2px solid rgba(0, 0, 0, 1);    
 }
-p{
-  display:inline;
-  margin: 0 auto;
-  width: 200px;
-  height: 60px;
-}
+
 footer{
   text-align: center;
+ 
 }
 footer img{
-  left: 400px;
+  float: right;
+  margin-right: 20px;
+}
+footer a{
+  display:inline;
+  position: relative;
+  top:62px;
+  left:60px;
+  text-decoration: none;
 }
 /* ANIMATION */
 @-webkit-keyframes bounce {
