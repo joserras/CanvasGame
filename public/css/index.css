@@ -1,0 +1,98 @@
+
+body{
+    background: #161c22;
+    background-image: url("images/background_image.png");
+}
+
+
+/* BODY */
+.title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #161c22;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  overflow: hidden;
+  margin:0 auto;
+  margin-top: 800px;
+}
+
+::selection {
+  background: transparent;
+}
+
+h1 {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 250px;
+  width: 800px;
+  margin: auto;
+  display: block;
+  -webkit-animation: bounce .3s ease infinite alternate;
+  font-family: 'Alfa Slab One', cursive;
+  font-size: 80px;
+  color: rgb(218, 62, 62);
+  text-align: center;
+  line-height: 100px;
+  text-shadow: 0 2px 0 rgb(218, 62, 62), 0 2px 0 #5c0a0a, 0 3px 0 #5c0a0a, 0 4px 0 #5c0a0a, 0 5px 0 #5c0a0a, 0 6px 0 transparent, 0 7px 0 transparent, 0 8px 0 transparent, 0 9px 0 transparent, 0 10px 10px rgba(0, 0, 0, 0.6);
+  margin-top: 160px;
+}
+.form{
+    display:block;
+    width: 800px;
+    height: 400;
+    margin:0 auto;
+    margin-top: 450px;
+}
+.form__advises, .form__input, .form__button{
+    margin:0 auto;  
+    display:block;
+    border-radius: 19px;
+    width: 80px;
+    height: 35px;
+}
+.form__button{
+  box-shadow: rgb(0, 0, 0) 0px 6px 50px;
+  font-family: 'Erica one',cursive;
+  background-color: #da3e3e;
+  border-color:black;
+  height: 45px;
+  font-size: larger;
+}
+.form__input{
+    margin-bottom: 15px;
+    box-shadow: rgb(0, 0, 0) 0px 6px 50px;
+    height: 43px;
+    border-radius: 29px;
+    text-align: center;
+    font-size: large;
+    font-family:'Erica one',cursive;
+    width:200px;
+    border: 2px solid rgba(0, 0, 0, 1);    
+}
+p{
+  display:inline;
+  margin: 0 auto;
+  width: 200px;
+  height: 60px;
+}
+footer{
+  text-align: center;
+}
+footer img{
+  left: 400px;
+}
+/* ANIMATION */
+@-webkit-keyframes bounce {
+  100% {
+    top: -30px;
+    text-shadow: 0 2px 0 rgb(218, 62, 62), 0 2px 0 #5c0a0a, 0 3px 0 #5c0a0a, 0 4px 0 #5c0a0a, 0 5px 0 #5c0a0a, 0 6px 0 #5c0a0a, 0 7px 0 #5c0a0a, 0 8px 0 #5c0a0a, 0 9px 0 #5c0a0a, 0 30px 30px rgba(0, 0, 0, 0.3);
+  }
+}
+
