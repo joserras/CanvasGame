@@ -8,25 +8,28 @@
     <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet">
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/phaser.min.js"></script>
     <script
         src="http://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous">
     </script>
-    <title>Bomberman</title>
+    <title>BattleRoyal</title>
 </head>
 <body>
-    <div class="tittle">
-        <h1>BattleRoyal</h1>
+    <div id="content" >
+        <div class="tittle">
+            <h1>BattleRoyal</h1>
+        </div>
+        <form class="form" onsubmit="login(this)" accept-charset="UTF-8"  method="POST" action="javascript:void(0);">
+            <p class="form__advises"></p>           
+            <input type="text" name="nickname" class="form__input" placeholder="Nickname" maxlength="12" minlength="4">
+            <input type="submit" class="form__button"  value="Play!">
+        </form>
     </div>
-    <form class="form" onsubmit="login(this)" accept-charset="UTF-8"  method="POST" action="javascript:void(0);">
-        <p class="form__advises"></p>           
-        <input type="text" name="nickname" class="form__input" placeholder="Nickname" maxlength="12" minlength="4">
-        <input type="submit" class="form__button"   value="Play!">
-    </form>
-    
+
 </body>
-<footer> 
+<footer id="footer" > 
     <img src="css/images/twitter.png" alt="twitter" width="80px" height="74px">
     <img src="css/images/facebook.png" alt="facebook" width="80px" height="74px">
     <a href="">privacy &nbsp </a>

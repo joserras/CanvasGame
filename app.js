@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //utilizamos el directorio public
 app.use(express.static('public'));
 
-app.get('/hello', function(req, res) {  
-  res.status(200).send("Hello World!");
+app.get('/game', function(req, res) {  
+  res.sendFile( __dirname + "/public/" + "game.html" );
 });
 //conexion a mongo y creaciond e collection
 MongoClient.connect(url, function(err, db) {
@@ -48,7 +48,7 @@ io.on('connection', function(socket) {
   contador++;
   
   console.log('Alguien se ha conectado con Sockets');
-  joinInRoom();
+  joinInRoom(socket);
   usuarios.push(socket.id);
   io.sockets.emit('conectados', contador);
     socket.on('mouse',function(data) {    
@@ -57,7 +57,16 @@ io.on('connection', function(socket) {
 });
 
 //comprueba si esta la sala llena e infresa en la room
-function joinInRoom(){ if(io.sockets.adapter.rooms[room].length==6){room++;} socket.join(room);}
+function joinInRoom(socket){ 
+  if(io.sockets.adapter.rooms[room]!=null)
+  if(io.sockets.adapter.rooms[room].length==6){
+    var data;
+    data.rol='tudel';
+    io.to(room).emit('startGame',data); 
+    room++; 
+  } 
+  socket.join(room);
+}
 
 //LOGEO DE USUARIO
 app.post('/login', function (req, res) {
