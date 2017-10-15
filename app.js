@@ -33,6 +33,7 @@ MongoClient.connect(url, function(err, db) {
 
 });
 
+var room=0;
 var contador=0
 var usuarios = ["primer"];
 //CONEXION DE LOS USUARIOS
@@ -41,28 +42,22 @@ io.on('connection', function(socket) {
      console.log('user disconnected');
      contador--;
      var posicion = usuarios.indexOf(socket.id);
-     io.sockets.emit('conectados', contador);
-     io.sockets.emit('desconectado', posicion);
      delete usuarios[posicion];
      usuarios = usuarios.filter(Boolean);
-     console.log(usuarios);
-     console.log(posicion);
   });
   contador++;
   
   console.log('Alguien se ha conectado con Sockets');
+  joinInRoom();
   usuarios.push(socket.id);
-   io.sockets.emit('conectados', contador);
-
-   
+  io.sockets.emit('conectados', contador);
     socket.on('mouse',function(data) {    
            socket.broadcast.emit('mouse', data);
-          } );
-          
- 
-
+          } );      
 });
 
+//comprueba si esta la sala llena e infresa en la room
+function joinInRoom(){ if(io.sockets.adapter.rooms[room].length==6){room++;} socket.join(room);}
 
 //LOGEO DE USUARIO
 app.post('/login', function (req, res) {
