@@ -58,14 +58,17 @@ io.on('connection', function(socket) {
 
 //comprueba si esta la sala llena e infresa en la room
 function joinInRoom(socket){ 
-  if(io.sockets.adapter.rooms[room]!=null)
-  if(io.sockets.adapter.rooms[room].length==6){
-    var data;
-    data.rol='tudel';
-    io.to(room).emit('startGame',data); 
-    room++; 
-  } 
   socket.join(room);
+  if(io.sockets.adapter.rooms[room]!=null){
+    if(io.sockets.adapter.rooms[room].length==3){
+      var data;
+      data='tudel';
+      console.log("start game");
+      io.to(room).emit('startGame',data); 
+      room++; 
+    } 
+  }
+  
 }
 
 //LOGEO DE USUARIO

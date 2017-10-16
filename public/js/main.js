@@ -1,5 +1,4 @@
-var socket; // define a global variable called socket 
-socket = io.connect(); // send a connection request to the server
+
 
 //this is just configuring a screen size to fit the game properly
 //to the browser
@@ -32,7 +31,7 @@ main.prototype = {
 		//listen to the “connect” message from the server. The server 
 		//automatically emit a “connect” message when the cleint connets.When 
 		//the client connects, call onsocketConnected.  
-		socket.on("connect", onsocketConnected); 
+		//socket.on("connect", onsocketConnected); 
 
 	}
 }
