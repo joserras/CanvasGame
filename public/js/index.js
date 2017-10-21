@@ -1,5 +1,7 @@
 var socket;
 var advises = [10];
+//ME
+var player;
 //rellenamos los consejos
 advises[0] = "Wait a moment, looking for a match!";
 advises[1] = "3 different roles!";
@@ -14,7 +16,7 @@ advises[9] = "Take the match control!";
 
 
 
-var suggestesTimer = TimersetInterval(myTimer ,3000);
+var suggestesTimer = setInterval(myTimer ,3000);
 function myTimer() {
     console.log("·asd");      
     var random = Math.floor((Math.random() * 9) + 1);
@@ -49,8 +51,17 @@ function login(data){
 function activateSockets(){
     socket.on('startGame', function(data) {
         console.log('seis personas');
+        console.log(data);
+        findMe(data);
         activateGame();      
     })
+}
+
+//Me encuentro entre los distintos jugadores
+function findMe(data){
+    var posicion = data.indexOf(socket.id);
+    player = data[posicion];
+    console.log(player);
 }
 
 //Mostramos el loading del juego
