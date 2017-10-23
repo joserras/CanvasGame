@@ -37,6 +37,7 @@ var room=0;
 var contador=0;
 var playersMatch = new Array();
 var allPlayers = new Array();
+var allPlayers2 = new Array();
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -52,20 +53,43 @@ io.on('connection', function(socket) {
   console.log('Alguien se ha conectado con Sockets');
   joinInRoom(socket);
   io.sockets.emit('conectados', contador);
+
   socket.on('mouse',function(data) {    
            socket.broadcast.emit('mouse', data);
-        });      
+        });   
+  // movimiento   
+  socket.on('movement', function(data) {
+          movePlayer(socket.id);    
+      })
 });
+
+function movePlayer(socketID){
+ var player = findPlayer(socketID);
+ console.log(player);
+}
+
+function findPlayer(socketID){
+
+    function encontrar(allPlayers2) { 
+      return allPlayers2.id === socketID;
+  }
+ return (allPlayers2.find(encontrar));
+}
 
 //borramos usuarios de nuestro array players tras desconectarse
 function deleteUser(id){
       var posicion = allPlayers.indexOf(id);
       delete allPlayers[posicion];
       allPlayers = allPlayers.filter(Boolean);
+
       posicion = playersMatch.indexOf(id);
       delete playersMatch[posicion];
       playersMatch = playersMatch.filter(Boolean);
-      console.log(posicion);
+
+      posicion = allPlayers2.indexOf(id);
+      delete allPlayers2[posicion];
+      allPlayers2 = allPlayers2.filter(Boolean);
+      
 }
 
 //comprueba si esta la sala llena e infresa en la room
@@ -130,7 +154,8 @@ function fillPlayer(socket){
    //Creamos la matriz solo con el primer jugador
    if(io.sockets.adapter.rooms[room].length==1)
       playersMatch[room] = new Array(6);
-
+      allPlayers2.push(player);
+  
    playersMatch[room].push(player);
 
 }

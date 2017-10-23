@@ -60,20 +60,24 @@ main.prototype = {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
 		{
 			ship.x -= 4;
+			socket.emit('movement', 'left');
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
 		{
 			ship.x += 4;
+			socket.emit('movement', 'right');
 		}
 	
 		if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
 		{
 			ship.y -= 4;
+			socket.emit('movement', 'up');
 			console.log("up");
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
 		{
 			ship.y += 4;
+			socket.emit('movement', 'down');
 		}
 		
 

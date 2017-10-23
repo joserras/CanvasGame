@@ -50,19 +50,25 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        console.log('seis personas');
         console.log(data);
-        findMe(data);
+        console.log(socket.id);
+        findPlayer(data,socket.id);
+        console.log(player);
         activateGame();      
     })
 }
-
 //Me encuentro entre los distintos jugadores
-function findMe(data){
-    var posicion = data.indexOf(socket.id);
-    player = data[posicion];
-    console.log(player);
-}
+   function findPlayer(data,socketID){
+    data.forEach(function(element) {
+        if(element !=null)
+        if(element.id == String(socketID))
+        {
+            player=element;
+        
+      }  }, this);
+
+   }
+   
 
 //Mostramos el loading del juego
 function loading(){
