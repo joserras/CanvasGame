@@ -4,9 +4,7 @@
 //to the browser
 canvas_width = window.innerWidth * window.devicePixelRatio; 
 canvas_height = window.innerHeight * window.devicePixelRatio;
-//YOU
-var ship;
-var cursors;
+
 //make a phaser game
 game = new Phaser.Game(canvas_width,canvas_height, Phaser.CANVAS,
  'gameDiv');
@@ -24,10 +22,20 @@ var main = function(game){
 // add the 
 main.prototype = {
 	preload: function() {
-
-		game.load.atlasJSONHash('ship', 'sprites/shipRound.png', 'sprites/shipRound.json');
 		game.load.image("background", "http://gametest.mobi/phaser095/assets/pics/aya_touhou_teng_soldier.png");
-		
+		if(player.team == 0){
+			switch(player.rol){
+				case 0:	
+					game.load.atlasJSONHash('ship', 'sprites/shipRound.png', 'sprites/shipRound.json');
+					break
+				case 1:
+					game.load.atlasJSONHash('ship', 'sprites/shipCone.png', 'sprites/shipCone.json');
+					break
+				case 2:
+					game.load.atlasJSONHash('ship', 'sprites/shipRound.png', 'sprites/shipRound.json');
+					break
+			}
+		}
 		
     },
 	//this function is fired once when we load the game
@@ -37,7 +45,7 @@ main.prototype = {
 		//automatically emit a “connect” message when the cleint connets.When 
 		//the client connects, call onsocketConnected.  
 		//socket.on("connect", onsocketConnected); 
-		ship = game.add.sprite(game.world.centerX, game.world.centerY, 'ship');
+		ship = game.add.sprite(player.posicionX, player.posicionY, 'ship');
 		var walk = ship.animations.add('walk');
 		//se redimensiona el mapa pero es obligatorio para la camara
 		game.world.setBounds(0, 0, 3000, 3000);
@@ -56,7 +64,6 @@ main.prototype = {
 	},
 
 	update: function() {
-
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
 		{
 			ship.x -= 4;
@@ -79,8 +86,12 @@ main.prototype = {
 			ship.y += 4;
 			socket.emit('movement', 'down');
 		}
+		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
+		//todo tocar aqui
+		document.getElementById("gameDiv").onmousemove = function(event) {console.log( game.time.elapsed / 1000);
+			socket.emit('roration', ship.rotation);
+		};
 		
-
     },
 }
 

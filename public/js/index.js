@@ -2,6 +2,9 @@ var socket;
 var advises = [10];
 //ME
 var player;
+//Sprite
+var ship;
+var cursors;
 //rellenamos los consejos
 advises[0] = "Wait a moment, looking for a match!";
 advises[1] = "3 different roles!";
@@ -50,8 +53,6 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        console.log(data);
-        console.log(socket.id);
         findPlayer(data,socket.id);
         console.log(player);
         activateGame();      
