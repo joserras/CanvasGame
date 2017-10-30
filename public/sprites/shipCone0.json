@@ -1,0 +1,52 @@
+{"frames": {
+
+"1.png":
+{
+	"frame": {"x":0,"y":0,"w":640,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":640},
+	"sourceSize": {"w":640,"h":640}
+},
+"2.png":
+{
+	"frame": {"x":640,"y":0,"w":640,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":640},
+	"sourceSize": {"w":640,"h":640}
+},
+"3.png":
+{
+	"frame": {"x":1280,"y":0,"w":640,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":640},
+	"sourceSize": {"w":640,"h":640}
+},
+"4.png":
+{
+	"frame": {"x":0,"y":640,"w":640,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":640},
+	"sourceSize": {"w":640,"h":640}
+},
+"5.png":
+{
+	"frame": {"x":640,"y":640,"w":640,"h":640},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":640,"h":640},
+	"sourceSize": {"w":640,"h":640}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "shipCone0.png",
+	"format": "RGBA8888",
+	"size": {"w":1920,"h":1280},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:af4bb1367f9839a4c3418ebdf3c213df:3177271a87a2c5f1197e4cf4748a7b82:dc409d98da5d8cd3f116987433277961$"
+}
+}

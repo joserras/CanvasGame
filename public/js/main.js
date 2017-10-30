@@ -32,7 +32,7 @@ main.prototype = {
 					game.load.atlasJSONHash('ship', 'sprites/shipCone.png', 'sprites/shipCone.json');
 					break
 				case 2:
-					game.load.atlasJSONHash('ship', 'sprites/shipRound.png', 'sprites/shipRound.json');
+					game.load.atlasJSONHash('ship', 'sprites/shipSpear.png', 'sprites/shipSpear.json');
 					break
 			}
 		}
@@ -89,14 +89,15 @@ main.prototype = {
 		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui
 		document.getElementById("gameDiv").onmousemove = function(event) {console.log( game.time.elapsed / 1000);
-			socket.emit('roration', ship.rotation);
+			socket.emit('rotation', ship.rotation);
 		};
 		
     },
 }
 
 // this function is fired when we connect
-function onsocketConnected () {
+function onsocketConnected ()
+{
 	console.log("connected to server"); 
 	
 }

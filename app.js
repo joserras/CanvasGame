@@ -54,19 +54,42 @@ io.on('connection', function(socket) {
   joinInRoom(socket);
   io.sockets.emit('conectados', contador);
 
-  socket.on('mouse',function(data) {    
+      socket.on('mouse',function(data) {    
            socket.broadcast.emit('mouse', data);
         });   
   // movimiento   
-  socket.on('movement', function(data) {
-          movePlayer(socket.id);    
+      socket.on('movement', function(data) {
+          movePlayer(socket.id,data);    
       })
+  //rotation
+      socket.on('rotation', function(data) {
+        rotatePlayer(socket.id,data);    
+    })
 });
 
-function movePlayer(socketID){
- var player = findPlayer(socketID);
- console.log(player);
+function movePlayer(socketID,data){
+ switch (data){
+    case 'up':
+    findPlayer(socketID).posicionY-=4;
+    break;
+    case 'down':
+    findPlayer(socketID).posicionY+=4;
+    break;
+    case 'right':
+    findPlayer(socketID).posicionX+=4;
+    break;
+    case 'left':
+    findPlayer(socketID).posicionX-=4;
+    break;
+ }
+
 }
+
+function rotatePlayer(socketID,data){
+  if(data >-1.7 && data < 4.7)
+    findPlayer(socketID).rotate = data;
+  
+ }
 
 function findPlayer(socketID){
 
@@ -114,13 +137,13 @@ function fillPlayer(socket){
   var player = new Object();
   //asignamos como id, nuestro id socket
   player.id=socket.id;
-  //Asignamos el equipo
+  //Asignamos el equipo ES POSIBLE QUE SE PUEDA ELIMINAR
  if(io.sockets.adapter.rooms[room].length>=1 && io.sockets.adapter.rooms[room].length<=3)
     player.team = 0;
  if(io.sockets.adapter.rooms[room].length>=4 && io.sockets.adapter.rooms[room].length<=6)
     player.team = 1;
     //asignamos el  y posicion inicial
-    console.log("joder");
+    
     console.log(io.sockets.adapter.rooms[room].length);
     switch(io.sockets.adapter.rooms[room].length) {
       case 1:
