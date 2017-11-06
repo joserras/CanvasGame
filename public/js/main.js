@@ -27,12 +27,15 @@ main.prototype = {
 			switch(player.rol){
 				case 0:	
 					game.load.atlasJSONHash('ship', 'sprites/shipRound.png', 'sprites/shipRound.json');
+					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
 					break
 				case 1:
 					game.load.atlasJSONHash('ship', 'sprites/shipCone.png', 'sprites/shipCone.json');
+					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
 					break
 				case 2:
-					game.load.atlasJSONHash('ship', 'sprites/shipSpear.png', 'sprites/shipSpear.json');
+					game.load.atlasJSONHash('ship', 'sprites/shipSpear1.png', 'sprites/shipSpear.json');
+					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
 					break
 			}
 		}
@@ -47,6 +50,19 @@ main.prototype = {
 		//socket.on("connect", onsocketConnected); 
 		ship = game.add.sprite(player.posicionX, player.posicionY, 'ship');
 		var walk = ship.animations.add('walk');
+
+		 //  Creates 30 bullets, using the 'bullet' graphic
+		weapon = game.add.weapon(30, 'bullet');
+		
+			//  The bullet will be automatically killed when it leaves the world bounds
+		weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
+	
+		//  The speed at which the bullet is fired
+		weapon.bulletSpeed = 600;
+	
+		//  Speed-up the rate of fire, allowing them to shoot 1 bullet every 60ms
+		weapon.fireRate = 100;
+		
 		//se redimensiona el mapa pero es obligatorio para la camara
 		game.world.setBounds(0, 0, 3000, 3000);
 		ship.anchor.setTo(0.5, 0.5);
@@ -56,7 +72,10 @@ main.prototype = {
 			//  true means it will loop when it finishes
 		ship.animations.play('walk', 10, true);
 		cursors = game.input.keyboard.createCursorKeys();
+		fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
+		//true indica que se mueve con la rotacion
+		weapon.trackSprite(ship, 0, 0, true);
 		//camera
 		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 		game.add.image(game.world.centerX, game.world.centerY, 'background');
@@ -67,6 +86,7 @@ main.prototype = {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
 		{
 			ship.x -= 4;
+			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);
 			socket.emit('movement', 'left');
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
@@ -88,9 +108,14 @@ main.prototype = {
 		}
 		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui
-		document.getElementById("gameDiv").onmousemove = function(event) {console.log( game.time.elapsed / 1000);
+		document.getElementById("gameDiv").onmousemove = function(event) {//console.log( game.time.elapsed / 1000);
 			socket.emit('rotation', ship.rotation);
 		};
+
+		if (fireButton.isDown)
+		{
+			weapon.fire();
+		}
 		
     },
 }

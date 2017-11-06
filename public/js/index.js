@@ -5,6 +5,9 @@ var player;
 //Sprite
 var ship;
 var cursors;
+//weapons
+var weapon;
+var fireButton;
 //rellenamos los consejos
 advises[0] = "Wait a moment, looking for a match!";
 advises[1] = "3 different roles!";
