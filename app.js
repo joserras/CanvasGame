@@ -9,8 +9,30 @@ var multer = require('multer'); // v1.0.5
 var upload = multer(); // for parsing multipart/form-data
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+// const spawn = require('threads').spawn;
+// const spawn1 = spawn.spawn;
+// const thread = spawn(function(input, done) {
+//  // Everything we do here will be run in parallel in another execution context. 
+//  console.log("tudel");
+//  // Remember that this function will be executed in the thread's context, 
+//  // so you cannot reference any value of the surrounding code. 
+//  done({ string : input.string, integer : parseInt(input.string) });
+//  done({ string : input.string, integer : parseInt(input.string) });
+// });
 
-
+// thread
+//  .send({ string : '123' })
+//  // The handlers come here: (none of them is mandatory) 
+//  .on('message', function(response) {
+//    console.log('123 * 2 = ', response.integer * 2);
+//    thread.kill();
+//  })
+//  .on('error', function(error) {
+//    console.error('Worker errored:', error);
+//  })
+//  .on('exit', function() {
+//    console.log('Worker has been terminated.');
+//  });
 
 
 //utilizamos el directorio public
@@ -127,10 +149,20 @@ function joinInRoom(socket){
       console.log("start game");
       allPlayers.push(playersMatch[room]);
       io.to(room).emit('startGame',data); 
-      room++; 
+      room++;
+     
+      
     } 
   }
   
+}
+setInterval( function() { updatePlayers(); }, 1000/60 );
+function updatePlayers(){
+ var i;
+for(i=0; i<room;i++)
+  {
+    io.to(i).emit('updatePlayers',playersMatch[i]); 
+  }
 }
 
 function fillPlayer(socket){
@@ -148,17 +180,17 @@ function fillPlayer(socket){
     switch(io.sockets.adapter.rooms[room].length) {
       case 1:
           player.rol = 0;
-          player.posicionX = 1450;
+          player.posicionX = 1300;
           player.posicionY = 1500;
           break;
       case 2:
           player.rol = 1;
-          player.posicionX = 1500;
+          player.posicionX = 1600;
           player.posicionY = 1500;
           break;
       case 3:
           player.rol = 2;
-          player.posicionX = 1550;
+          player.posicionX = 1900;
           player.posicionY = 1500;
           break;
       case 4:
@@ -182,6 +214,9 @@ function fillPlayer(socket){
    playersMatch[room].push(player);
 
 }
+
+
+
 
 //LOGEO DE USUARIO
 app.post('/login', function (req, res) {

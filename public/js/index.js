@@ -2,8 +2,11 @@ var socket;
 var advises = [10];
 //ME
 var player;
+var players;
 //Sprite
 var ship;
+var ship2;
+var ship3;
 var cursors;
 //weapons
 var weapon;
@@ -23,8 +26,7 @@ advises[9] = "Take the match control!";
 
 
 var suggestesTimer = setInterval(myTimer ,3000);
-function myTimer() {
-    console.log("·asd");      
+function myTimer() {    
     var random = Math.floor((Math.random() * 9) + 1);
     document.getElementById("form__advises").innerHTML = advises[random];
 
@@ -57,9 +59,24 @@ function login(data){
 function activateSockets(){
     socket.on('startGame', function(data) {
         findPlayer(data,socket.id);
-        console.log(player);
+       players = data;
+       console.log(players);
         activateGame();      
     })
+    socket.on('updatePlayers', function(data) {
+        findPlayer(data,socket.id);
+        players = data;
+       // console.log(player);
+            
+    })
+}
+
+function deleteUser(id){
+    var posicion = players.indexOf(id);
+    delete players[posicion];
+    players = players.filter(Boolean);
+
+    
 }
 //Me encuentro entre los distintos jugadores
    function findPlayer(data,socketID){

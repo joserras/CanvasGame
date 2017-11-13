@@ -23,22 +23,16 @@ var main = function(game){
 main.prototype = {
 	preload: function() {
 		game.load.image("background", "http://gametest.mobi/phaser095/assets/pics/aya_touhou_teng_soldier.png");
-		if(player.team == 0){
-			switch(player.rol){
-				case 0:	
-					game.load.atlasJSONHash('ship', 'sprites/shipRound.png', 'sprites/shipRound.json');
-					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
-					break
-				case 1:
-					game.load.atlasJSONHash('ship', 'sprites/shipCone.png', 'sprites/shipCone.json');
-					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
-					break
-				case 2:
-					game.load.atlasJSONHash('ship', 'sprites/shipSpear1.png', 'sprites/shipSpear.json');
-					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
-					break
-			}
-		}
+		
+				
+					game.load.atlasJSONHash('ship0', 'sprites/shipRound2.png', 'sprites/shipRound.json');
+			
+					game.load.atlasJSONHash('ship1', 'sprites/shipCone.png', 'sprites/shipCone.json');
+				
+					game.load.atlasJSONHash('ship2', 'sprites/shipSpear1.png', 'sprites/shipSpear.json');
+					
+				
+		
 		
     },
 	//this function is fired once when we load the game
@@ -48,11 +42,33 @@ main.prototype = {
 		//automatically emit a “connect” message when the cleint connets.When 
 		//the client connects, call onsocketConnected.  
 		//socket.on("connect", onsocketConnected); 
-		ship = game.add.sprite(player.posicionX, player.posicionY, 'ship');
+	
+		
+		    if(player.rol==0){
+			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
+			ship2 = game.add.sprite(players[7].posicionX, players[7].posicionY, 'ship1');
+			ship3 = game.add.sprite(players[8].posicionX, players[8].posicionY, 'ship2');
+			}
+			if(player.rol==1){
+			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
+			ship2 = game.add.sprite(players[6].posicionX, players[6].posicionY, 'ship0');
+			ship3 = game.add.sprite(players[8].posicionX, players[8].posicionY, 'ship2');
+			
+			}
+			
+			if(player.rol==2){	
+			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
+			ship2 = game.add.sprite(players[7].posicionX, players[7].posicionY, 'ship1');
+			ship3 = game.add.sprite(players[6].posicionX, players[6].posicionY, 'ship0');
+		    }
+		
+		
+		
+		
 		var walk = ship.animations.add('walk');
 
 		 //  Creates 30 bullets, using the 'bullet' graphic
-		weapon = game.add.weapon(30, 'bullet');
+		weapon = game.add.weapon(1, 'bullet');
 		
 			//  The bullet will be automatically killed when it leaves the world bounds
 		weapon.bulletKillType = Phaser.Weapon.KILL_CAMERA_BOUNDS;
@@ -67,19 +83,35 @@ main.prototype = {
 		game.world.setBounds(0, 0, 3000, 3000);
 		ship.anchor.setTo(0.5, 0.5);
 		ship.scale.setTo(0.25, 0.25);
+		ship2.anchor.setTo(0.5, 0.5);
+		ship2.scale.setTo(0.25, 0.25);
+		ship3.anchor.setTo(0.5, 0.5);
+		ship3.scale.setTo(0.25, 0.25);
+		// ship2.anchor.setTo(0.5, 0.5);
+		// ship2.scale.setTo(0.25, 0.25);
+		// ship3.anchor.setTo(0.5, 0.5);
+		// ship3.scale.setTo(0.25, 0.25);
 			//  And this starts the animation playing by using its key ("walk")
 			//  30 is the frame rate (30fps)
 			//  true means it will loop when it finishes
 		ship.animations.play('walk', 10, true);
+		ship2.animations.play('walk', 10, true);
+		ship3.animations.play('walk', 10, true);
+		//ship2.animations.play('walk', 10, true);
+		//ship3.animations.play('walk', 10, true);
 		cursors = game.input.keyboard.createCursorKeys();
 		fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
 		//true indica que se mueve con la rotacion
 		weapon.trackSprite(ship, 0, 0, true);
+		weapon.trackOffset.y = 50;
+		weapon.trackOffset.x = 0;
+		
+		console.log(weapon);
 		//camera
 		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 		game.add.image(game.world.centerX, game.world.centerY, 'background');
-
+		
 	},
 
 	update: function() {
@@ -106,7 +138,7 @@ main.prototype = {
 			ship.y += 4;
 			socket.emit('movement', 'down');
 		}
-		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
+		ship.rotation = game.physics.arcade.angleToPointer(ship);
 		//todo tocar aqui
 		document.getElementById("gameDiv").onmousemove = function(event) {//console.log( game.time.elapsed / 1000);
 			socket.emit('rotation', ship.rotation);
@@ -116,7 +148,32 @@ main.prototype = {
 		{
 			weapon.fire();
 		}
-		
+
+		//Actualizacion de enemigos
+	
+			if(player.rol==0){
+			
+			ship2.x = players[7].posicionX;
+			ship2.y = players[7].posicionY;
+			ship3.x = players[8].posicionX;
+			ship3.y = players[8].posicionY;
+			}
+			if(player.rol==1){
+	
+			ship2.x = players[6].posicionX;
+			ship2.y = players[6].posicionY;
+			ship3.x = players[8].posicionX;
+			ship3.y = players[8].posicionY;
+			
+			}
+			
+			if(player.rol==2){	
+			
+			ship2.x = players[7].posicionX;
+			ship2.y = players[7].posicionY;
+			ship3.x = players[6].posicionX;
+			ship3.y = players[6].posicionY;
+		    }
     },
 }
 
