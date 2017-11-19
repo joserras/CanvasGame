@@ -60,6 +60,7 @@ var contador=0;
 var playersMatch = new Array();
 var allPlayers = new Array();
 var allPlayers2 = new Array();
+var bulletsMatch = new Array();
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -87,7 +88,72 @@ io.on('connection', function(socket) {
       socket.on('rotation', function(data) {
         rotatePlayer(socket.id,data);    
     })
+    socket.on('fireBullet', function() {
+      //rotatePlayer(socket.id);   
+      //findPlayer(socket.id).fire=true; 
+      sleep(5000);
+      console.log("tud");
+     createBullet(findPlayer(socket.id));
+  })
 });
+
+function sleep(miliseconds) {
+  var currentTime = new Date().getTime();
+
+  while (currentTime + miliseconds >= new Date().getTime()) {
+  }
+}
+
+function createBullet(player){
+  var bullet =new Object();
+    switch(player.rol)
+   {
+      case 0:
+       bullet.speed = 20;
+       bullet.rol = 0;
+       bullet.id = player.id;
+       bullet.x = player.posicionX;
+       bullet.y = player.posicionY;
+       bullet.rotation = player.rotation;
+       
+      break;
+      case 1:
+      bullet.speed = 40;
+      bullet.rol = 1;
+      bullet.id = player.id;
+      bullet.x = player.posicionX;
+      bullet.y = player.posicionY;
+      bullet.rotation = player.rotation;
+      
+      break;
+      case 2:
+      bullet.speed = 40;
+      bullet.rol = 2;
+      bullet.id = player.id;
+      bullet.x = player.posicionX;
+      bullet.y = player.posicionY;
+      bullet.rotation = player.rotation;
+      
+      break;
+   } 
+   if(bulletsMatch[player.room] ==undefined)
+   {
+     console.log("una ves");
+    bulletsMatch[player.room] = new Array();
+   }
+   
+   bulletsMatch[player.room].push(bullet); 
+   
+}
+// setInterval( function() { createBullet(); }, 500);
+// function createBullet(){
+//  var i;
+// for(i=0; i<room;i++)
+//   {
+//     io.to(i).emit('updatePlayers',playersMatch[i]); 
+//   }
+// }
+
 
 function movePlayer(socketID,data){
  switch (data){
@@ -109,8 +175,8 @@ function movePlayer(socketID,data){
 
 function rotatePlayer(socketID,data){
   if(data >-1.7 && data < 4.7)
-    findPlayer(socketID).rotate = data;
-  
+    findPlayer(socketID).rotation = data;
+ 
  }
 
 function findPlayer(socketID){
@@ -123,18 +189,63 @@ function findPlayer(socketID){
 
 //borramos usuarios de nuestro array players tras desconectarse
 function deleteUser(id){
+  //casposo
       var posicion = allPlayers.indexOf(id);
       delete allPlayers[posicion];
       allPlayers = allPlayers.filter(Boolean);
-
-      posicion = playersMatch.indexOf(id);
-      delete playersMatch[posicion];
-      playersMatch = playersMatch.filter(Boolean);
-
+      var i=0;
+      var x=0;
+      var j=0;
+     
+  for(i=0; i<playersMatch.length;i++){
+    for(x=0; x<playersMatch[i].length;x++){
+      
+      if(playersMatch[i][x]!=null)
+      if(playersMatch[i][x].id == String(id))
+      {
+        
+        delete playersMatch[i][x];
+        playersMatch[i] = playersMatch[i].filter(Boolean);
+for(j=0;j<playersMatch[i].length;j++)
+      {
+            switch(j){
+              case 0:
+              playersMatch[i][j].rol = 0;
+              playersMatch[i][j].posicionX = 1300;
+              playersMatch[i][j].posicionY = 1500;
+              break;
+          case 1:
+          playersMatch[i][j].rol = 1;
+          playersMatch[i][j].posicionX = 1600;
+          playersMatch[i][j].posicionY = 1500;
+              break;
+          case 2:
+          playersMatch[i][j].rol = 2;
+          playersMatch[i][j].posicionX = 1900;
+          playersMatch[i][j].posicionY = 1500;
+              break;
+          case 3:
+              player.rol = 0;
+              break;
+          case 5:
+              player.rol = 1;
+              break;
+          case 6:
+              player.rol = 2;
+              break;
+            }
+          
+        }
+        
+      }
+    }
+  }
+  //TODO HAY QUE HACER OTRO FILTRO PARA BORRAR LOS PLAYERmATCH[I]
+   
       posicion = allPlayers2.indexOf(id);
       delete allPlayers2[posicion];
       allPlayers2 = allPlayers2.filter(Boolean);
-      
+      //console.log(allPlayers2);
 }
 
 //comprueba si esta la sala llena e infresa en la room
@@ -161,7 +272,8 @@ function updatePlayers(){
  var i;
 for(i=0; i<room;i++)
   {
-    io.to(i).emit('updatePlayers',playersMatch[i]); 
+    io.to(i).emit('updatePlayers',playersMatch[i]);
+    io.to(i).emit('updateBullets',bulletsMatch[i]); 
   }
 }
 
@@ -176,7 +288,7 @@ function fillPlayer(socket){
     player.team = 1;
     //asignamos el  y posicion inicial
     
-    console.log(io.sockets.adapter.rooms[room].length);
+
     switch(io.sockets.adapter.rooms[room].length) {
       case 1:
           player.rol = 0;
@@ -205,10 +317,10 @@ function fillPlayer(socket){
   };
    //Asignamos velocidad
    player.speed = 20;
-
+   player.room = room;
    //Creamos la matriz solo con el primer jugador
    if(io.sockets.adapter.rooms[room].length==1)
-      playersMatch[room] = new Array(6);
+      playersMatch[room] = new Array();
       allPlayers2.push(player);
   
    playersMatch[room].push(player);

@@ -55,6 +55,7 @@ function login(data){
 
        
 }
+var balasMatch;
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
@@ -69,15 +70,21 @@ function activateSockets(){
        // console.log(player);
             
     })
+    socket.on('updateBullets', function(data) {
+        balasMatch = data;
+      
+        //console.log(datosbalas);
+            
+    })
 }
 
-function deleteUser(id){
-    var posicion = players.indexOf(id);
-    delete players[posicion];
-    players = players.filter(Boolean);
+// function deleteUser(id){
+//     var posicion = players.indexOf(id);
+//     delete players[posicion];
+//     players = players.filter(Boolean);
 
     
-}
+// }
 //Me encuentro entre los distintos jugadores
    function findPlayer(data,socketID){
     data.forEach(function(element) {

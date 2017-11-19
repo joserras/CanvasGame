@@ -8,6 +8,9 @@ canvas_height = window.innerHeight * window.devicePixelRatio;
 //make a phaser game
 game = new Phaser.Game(canvas_width,canvas_height, Phaser.CANVAS,
  'gameDiv');
+ var gameState = new Phaser.Stage(game);
+ gameState.stage.disableVisibilityChange = true;
+
 
 var gameProperties = { 
 	//this is the actual game size to determine the boundary of 
@@ -46,27 +49,28 @@ main.prototype = {
 		
 		    if(player.rol==0){
 			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
-			ship2 = game.add.sprite(players[7].posicionX, players[7].posicionY, 'ship1');
-			ship3 = game.add.sprite(players[8].posicionX, players[8].posicionY, 'ship2');
+			ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
+			ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
 			}
 			if(player.rol==1){
 			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
-			ship2 = game.add.sprite(players[6].posicionX, players[6].posicionY, 'ship0');
-			ship3 = game.add.sprite(players[8].posicionX, players[8].posicionY, 'ship2');
+			ship2 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
+			ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
 			
 			}
 			
 			if(player.rol==2){	
 			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
-			ship2 = game.add.sprite(players[7].posicionX, players[7].posicionY, 'ship1');
-			ship3 = game.add.sprite(players[6].posicionX, players[6].posicionY, 'ship0');
+			ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
+			ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
 		    }
 		
 		
 		
 		
 		var walk = ship.animations.add('walk');
-
+		var walk2 = ship2.animations.add('walk');
+		var walk3 = ship3.animations.add('walk');
 		 //  Creates 30 bullets, using the 'bullet' graphic
 		weapon = game.add.weapon(1, 'bullet');
 		
@@ -99,8 +103,8 @@ main.prototype = {
 		ship3.animations.play('walk', 10, true);
 		//ship2.animations.play('walk', 10, true);
 		//ship3.animations.play('walk', 10, true);
-		cursors = game.input.keyboard.createCursorKeys();
-		fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+		
+		
 
 		//true indica que se mueve con la rotacion
 		weapon.trackSprite(ship, 0, 0, true);
@@ -111,7 +115,12 @@ main.prototype = {
 		//camera
 		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 		game.add.image(game.world.centerX, game.world.centerY, 'background');
-		
+
+		cursors = game.input.keyboard.createCursorKeys();
+
+		key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+		key1.onDown.add(addPhaserDude, this);
+		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 	},
 
 	update: function() {
@@ -131,57 +140,93 @@ main.prototype = {
 		{
 			ship.y -= 4;
 			socket.emit('movement', 'up');
-			console.log("up");
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
 		{
 			ship.y += 4;
 			socket.emit('movement', 'down');
 		}
-		ship.rotation = game.physics.arcade.angleToPointer(ship);
+		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui
 		document.getElementById("gameDiv").onmousemove = function(event) {//console.log( game.time.elapsed / 1000);
 			socket.emit('rotation', ship.rotation);
 		};
 
-		if (fireButton.isDown)
-		{
-			weapon.fire();
-		}
-
+		// if (game.input.keyboard.onDown(Phaser.Keyboard.SPACEBAR))
+		// {	console.log("fire");
+		// 	//weapon.fire();
+		// 	socket.emit('fireBullet');
+			
+		// }
+		  //fire in here}, this);
 		//Actualizacion de enemigos
 	
 			if(player.rol==0){
+					if(players[1] !=null)
+					{
+					ship2.rotation = players[1].rotation;
+					ship2.x = players[1].posicionX;
+					ship2.y = players[1].posicionY;
+					}
+					else{ship2.x=-200;}
+					if(players[2] !=null)
+					{
+					ship3.x = players[2].posicionX;
+					ship3.y = players[2].posicionY;
+					ship3.rotation = players[2].rotation;
+					}
+					else{ship3.x=-200;}
 			
-			ship2.x = players[7].posicionX;
-			ship2.y = players[7].posicionY;
-			ship3.x = players[8].posicionX;
-			ship3.y = players[8].posicionY;
 			}
+
+			
 			if(player.rol==1){
-	
-			ship2.x = players[6].posicionX;
-			ship2.y = players[6].posicionY;
-			ship3.x = players[8].posicionX;
-			ship3.y = players[8].posicionY;
-			
+				if(players[0]!=null)
+				{
+					ship2.x = players[0].posicionX;
+					ship2.y = players[0].posicionY;
+					ship2.rotation = players[0].rotation;
+				}
+				else{ship2.x=-200;}
+				if(players[2]!=null){
+					ship3.x = players[2].posicionX;
+					ship3.y = players[2].posicionY;
+					ship3.rotation = players[2].rotation;
+				}
+				else{ship3.x=-200;}
 			}
 			
+
+
 			if(player.rol==2){	
-			
-			ship2.x = players[7].posicionX;
-			ship2.y = players[7].posicionY;
-			ship3.x = players[6].posicionX;
-			ship3.y = players[6].posicionY;
+					if(players[1]!=null){
+					ship2.x = players[1].posicionX;
+					ship2.y = players[1].posicionY;
+					ship2.rotation = players[1].rotation;
+					}
+					else{ship2.x=-200;}
+					if(players[0]!=null){
+					ship3.x = players[0].posicionX;
+					ship3.y = players[0].posicionY;
+					ship3.rotation = players[0].rotation;
+			     	}
+				else{ship3.x=-200;}
 		    }
-    },
+	},
+	
 }
+
+
 
 // this function is fired when we connect
 function onsocketConnected ()
 {
 	console.log("connected to server"); 
 	
+}
+function addPhaserDude () {
+	console.log("tud");
+	socket.emit('fireBullet');
 }
 
 // wrap the game states.
