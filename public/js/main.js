@@ -1,5 +1,4 @@
 
-
 //this is just configuring a screen size to fit the game properly
 //to the browser
 canvas_width = window.innerWidth * window.devicePixelRatio; 
@@ -19,6 +18,9 @@ var gameProperties = {
 	gameHeight: 8000,
 };
 
+
+
+
 // this is the main game state
 var main = function(game){
 };
@@ -34,6 +36,7 @@ main.prototype = {
 				
 					game.load.atlasJSONHash('ship2', 'sprites/shipSpear1.png', 'sprites/shipSpear.json');
 					
+					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
 				
 		
 		
@@ -124,6 +127,14 @@ main.prototype = {
 	},
 
 	update: function() {
+		 if(balasSpriteMatch!=null)
+		 for(i=0;i<balasSpriteMatch.length;i++)
+		 {
+			 if(balasSpriteMatch[i]!=null && balasMatch[i]!=null){
+				balasSpriteMatch[i].x = balasMatch[i].x;
+				balasSpriteMatch[i].y = balasMatch[i].y;
+			 }
+		 }
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
 		{
 			ship.x -= 4;
@@ -227,6 +238,7 @@ function onsocketConnected ()
 function addPhaserDude () {
 	console.log("tud");
 	socket.emit('fireBullet');
+	console.log(balasMatch);
 }
 
 // wrap the game states.

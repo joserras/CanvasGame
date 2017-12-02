@@ -33,6 +33,35 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 //  .on('exit', function() {
 //    console.log('Worker has been terminated.');
 //  });
+// const cluster = require('cluster');
+// const http = require('http');
+// const numCPUs = require('os').cpus().length;
+
+// if (cluster.isMaster) {
+//   console.log(`Master ${process.pid} is running`);
+
+// //   // Fork workers.
+// //   for (let i = 0; i < numCPUs; i++) {
+// //     cluster.fork();
+// //   }
+
+// //   cluster.on('exit', (worker, code, signal) => {
+// //     console.log(`worker ${worker.process.pid} died`);
+// //   });
+// // } else {
+//   // Workers can share any TCP connection
+//   // In this case it is an HTTP server
+  server.listen(8080, function() {  
+      console.log("Servidor corriendo en http://localhost:8080");
+     }); 
+
+//   console.log(`Worker ${process.pid} started`);
+// }
+
+
+
+
+
 
 
 //utilizamos el directorio public
@@ -91,11 +120,28 @@ io.on('connection', function(socket) {
     socket.on('fireBullet', function() {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
-      sleep(5000);
+      
       console.log("tud");
-     createBullet(findPlayer(socket.id));
+      findPlayer(socket.id).fire=true;
+     //createBullet(findPlayer(socket.id));
+     //sleep(2000);
   })
 });
+
+setInterval( function() { confirmBullet(); }, 500);
+function confirmBullet(){
+  //console.log(allPlayers2);
+  for(i=0;i<allPlayers2.length;i++)
+  {
+    
+    if(allPlayers2[i]!=null)
+    if(allPlayers2[i].fire==true)
+    { console.log("entro");
+      createBullet(allPlayers2[i]);
+      allPlayers2[i].fire = false;
+    }
+  }
+ }
 
 function sleep(miliseconds) {
   var currentTime = new Date().getTime();
@@ -115,6 +161,7 @@ function createBullet(player){
        bullet.x = player.posicionX;
        bullet.y = player.posicionY;
        bullet.rotation = player.rotation;
+       bullet.id = player.id;
        
       break;
       case 1:
@@ -124,7 +171,7 @@ function createBullet(player){
       bullet.x = player.posicionX;
       bullet.y = player.posicionY;
       bullet.rotation = player.rotation;
-      
+      bullet.id = player.id;
       break;
       case 2:
       bullet.speed = 40;
@@ -133,7 +180,7 @@ function createBullet(player){
       bullet.x = player.posicionX;
       bullet.y = player.posicionY;
       bullet.rotation = player.rotation;
-      
+      bullet.id = player.id;
       break;
    } 
    if(bulletsMatch[player.room] ==undefined)
@@ -267,11 +314,23 @@ function joinInRoom(socket){
   }
   
 }
-setInterval( function() { updatePlayers(); }, 1000/60 );
+
+
+function updateBullet(bulletMatch){
+if(bulletMatch!=null)
+  bulletMatch.forEach(element => {
+    element.y +=5;
+  });
+
+}
+var i;
+setInterval( function() { updatePlayers(); }, 1000/30 );
 function updatePlayers(){
- var i;
+
 for(i=0; i<room;i++)
   {
+    updateBullet(bulletsMatch[i]);
+    
     io.to(i).emit('updatePlayers',playersMatch[i]);
     io.to(i).emit('updateBullets',bulletsMatch[i]); 
   }
@@ -292,16 +351,19 @@ function fillPlayer(socket){
     switch(io.sockets.adapter.rooms[room].length) {
       case 1:
           player.rol = 0;
+          player.fire = false;
           player.posicionX = 1300;
           player.posicionY = 1500;
           break;
       case 2:
           player.rol = 1;
+          player.fire = false;
           player.posicionX = 1600;
           player.posicionY = 1500;
           break;
       case 3:
           player.rol = 2;
+          player.fire = false;
           player.posicionX = 1900;
           player.posicionY = 1500;
           break;
@@ -363,6 +425,6 @@ MongoClient.connect(url, function(err, db) {
 
 
 
-server.listen(8080, function() {  
-  console.log("Servidor corriendo en http://localhost:8080");
-}); 
+// server.listen(8080, function() {  
+//   console.log("Servidor corriendo en http://localhost:8080");
+// }); 

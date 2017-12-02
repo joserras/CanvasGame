@@ -8,9 +8,16 @@ var ship;
 var ship2;
 var ship3;
 var cursors;
+var balasMatch;
 //weapons
 var weapon;
 var fireButton;
+
+
+
+
+
+
 //rellenamos los consejos
 advises[0] = "Wait a moment, looking for a match!";
 advises[1] = "3 different roles!";
@@ -55,7 +62,7 @@ function login(data){
 
        
 }
-var balasMatch;
+var balasSpriteMatch=[];
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
@@ -72,6 +79,13 @@ function activateSockets(){
     })
     socket.on('updateBullets', function(data) {
         balasMatch = data;
+        if(balasMatch!=null)
+        for(i=0;i<balasMatch.length;i++)
+        {   if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
+            balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
+            console.log(balasSpriteMatch[i]);
+        }
+        }
       
         //console.log(datosbalas);
             
