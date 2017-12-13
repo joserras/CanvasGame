@@ -30,7 +30,7 @@ main.prototype = {
 		game.load.image("background", "http://gametest.mobi/phaser095/assets/pics/aya_touhou_teng_soldier.png");
 		
 				
-					game.load.atlasJSONHash('ship0', 'sprites/shipRound2.png', 'sprites/shipRound.json');
+					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
 			
 					game.load.atlasJSONHash('ship1', 'sprites/shipCone.png', 'sprites/shipCone.json');
 				

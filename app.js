@@ -319,7 +319,9 @@ function joinInRoom(socket){
 function updateBullet(bulletMatch){
 if(bulletMatch!=null)
   bulletMatch.forEach(element => {
-    element.y +=5;
+  //  var alfa=(element.rotation-90)* (Math.PI / 180);
+    element.x+=4*Math.cos(element.rotation-1.5);
+    element.y+=4*Math.sin(element.rotation-1.5);
   });
 
 }
