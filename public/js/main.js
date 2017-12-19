@@ -27,7 +27,7 @@ var main = function(game){
 // add the 
 main.prototype = {
 	preload: function() {
-		game.load.image("background", "http://gametest.mobi/phaser095/assets/pics/aya_touhou_teng_soldier.png");
+		// game.load.image("background", "http://gametest.mobi/phaser095/assets/pics/aya_touhou_teng_soldier.png");
 		
 				
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
