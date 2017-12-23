@@ -134,28 +134,46 @@ main.prototype = {
 				balasSpriteMatch[i].x = balasMatch[i].x;
 				balasSpriteMatch[i].y = balasMatch[i].y;
 			 }
+			 else{
+				balasSpriteMatch[i].x =-20;
+				balasSpriteMatch[i].y =-20;
+			 }
 		 }
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
-		{
-			ship.x -= 4;
+		{  
 			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);
-			socket.emit('movement', 'left');
+			console.log(ship.x);
+			if(ship.x >100)
+			 {
+				ship.x -= 4;	
+				socket.emit('movement', 'left');
+			 }
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
 		{
-			ship.x += 4;
-			socket.emit('movement', 'right');
+			if(ship.x < 2876)
+			{
+				ship.x += 4;
+				socket.emit('movement', 'right');
+			}
 		}
 	
 		if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
 		{
-			ship.y -= 4;
-			socket.emit('movement', 'up');
+			if(ship.y >100)
+			{
+				ship.y -= 4;
+				socket.emit('movement', 'up');
+			}
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
 		{
-			ship.y += 4;
-			socket.emit('movement', 'down');
+			console.log(ship.y);
+			if(ship.y < 2900)
+			{
+				ship.y += 4;
+				socket.emit('movement', 'down');
+			}
 		}
 		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui

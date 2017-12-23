@@ -90,6 +90,7 @@ var playersMatch = new Array();
 var allPlayers = new Array();
 var allPlayers2 = new Array();
 var bulletsMatch = new Array();
+var allBullets = new Array();
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -158,29 +159,38 @@ function createBullet(player){
        bullet.speed = 20;
        bullet.rol = 0;
        bullet.id = player.id;
+       bullet.x0 = player.posicionX;
+       bullet.y0 = player.posicionY;
        bullet.x = player.posicionX;
        bullet.y = player.posicionY;
        bullet.rotation = player.rotation;
        bullet.id = player.id;
+       bullet.room = player.room;
        
       break;
       case 1:
       bullet.speed = 40;
       bullet.rol = 1;
       bullet.id = player.id;
+      bullet.x0 = player.posicionX;
+      bullet.y0 = player.posicionY;
       bullet.x = player.posicionX;
       bullet.y = player.posicionY;
       bullet.rotation = player.rotation;
       bullet.id = player.id;
+      bullet.room = player.room;
       break;
       case 2:
       bullet.speed = 40;
       bullet.rol = 2;
       bullet.id = player.id;
+      bullet.x0 = player.posicionX;
+      bullet.y0 = player.posicionY;
       bullet.x = player.posicionX;
       bullet.y = player.posicionY;
       bullet.rotation = player.rotation;
       bullet.id = player.id;
+      bullet.room = player.room;
       break;
    } 
    if(bulletsMatch[player.room] ==undefined)
@@ -190,7 +200,7 @@ function createBullet(player){
    }
    
    bulletsMatch[player.room].push(bullet); 
-   
+   console.log(bulletsMatch);
 }
 // setInterval( function() { createBullet(); }, 500);
 // function createBullet(){
@@ -205,15 +215,21 @@ function createBullet(player){
 function movePlayer(socketID,data){
  switch (data){
     case 'up':
+    
+    if(findPlayer(socketID).posicionY>100)
     findPlayer(socketID).posicionY-=4;
     break;
     case 'down':
+    console.log(findPlayer(socketID).posicionY);
+    if(findPlayer(socketID).posicionY < 2900)
     findPlayer(socketID).posicionY+=4;
     break;
     case 'right':
+    if(findPlayer(socketID).posicionX < 2876)
     findPlayer(socketID).posicionX+=4;
     break;
     case 'left':
+    if(findPlayer(socketID).posicionX  > 100)
     findPlayer(socketID).posicionX-=4;
     break;
  }
@@ -316,12 +332,84 @@ function joinInRoom(socket){
 }
 
 
-function updateBullet(bulletMatch){
-if(bulletMatch!=null)
-  bulletMatch.forEach(element => {
-  //  var alfa=(element.rotation-90)* (Math.PI / 180);
+function updateBullet(i){
+if(bulletsMatch[i]!=null)
+  bulletsMatch[i].forEach(element => {
+    
+
+    //Calculadmos la distancia recorrida de la bala para borrarla
+    switch(element.rol){
+  
+    case 0:
+    element.x+=2*Math.cos(element.rotation-1.5);
+    element.y+=2*Math.sin(element.rotation-1.5);
+
+    var a = element.x-element.x0;
+    var b = element.y-element.y0;
+ 
+ 
+   // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
+     //Borrado de balas
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000))
+     {
+       
+       //console.log(element.room);
+       var posicion = bulletsMatch[i].indexOf(element);
+      
+       
+       delete bulletsMatch[i][posicion];
+       bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
+      console.log(posicion);
+ 
+     }
+    case 1:
     element.x+=4*Math.cos(element.rotation-1.5);
     element.y+=4*Math.sin(element.rotation-1.5);
+
+    var a = element.x-element.x0;
+    var b = element.y-element.y0;
+ 
+ 
+   // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
+     //Borrado de balas
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000))
+     {
+       
+       //console.log(element.room);
+       var posicion = bulletsMatch[i].indexOf(element);
+      
+       
+       delete bulletsMatch[i][posicion];
+       bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
+      console.log(posicion);
+ 
+     }
+
+    case 2:
+    element.x+=6*Math.cos(element.rotation-1.5);
+    element.y+=6*Math.sin(element.rotation-1.5);
+
+    var a = element.x-element.x0;
+    var b = element.y-element.y0;
+ 
+ 
+   // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
+     //Borrado de balas
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000))
+     {
+       
+       //console.log(element.room);
+       var posicion = bulletsMatch[i].indexOf(element);
+      
+       
+       delete bulletsMatch[i][posicion];
+       bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
+      console.log(posicion);
+ 
+     }
+
+    }
+   
   });
 
 }
@@ -331,10 +419,11 @@ function updatePlayers(){
 
 for(i=0; i<room;i++)
   {
-    updateBullet(bulletsMatch[i]);
+    updateBullet(i);
     
     io.to(i).emit('updatePlayers',playersMatch[i]);
     io.to(i).emit('updateBullets',bulletsMatch[i]); 
+
   }
 }
 
