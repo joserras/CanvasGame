@@ -37,7 +37,10 @@ main.prototype = {
 					game.load.atlasJSONHash('ship2', 'sprites/shipSpear1.png', 'sprites/shipSpear.json');
 					
 					game.load.atlasJSONHash('bullet', 'sprites/bullet1.png', 'sprites/bullet1.json');
-				
+
+					game.load.physics("shipConeCollide", "sprites/shipConeCollide.json");
+					game.load.physics("shipRoundCollide", "sprites/shipRoundCollide.json");
+				    game.load.physics("shipSpearCollide", "sprites/shipSpearCollide.json");
 		
 		
     },
@@ -49,16 +52,40 @@ main.prototype = {
 		//the client connects, call onsocketConnected.  
 		//socket.on("connect", onsocketConnected); 
 	
-		
+			
+			game.physics.startSystem(Phaser.Physics.P2JS);
+			resizePolygon('shipConeCollide', 'scaleCone', 'shipCone', 0.25);
+			resizePolygon('shipRoundCollide', 'scaleRound', 'shipRound', 0.25);
+			resizePolygon('shipSpearCollide', 'scaleSpear', 'shipSpear', 0.25);
 		    if(player.rol==0){
 			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
 			ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 			ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
+			game.physics.p2.enable(ship, true);
+			game.physics.p2.enable(ship2, true);
+			game.physics.p2.enable(ship3, true);
+			ship.body.clearShapes();
+			ship2.body.clearShapes();
+			ship3.body.clearShapes();
+			ship.body.loadPolygon("scaleRound", "shipRound");
+			ship2.body.loadPolygon("scaleCone", "shipCone");
+			ship3.body.loadPolygon("scaleSpear", "shipSpear");
+
+			
 			}
 			if(player.rol==1){
 			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
 			ship2 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
 			ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
+			game.physics.p2.enable(ship, true);
+			game.physics.p2.enable(ship2, true);
+			game.physics.p2.enable(ship3, true);
+			ship.body.clearShapes();
+			ship2.body.clearShapes();
+			ship3.body.clearShapes();
+			ship.body.loadPolygon("scaleCone", "shipCone");
+			ship2.body.loadPolygon("scaleRound", "shipRound");
+			ship3.body.loadPolygon("scaleSpear", "shipSpear");
 			
 			}
 			
@@ -66,10 +93,18 @@ main.prototype = {
 			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
 			ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 			ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
+			game.physics.p2.enable(ship, true);
+			game.physics.p2.enable(ship2, true);
+			game.physics.p2.enable(ship3, true);
+			ship.body.clearShapes();
+			ship2.body.clearShapes();
+			ship3.body.clearShapes();
+			ship.body.loadPolygon("scaleSpear", "shipSpear");
+			ship2.body.loadPolygon("scaleCone", "shipCone");
+			ship3.body.loadPolygon("scaleRound", "shipRound");
 		    }
 		
-		
-		
+			
 		
 		var walk = ship.animations.add('walk');
 		var walk2 = ship2.animations.add('walk');
@@ -258,6 +293,27 @@ function addPhaserDude () {
 	socket.emit('fireBullet');
 	console.log(balasMatch);
 }
+
+function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale){
+	var newData = [];
+	var data = this.game.cache.getPhysicsData(originalPhysicsKey, shapeKey);
+ 
+	for (var i = 0; i < data.length; i++) {
+		var vertices = [];
+ 
+		for (var j = 0; j < data[i].shape.length; j += 2) {
+		   vertices[j] = data[i].shape[j] * scale;
+		   vertices[j+1] = data[i].shape[j+1] * scale; 
+		}
+ 
+		newData.push({shape : vertices});
+	}
+ 
+	var item = {};
+	item[shapeKey] = newData;
+	game.load.physics(newPhysicsKey, '', item);
+ 
+ }
 
 // wrap the game states.
 var gameBootstrapper = {

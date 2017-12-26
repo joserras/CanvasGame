@@ -377,8 +377,6 @@ if(bulletsMatch[i]!=null)
        
        //console.log(element.room);
        var posicion = bulletsMatch[i].indexOf(element);
-      
-       
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
       console.log(posicion);
