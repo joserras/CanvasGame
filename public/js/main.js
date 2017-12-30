@@ -18,7 +18,8 @@ var gameProperties = {
 	gameHeight: 8000,
 };
 
-
+//espera a colision
+var collision = false;
 
 
 // this is the main game state
@@ -104,7 +105,12 @@ main.prototype = {
 			ship3.body.loadPolygon("scaleRound", "shipRound");
 		    }
 		
-			
+			ship.body.setZeroDamping();
+			ship.body.fixedRotation = true;
+			ship2.body.setZeroDamping();
+			ship2.body.fixedRotation = true;
+			ship3.body.setZeroDamping();
+			ship3.body.fixedRotation = true;
 		
 		var walk = ship.animations.add('walk');
 		var walk2 = ship2.animations.add('walk');
@@ -158,10 +164,15 @@ main.prototype = {
 
 		key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		key1.onDown.add(addPhaserDude, this);
+		ship.body.onBeginContact.add(blockHit, this);
+		ship.body.onEndContact.add(blockHitEnd, this);
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 	},
 
 	update: function() {
+		ship.body.setZeroVelocity();
+		ship2.body.setZeroVelocity();
+		ship3.body.setZeroVelocity();
 		 if(balasSpriteMatch!=null)
 		 for(i=0;i<balasSpriteMatch.length;i++)
 		 {
@@ -178,38 +189,39 @@ main.prototype = {
 		{  
 			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);
 			console.log(ship.x);
-			if(ship.x >100)
+			if(ship.body.x >100 && collision ==false)
 			 {
-				ship.x -= 4;	
+				ship.body.x -=4;	
 				socket.emit('movement', 'left');
 			 }
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
 		{
-			if(ship.x < 2876)
+			if(ship.body.x < 2876 && collision ==false)
 			{
-				ship.x += 4;
+				ship.body.x +=4;
 				socket.emit('movement', 'right');
 			}
 		}
 	
 		if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
 		{
-			if(ship.y >100)
+			if(ship.body.y >100 && collision ==false)
 			{
-				ship.y -= 4;
+				ship.body.y -=4;
 				socket.emit('movement', 'up');
 			}
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
 		{
-			console.log(ship.y);
-			if(ship.y < 2900)
+			console.log(ship.body);
+			if(ship.body.y < 2900 && collision ==false)
 			{
-				ship.y += 4;
+				ship.body.y +=4;
 				socket.emit('movement', 'down');
 			}
 		}
+		ship.body.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui
 		document.getElementById("gameDiv").onmousemove = function(event) {//console.log( game.time.elapsed / 1000);
@@ -229,17 +241,19 @@ main.prototype = {
 					if(players[1] !=null)
 					{
 					ship2.rotation = players[1].rotation;
-					ship2.x = players[1].posicionX;
-					ship2.y = players[1].posicionY;
+					ship2.body.rotation = players[1].rotation;
+					ship2.body.x = players[1].posicionX;
+					ship2.body.y = players[1].posicionY;
 					}
-					else{ship2.x=-200;}
+					else{ship2.body.x=-200;}
 					if(players[2] !=null)
 					{
-					ship3.x = players[2].posicionX;
-					ship3.y = players[2].posicionY;
+					ship3.body.x = players[2].posicionX;
+					ship3.body.y = players[2].posicionY;
 					ship3.rotation = players[2].rotation;
+					ship3.body.rotation = players[2].rotation;
 					}
-					else{ship3.x=-200;}
+					else{ship3.body.x=-200;}
 			
 			}
 
@@ -247,34 +261,38 @@ main.prototype = {
 			if(player.rol==1){
 				if(players[0]!=null)
 				{
-					ship2.x = players[0].posicionX;
-					ship2.y = players[0].posicionY;
+					ship2.body.x = players[0].posicionX;
+					ship2.body.y = players[0].posicionY;
+					ship2.body.rotation = players[0].rotation;
 					ship2.rotation = players[0].rotation;
 				}
-				else{ship2.x=-200;}
+				else{ship2.body.x=-200;}
 				if(players[2]!=null){
-					ship3.x = players[2].posicionX;
-					ship3.y = players[2].posicionY;
+					ship3.body.x = players[2].posicionX;
+					ship3.body.y = players[2].posicionY;
 					ship3.rotation = players[2].rotation;
+					ship3.body.rotation = players[2].rotation;
 				}
-				else{ship3.x=-200;}
+				else{ship3.body.x=-200;}
 			}
 			
 
 
 			if(player.rol==2){	
 					if(players[1]!=null){
-					ship2.x = players[1].posicionX;
-					ship2.y = players[1].posicionY;
+					ship2.body.x = players[1].posicionX;
+					ship2.body.y = players[1].posicionY;
 					ship2.rotation = players[1].rotation;
+					ship2.body.rotation = players[1].rotation;
 					}
-					else{ship2.x=-200;}
+					else{ship2.body.x=-200;}
 					if(players[0]!=null){
-					ship3.x = players[0].posicionX;
-					ship3.y = players[0].posicionY;
+					ship3.body.x = players[0].posicionX;
+					ship3.body.y = players[0].posicionY;
 					ship3.rotation = players[0].rotation;
+					ship3.body.rotation = players[0].rotation;
 			     	}
-				else{ship3.x=-200;}
+				else{ship3.body.x=-200;}
 		    }
 	},
 	
@@ -293,6 +311,41 @@ function addPhaserDude () {
 	socket.emit('fireBullet');
 	console.log(balasMatch);
 }
+function blockHit (body, bodyB, shapeA, shapeB, equation) {
+	
+
+		//  The block hit something.
+		//  
+		//  This callback is sent 5 arguments:
+		//  
+		//  The Phaser.Physics.P2.Body it is in contact with. *This might be null* if the Body was created directly in the p2 world.
+		//  The p2.Body this Body is in contact with.
+		//  The Shape from this body that caused the contact.
+		//  The Shape from the contact body.
+		//  The Contact Equation data array.
+		//  
+		//  The first argument may be null or not have a sprite property, such as when you hit the world bounds.
+		collision = true;
+	
+	}
+
+	function blockHitEnd (body, bodyB, shapeA, shapeB, equation) {
+		
+	
+			//  The block hit something.
+			//  
+			//  This callback is sent 5 arguments:
+			//  
+			//  The Phaser.Physics.P2.Body it is in contact with. *This might be null* if the Body was created directly in the p2 world.
+			//  The p2.Body this Body is in contact with.
+			//  The Shape from this body that caused the contact.
+			//  The Shape from the contact body.
+			//  The Contact Equation data array.
+			//  
+			//  The first argument may be null or not have a sprite property, such as when you hit the world bounds.
+			collision = false;
+		
+		}
 
 function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale){
 	var newData = [];
@@ -302,8 +355,11 @@ function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale){
 		var vertices = [];
  
 		for (var j = 0; j < data[i].shape.length; j += 2) {
-		   vertices[j] = data[i].shape[j] * scale;
-		   vertices[j+1] = data[i].shape[j+1] * scale; 
+			console.log(data[i].shape[j]);
+			console.log(data[i].shape[j]);
+		   
+		   vertices[j] = (data[i].shape[j] * scale)+190;
+		   vertices[j+1] = (data[i].shape[j+1] * scale)+190; 
 		}
  
 		newData.push({shape : vertices});

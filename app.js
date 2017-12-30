@@ -453,7 +453,7 @@ function fillPlayer(socket){
       case 3:
           player.rol = 2;
           player.fire = false;
-          player.posicionX = 1900;
+          player.posicionX = 2900;
           player.posicionY = 1500;
           break;
       case 4:
