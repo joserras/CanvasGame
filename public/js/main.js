@@ -55,54 +55,54 @@ main.prototype = {
 	
 			
 			game.physics.startSystem(Phaser.Physics.P2JS);
-			resizePolygon('shipConeCollide', 'scaleCone', 'shipCone', 0.25);
-			resizePolygon('shipRoundCollide', 'scaleRound', 'shipRound', 0.25);
-			resizePolygon('shipSpearCollide', 'scaleSpear', 'shipSpear', 0.25);
+			resizePolygon('shipConeCollide', 'scaleCone', 'shipCone', 0.25,254,240);
+			resizePolygon('shipRoundCollide', 'scaleRound', 'shipRound', 0.25,192,190);
+			resizePolygon('shipSpearCollide', 'scaleSpear', 'shipSpear', 0.25,190,190);
 		    if(player.rol==0){
-			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
-			ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
-			ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
-			game.physics.p2.enable(ship, true);
-			game.physics.p2.enable(ship2, true);
-			game.physics.p2.enable(ship3, true);
-			ship.body.clearShapes();
-			ship2.body.clearShapes();
-			ship3.body.clearShapes();
-			ship.body.loadPolygon("scaleRound", "shipRound");
-			ship2.body.loadPolygon("scaleCone", "shipCone");
-			ship3.body.loadPolygon("scaleSpear", "shipSpear");
+				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
+				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
+				ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
+				game.physics.p2.enable(ship, true);
+				game.physics.p2.enable(ship2, true);
+				game.physics.p2.enable(ship3, true);
+				ship.body.clearShapes();
+				ship2.body.clearShapes();
+				ship3.body.clearShapes();
+				ship.body.loadPolygon("scaleRound", "shipRound");
+				ship2.body.loadPolygon("scaleCone", "shipCone");
+				ship3.body.loadPolygon("scaleSpear", "shipSpear");
 
 			
 			}
 			if(player.rol==1){
-			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
-			ship2 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
-			ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
-			game.physics.p2.enable(ship, true);
-			game.physics.p2.enable(ship2, true);
-			game.physics.p2.enable(ship3, true);
-			ship.body.clearShapes();
-			ship2.body.clearShapes();
-			ship3.body.clearShapes();
-			ship.body.loadPolygon("scaleCone", "shipCone");
-			ship2.body.loadPolygon("scaleRound", "shipRound");
-			ship3.body.loadPolygon("scaleSpear", "shipSpear");
+				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
+				ship2 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
+				ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
+				game.physics.p2.enable(ship, true);
+				game.physics.p2.enable(ship2, true);
+				game.physics.p2.enable(ship3, true);
+				ship.body.clearShapes();
+				ship2.body.clearShapes();
+				ship3.body.clearShapes();
+				ship.body.loadPolygon("scaleCone", "shipCone");
+				ship2.body.loadPolygon("scaleRound", "shipRound");
+				ship3.body.loadPolygon("scaleSpear", "shipSpear");
 			
 			}
 			
 			if(player.rol==2){	
-			ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
-			ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
-			ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
-			game.physics.p2.enable(ship, true);
-			game.physics.p2.enable(ship2, true);
-			game.physics.p2.enable(ship3, true);
-			ship.body.clearShapes();
-			ship2.body.clearShapes();
-			ship3.body.clearShapes();
-			ship.body.loadPolygon("scaleSpear", "shipSpear");
-			ship2.body.loadPolygon("scaleCone", "shipCone");
-			ship3.body.loadPolygon("scaleRound", "shipRound");
+				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
+				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
+				ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
+				game.physics.p2.enable(ship, true);
+				game.physics.p2.enable(ship2, true);
+				game.physics.p2.enable(ship3, true);
+				ship.body.clearShapes();
+				ship2.body.clearShapes();
+				ship3.body.clearShapes();
+				ship.body.loadPolygon("scaleSpear", "shipSpear");
+				ship2.body.loadPolygon("scaleCone", "shipCone");
+				ship3.body.loadPolygon("scaleRound", "shipRound");
 		    }
 		
 			ship.body.setZeroDamping();
@@ -145,6 +145,8 @@ main.prototype = {
 		ship.animations.play('walk', 10, true);
 		ship2.animations.play('walk', 10, true);
 		ship3.animations.play('walk', 10, true);
+		
+		//ship2.animations.play('walk', 10, true);
 		//ship2.animations.play('walk', 10, true);
 		//ship3.animations.play('walk', 10, true);
 		
@@ -166,6 +168,11 @@ main.prototype = {
 		key1.onDown.add(addPhaserDude, this);
 		ship.body.onBeginContact.add(blockHit, this);
 		ship.body.onEndContact.add(blockHitEnd, this);
+		ship.body.allowSleep = false;
+		ship2.body.allowSleep = false;
+		ship3.body.allowSleep = false;
+		
+		console.log(ship.body);
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 	},
 
@@ -177,12 +184,14 @@ main.prototype = {
 		 for(i=0;i<balasSpriteMatch.length;i++)
 		 {
 			 if(balasSpriteMatch[i]!=null && balasMatch[i]!=null){
-				balasSpriteMatch[i].x = balasMatch[i].x;
-				balasSpriteMatch[i].y = balasMatch[i].y;
+				 if(balasSpriteMatch[i].body!=null){
+					balasSpriteMatch[i].body.x = balasMatch[i].x;
+					balasSpriteMatch[i].body.y = balasMatch[i].y;
+				 }
 			 }
 			 else{
-				balasSpriteMatch[i].x =-20;
-				balasSpriteMatch[i].y =-20;
+				balasSpriteMatch[i].body.x =-20;
+				balasSpriteMatch[i].body.y =-20;
 			 }
 		 }
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
@@ -307,47 +316,19 @@ function onsocketConnected ()
 	
 }
 function addPhaserDude () {
-	console.log("tud");
 	socket.emit('fireBullet');
 	console.log(balasMatch);
 }
-function blockHit (body, bodyB, shapeA, shapeB, equation) {
-	
-
-		//  The block hit something.
-		//  
-		//  This callback is sent 5 arguments:
-		//  
-		//  The Phaser.Physics.P2.Body it is in contact with. *This might be null* if the Body was created directly in the p2 world.
-		//  The p2.Body this Body is in contact with.
-		//  The Shape from this body that caused the contact.
-		//  The Shape from the contact body.
-		//  The Contact Equation data array.
-		//  
-		//  The first argument may be null or not have a sprite property, such as when you hit the world bounds.
+function blockHit (body, bodyB, shapeA, shapeB, equation) {	
+console.log("hit");
 		collision = true;
-	
 	}
 
 	function blockHitEnd (body, bodyB, shapeA, shapeB, equation) {
-		
-	
-			//  The block hit something.
-			//  
-			//  This callback is sent 5 arguments:
-			//  
-			//  The Phaser.Physics.P2.Body it is in contact with. *This might be null* if the Body was created directly in the p2 world.
-			//  The p2.Body this Body is in contact with.
-			//  The Shape from this body that caused the contact.
-			//  The Shape from the contact body.
-			//  The Contact Equation data array.
-			//  
-			//  The first argument may be null or not have a sprite property, such as when you hit the world bounds.
-			collision = false;
-		
-		}
+		collision = false;	
+	}
 
-function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale){
+function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale, moveX, moveY){
 	var newData = [];
 	var data = this.game.cache.getPhysicsData(originalPhysicsKey, shapeKey);
  
@@ -355,11 +336,10 @@ function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale){
 		var vertices = [];
  
 		for (var j = 0; j < data[i].shape.length; j += 2) {
-			console.log(data[i].shape[j]);
-			console.log(data[i].shape[j]);
+			
 		   
-		   vertices[j] = (data[i].shape[j] * scale)+190;
-		   vertices[j+1] = (data[i].shape[j+1] * scale)+190; 
+		   vertices[j] = (data[i].shape[j] * scale)+moveX;
+		   vertices[j+1] = (data[i].shape[j+1] * scale)+moveY; 
 		}
  
 		newData.push({shape : vertices});

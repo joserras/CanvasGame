@@ -122,10 +122,19 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
       
-      console.log("tud");
+      
       findPlayer(socket.id).fire=true;
      //createBullet(findPlayer(socket.id));
      //sleep(2000);
+  })
+    socket.on('bulletHit', function(data) {
+      //rotatePlayer(socket.id);   
+      //findPlayer(socket.id).fire=true; 
+      console.log("golpeo");
+      
+      console.log(data);
+    //createBullet(findPlayer(socket.id));
+    //sleep(2000);
   })
 });
 
@@ -137,7 +146,7 @@ function confirmBullet(){
     
     if(allPlayers2[i]!=null)
     if(allPlayers2[i].fire==true)
-    { console.log("entro");
+    { 
       createBullet(allPlayers2[i]);
       allPlayers2[i].fire = false;
     }
@@ -158,49 +167,53 @@ function createBullet(player){
       case 0:
        bullet.speed = 20;
        bullet.rol = 0;
-       bullet.id = player.id;
-       bullet.x0 = player.posicionX;
-       bullet.y0 = player.posicionY;
-       bullet.x = player.posicionX;
-       bullet.y = player.posicionY;
+      
+       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+       console.log(bullet.id);
+       bullet.x0 = player.posicionX+40*Math.cos(player.rotation-1.5);
+       bullet.y0 = player.posicionY+40*Math.sin(player.rotation-1.5);
+       bullet.x = bullet.x0;
+       bullet.y = bullet.y0;
        bullet.rotation = player.rotation;
-       bullet.id = player.id;
+      
        bullet.room = player.room;
        
       break;
       case 1:
       bullet.speed = 40;
       bullet.rol = 1;
-      bullet.id = player.id;
-      bullet.x0 = player.posicionX;
-      bullet.y0 = player.posicionY;
-      bullet.x = player.posicionX;
-      bullet.y = player.posicionY;
+      bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.x = bullet.x0;
+      bullet.y = bullet.y0;
       bullet.rotation = player.rotation;
-      bullet.id = player.id;
+  
       bullet.room = player.room;
+    
       break;
       case 2:
       bullet.speed = 40;
       bullet.rol = 2;
-      bullet.id = player.id;
-      bullet.x0 = player.posicionX;
-      bullet.y0 = player.posicionY;
-      bullet.x = player.posicionX;
-      bullet.y = player.posicionY;
+      bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.x = bullet.x0;
+      bullet.y = bullet.y0;
       bullet.rotation = player.rotation;
-      bullet.id = player.id;
+     
       bullet.room = player.room;
+    
       break;
    } 
    if(bulletsMatch[player.room] ==undefined)
    {
-     console.log("una ves");
+     
     bulletsMatch[player.room] = new Array();
    }
    
    bulletsMatch[player.room].push(bullet); 
-   console.log(bulletsMatch);
+   
 }
 // setInterval( function() { createBullet(); }, 500);
 // function createBullet(){
@@ -359,7 +372,7 @@ if(bulletsMatch[i]!=null)
        
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
-      console.log(posicion);
+      
  
      }
     case 1:
@@ -379,7 +392,7 @@ if(bulletsMatch[i]!=null)
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
-      console.log(posicion);
+     
  
      }
 
@@ -402,7 +415,7 @@ if(bulletsMatch[i]!=null)
        
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
-      console.log(posicion);
+     
  
      }
 

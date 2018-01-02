@@ -80,17 +80,62 @@ function activateSockets(){
     socket.on('updateBullets', function(data) {
         balasMatch = data;
         if(balasMatch!=null)
-        for(i=0;i<balasMatch.length;i++)
-        {   if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
-            balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
-            console.log(balasSpriteMatch[i]);
-        }
-        }
+            for(i=0;i<balasMatch.length;i++)
+            {   if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
+                    balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
+                    game.physics.p2.enable(balasSpriteMatch[i], true);                 
+                    balasSpriteMatch[i].body.setCircle(6);
+                    balasSpriteMatch[i].body.miBala = balasMatch[i];
+                   
+                        balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
+                        balasSpriteMatch[i].body.onEndContact.add(blockHitEndBullet, this);     
+                    
+                }
+            }
       
         //console.log(datosbalas);
             
     })
 }
+
+
+function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
+ console.log("colision");
+ 
+if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){
+    console.log("colision2");
+    console.log(equation);
+    if(equation[0].shapeB.body.parent.miBala!=null)
+     socket.emit('bulletHit',equation[0].shapeB.body.parent.miBala);
+     else
+     socket.emit('bulletHit',equation[0].shapeA.body.parent.miBala);
+}
+
+//shapeA.body.parent
+//  if(golpeado.parent!=null)
+//  switch(golpeado.parent.sprite.key)
+//  {
+//     case 'ship0':
+//     console.log("golpee a nave 1");
+//     //socket.emit('bulletHit', 'left');
+//     break;
+//     case 'ship1':
+//     console.log("golpee a nave 2");
+//     //socket.emit('bulletHit', 'left');
+//     break;
+//     case 'ship2':
+//     console.log("golpee a nave 3");
+//     //socket.emit('bulletHit', 'left');
+//     break;
+//  }
+ 
+
+            
+        }
+    
+        function blockHitEndBullet (body, bodyB, shapeA, shapeB, equation) {
+           	console.log("termino");
+        }
 
 // function deleteUser(id){
 //     var posicion = players.indexOf(id);
