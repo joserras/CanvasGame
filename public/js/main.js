@@ -21,15 +21,15 @@ var gameProperties = {
 //espera a colision
 var collision = false;
 
-
+var circle;
 // this is the main game state
 var main = function(game){
 };
 // add the 
 main.prototype = {
 	preload: function() {
-		// game.load.image("background", "http://gametest.mobi/phaser095/assets/pics/aya_touhou_teng_soldier.png");
-		
+		 game.load.image("background", "sprites/space.png");
+		 game.load.image("shipCircle", "sprites/descarga.png");
 				
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
 			
@@ -52,8 +52,7 @@ main.prototype = {
 		//automatically emit a “connect” message when the cleint connets.When 
 		//the client connects, call onsocketConnected.  
 		//socket.on("connect", onsocketConnected); 
-	
-			
+		
 			game.physics.startSystem(Phaser.Physics.P2JS);
 			resizePolygon('shipConeCollide', 'scaleCone', 'shipCone', 0.25,254,240);
 			resizePolygon('shipRoundCollide', 'scaleRound', 'shipRound', 0.25,192,190);
@@ -104,7 +103,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleRound", "shipRound");
 		    }
-		
+			
 			ship.body.setZeroDamping();
 			ship.body.fixedRotation = true;
 			ship2.body.setZeroDamping();
@@ -157,13 +156,28 @@ main.prototype = {
 		weapon.trackOffset.y = 50;
 		weapon.trackOffset.x = 0;
 		
-		console.log(weapon);
+		
 		//camera
 		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
-		game.add.image(game.world.centerX, game.world.centerY, 'background');
+		
+		//game.add.image(game.world.centerX, game.world.centerY, 'background');
+		//MiniMap
+		var graphics = game.add.graphics(100, 100);
+		graphics.beginFill(0x000000, 1);
+		graphics.lineStyle(2, 0x0000FF, 1);
+		graphics.drawRect(game.camera.x+1100, game.camera.y+450, 200, 200);
+		graphics.endFill();
+		graphics.fixedToCamera = true
+		game.world.sendToBack(graphics);
+		// graphics.beginFill(0xff0000);
+		// circle = graphics.drawCircle((game.camera.x+1100)+(ship.body.x/14.38), (game.camera.y+450)+(ship.body.y/14.5), 10);
+		// graphics.endFill();+(ship.body.x/14.38)+(ship.body.y/14.5)
+		
+		shipCircle = game.add.sprite((game.camera.x+1200), (game.camera.y+550), 'shipCircle');
+		shipCircle.scale.setTo(0.01, 0.01);
+		shipCircle.fixedToCamera = true;
 
 		cursors = game.input.keyboard.createCursorKeys();
-
 		key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
 		key1.onDown.add(addPhaserDude, this);
 		ship.body.onBeginContact.add(blockHit, this);
@@ -171,8 +185,9 @@ main.prototype = {
 		ship.body.allowSleep = false;
 		ship2.body.allowSleep = false;
 		ship3.body.allowSleep = false;
-		
-		console.log(ship.body);
+		tileSprite = game.add.tileSprite(0, 0, 8000, 8000, 'background');
+		game.world.sendToBack(tileSprite);
+		window.graphics = graphics;
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 	},
 
@@ -180,6 +195,10 @@ main.prototype = {
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();
+		
+		//shipCircle.x = (game.camera.x+1100)+(ship.body.x/14.38);
+		//shipCircle.y = (game.camera.y+450)+(ship.body.y/14.5);
+		console.log(shipCircle.x);
 		 if(balasSpriteMatch!=null)
 		 for(i=0;i<balasSpriteMatch.length;i++)
 		 {
@@ -197,7 +216,7 @@ main.prototype = {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
 		{  
 			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);
-			console.log(ship.x);
+			
 			if(ship.body.x >100 && collision ==false)
 			 {
 				ship.body.x -=4;	
@@ -223,7 +242,7 @@ main.prototype = {
 		}
 		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
 		{
-			console.log(ship.body);
+			
 			if(ship.body.y < 2900 && collision ==false)
 			{
 				ship.body.y +=4;
@@ -249,18 +268,18 @@ main.prototype = {
 			if(player.rol==0){
 					if(players[1] !=null)
 					{
-					ship2.rotation = players[1].rotation;
-					ship2.body.rotation = players[1].rotation;
-					ship2.body.x = players[1].posicionX;
-					ship2.body.y = players[1].posicionY;
+						ship2.rotation = players[1].rotation;
+						ship2.body.rotation = players[1].rotation;
+						ship2.body.x = players[1].posicionX;
+						ship2.body.y = players[1].posicionY;
 					}
 					else{ship2.body.x=-200;}
 					if(players[2] !=null)
 					{
-					ship3.body.x = players[2].posicionX;
-					ship3.body.y = players[2].posicionY;
-					ship3.rotation = players[2].rotation;
-					ship3.body.rotation = players[2].rotation;
+						ship3.body.x = players[2].posicionX;
+						ship3.body.y = players[2].posicionY;
+						ship3.rotation = players[2].rotation;
+						ship3.body.rotation = players[2].rotation;
 					}
 					else{ship3.body.x=-200;}
 			
@@ -289,20 +308,22 @@ main.prototype = {
 
 			if(player.rol==2){	
 					if(players[1]!=null){
-					ship2.body.x = players[1].posicionX;
-					ship2.body.y = players[1].posicionY;
-					ship2.rotation = players[1].rotation;
-					ship2.body.rotation = players[1].rotation;
+						ship2.body.x = players[1].posicionX;
+						ship2.body.y = players[1].posicionY;
+						ship2.rotation = players[1].rotation;
+						ship2.body.rotation = players[1].rotation;
 					}
 					else{ship2.body.x=-200;}
 					if(players[0]!=null){
-					ship3.body.x = players[0].posicionX;
-					ship3.body.y = players[0].posicionY;
-					ship3.rotation = players[0].rotation;
-					ship3.body.rotation = players[0].rotation;
+						ship3.body.x = players[0].posicionX;
+						ship3.body.y = players[0].posicionY;
+						ship3.rotation = players[0].rotation;
+						ship3.body.rotation = players[0].rotation;
 			     	}
 				else{ship3.body.x=-200;}
-		    }
+			}
+			//console.log(circle);
+			
 	},
 	
 }

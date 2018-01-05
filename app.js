@@ -13,37 +13,13 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // const spawn1 = spawn.spawn;
 // const thread = spawn(function(input, done) {
 //  // Everything we do here will be run in parallel in another execution context. 
-//  console.log("tudel");
+
 //  // Remember that this function will be executed in the thread's context, 
 //  // so you cannot reference any value of the surrounding code. 
 //  done({ string : input.string, integer : parseInt(input.string) });
 //  done({ string : input.string, integer : parseInt(input.string) });
 // });
 
-// thread
-//  .send({ string : '123' })
-//  // The handlers come here: (none of them is mandatory) 
-//  .on('message', function(response) {
-//    console.log('123 * 2 = ', response.integer * 2);
-//    thread.kill();
-//  })
-//  .on('error', function(error) {
-//    console.error('Worker errored:', error);
-//  })
-//  .on('exit', function() {
-//    console.log('Worker has been terminated.');
-//  });
-// const cluster = require('cluster');
-// const http = require('http');
-// const numCPUs = require('os').cpus().length;
-
-// if (cluster.isMaster) {
-//   console.log(`Master ${process.pid} is running`);
-
-// //   // Fork workers.
-// //   for (let i = 0; i < numCPUs; i++) {
-// //     cluster.fork();
-// //   }
 
 // //   cluster.on('exit', (worker, code, signal) => {
 // //     console.log(`worker ${worker.process.pid} died`);
@@ -131,13 +107,28 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
       console.log("golpeo");
-      
       console.log(data);
+      console.log("findBullet");
+      console.log(findBullet(data.id,data.room));
+     if(findBullet(data.id,data.room)!=null) {
+      
+      findBullet(data.id,data.room).destroy=true;  
+
+     }
+      console.log(bulletsMatch);
     //createBullet(findPlayer(socket.id));
     //sleep(2000);
   })
 });
 
+function findBullet(socketID,i){
+
+  for(var x=0;x<bulletsMatch[i].length;x++)
+  {
+    if(bulletsMatch[i][x].id==socketID)
+      return bulletsMatch[i][x];
+  }
+}
 setInterval( function() { confirmBullet(); }, 500);
 function confirmBullet(){
   //console.log(allPlayers2);
@@ -152,6 +143,8 @@ function confirmBullet(){
     }
   }
  }
+
+
 
 function sleep(miliseconds) {
   var currentTime = new Date().getTime();
@@ -169,15 +162,14 @@ function createBullet(player){
        bullet.rol = 0;
       
        bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-       console.log(bullet.id);
        bullet.x0 = player.posicionX+40*Math.cos(player.rotation-1.5);
        bullet.y0 = player.posicionY+40*Math.sin(player.rotation-1.5);
        bullet.x = bullet.x0;
        bullet.y = bullet.y0;
        bullet.rotation = player.rotation;
-      
+       bullet.destroy = false;
        bullet.room = player.room;
-       
+       bullet.destroy = false;
       break;
       case 1:
       bullet.speed = 40;
@@ -188,7 +180,7 @@ function createBullet(player){
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
       bullet.rotation = player.rotation;
-  
+      bullet.destroy = false;
       bullet.room = player.room;
     
       break;
@@ -200,10 +192,9 @@ function createBullet(player){
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
-      bullet.rotation = player.rotation;
-     
+      bullet.rotation = player.rotation;     
       bullet.room = player.room;
-    
+      bullet.destroy = false;
       break;
    } 
    if(bulletsMatch[player.room] ==undefined)
@@ -233,7 +224,6 @@ function movePlayer(socketID,data){
     findPlayer(socketID).posicionY-=4;
     break;
     case 'down':
-    console.log(findPlayer(socketID).posicionY);
     if(findPlayer(socketID).posicionY < 2900)
     findPlayer(socketID).posicionY+=4;
     break;
@@ -363,13 +353,11 @@ if(bulletsMatch[i]!=null)
  
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000))
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
      {
-       
+      console.log("entro");
        //console.log(element.room);
-       var posicion = bulletsMatch[i].indexOf(element);
-      
-       
+       var posicion = bulletsMatch[i].indexOf(element);    
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
       
@@ -385,9 +373,9 @@ if(bulletsMatch[i]!=null)
  
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000))
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
      {
-       
+      console.log("entro");
        //console.log(element.room);
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
@@ -406,13 +394,11 @@ if(bulletsMatch[i]!=null)
  
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000))
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
      {
        
-       //console.log(element.room);
+       console.log("entro");
        var posicion = bulletsMatch[i].indexOf(element);
-      
-       
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
      
