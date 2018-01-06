@@ -111,7 +111,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
         for(i=0;i<balasMatch.length;i++)
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
-            {console.log("pasoo");
+            {
                 socket.emit('bulletHit',balasMatch[i]);
             }
         }
@@ -119,8 +119,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
     }
      else{
          console.log("A");
-        console.log(equation[0].shapeA.body.parent);
-        console.log(equation[0].shapeA.body.parent.rotation);
+        
         for(i=0;i<balasMatch.length;i++)
         {
             

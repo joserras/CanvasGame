@@ -88,7 +88,22 @@ io.on('connection', function(socket) {
         });   
   // movimiento   
       socket.on('movement', function(data) {
-          movePlayer(socket.id,data);    
+          movePlayer(socket.id,data); 
+          
+          switch(data){
+            case 'up':
+            findPlayer(socket.id).up=true;
+            break;
+            case 'down':
+            findPlayer(socket.id).down=true;
+            break;
+            case 'right':
+            findPlayer(socket.id).right=true;
+            break;
+            case 'left':
+            findPlayer(socket.id).left=true;
+            break;
+          }   
       })
   //rotation
       socket.on('rotation', function(data) {
@@ -115,7 +130,7 @@ io.on('connection', function(socket) {
       findBullet(data.id,data.room).destroy=true;  
 
      }
-      console.log(bulletsMatch);
+     
     //createBullet(findPlayer(socket.id));
     //sleep(2000);
   })
@@ -131,7 +146,7 @@ function findBullet(socketID,i){
 }
 setInterval( function() { confirmBullet(); }, 500);
 function confirmBullet(){
-  //console.log(allPlayers2);
+  
   for(i=0;i<allPlayers2.length;i++)
   {
     
@@ -216,27 +231,30 @@ function createBullet(player){
 // }
 
 
-function movePlayer(socketID,data){
- switch (data){
-    case 'up':
+function movePlayer(i){
+  if(playersMatch[i]!=null){
+  playersMatch[i].forEach(element => {
+  
     
-    if(findPlayer(socketID).posicionY>100)
-    findPlayer(socketID).posicionY-=4;
-    break;
-    case 'down':
-    if(findPlayer(socketID).posicionY < 2900)
-    findPlayer(socketID).posicionY+=4;
-    break;
-    case 'right':
-    if(findPlayer(socketID).posicionX < 2876)
-    findPlayer(socketID).posicionX+=4;
-    break;
-    case 'left':
-    if(findPlayer(socketID).posicionX  > 100)
-    findPlayer(socketID).posicionX-=4;
-    break;
- }
-
+      if(element.up==true && element.posicionY>100){
+        element.posicionY-=4;
+        element.up=false;
+      }
+      if(element.down ==true && element.posicionY < 2900){
+        element.posicionY+=4;
+        element.down=false;
+      }
+      if(element.right==true && element.posicionX < 2876){
+        element.posicionX+=4;
+        element.right=false;
+      }
+      if(element.left==true && element.posicionX  > 100){
+        element.posicionX-=4;
+        element.left=false;
+      }
+     
+  });
+}
 }
 
 function rotatePlayer(socketID,data){
@@ -274,30 +292,32 @@ function deleteUser(id){
         playersMatch[i] = playersMatch[i].filter(Boolean);
 for(j=0;j<playersMatch[i].length;j++)
       {
+                
             switch(j){
               case 0:
-              playersMatch[i][j].rol = 0;
-              playersMatch[i][j].posicionX = 1300;
-              playersMatch[i][j].posicionY = 1500;
+                playersMatch[i][j].rol = 0;
+                playersMatch[i][j].posicionX = 1300;
+                playersMatch[i][j].posicionY = 1500;
+                
               break;
-          case 1:
-          playersMatch[i][j].rol = 1;
-          playersMatch[i][j].posicionX = 1600;
-          playersMatch[i][j].posicionY = 1500;
+              case 1:
+                playersMatch[i][j].rol = 1;
+                playersMatch[i][j].posicionX = 1600;
+                playersMatch[i][j].posicionY = 1500;
               break;
-          case 2:
-          playersMatch[i][j].rol = 2;
-          playersMatch[i][j].posicionX = 1900;
-          playersMatch[i][j].posicionY = 1500;
+              case 2:
+                playersMatch[i][j].rol = 2;
+                playersMatch[i][j].posicionX = 1900;
+                playersMatch[i][j].posicionY = 1500;
               break;
-          case 3:
-              player.rol = 0;
+              case 3:
+                player.rol = 0;
               break;
-          case 5:
-              player.rol = 1;
+              case 4:
+                player.rol = 1;
               break;
-          case 6:
-              player.rol = 2;
+              case 5:
+                player.rol = 2;
               break;
             }
           
@@ -351,12 +371,11 @@ if(bulletsMatch[i]!=null)
     var b = element.y-element.y0;
  
  
-   // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
+   
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
      {
-      console.log("entro");
-       //console.log(element.room);
+    
        var posicion = bulletsMatch[i].indexOf(element);    
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
@@ -375,7 +394,7 @@ if(bulletsMatch[i]!=null)
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
      {
-      console.log("entro");
+     
        //console.log(element.room);
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
@@ -397,7 +416,7 @@ if(bulletsMatch[i]!=null)
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
      {
        
-       console.log("entro");
+       
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
@@ -411,13 +430,13 @@ if(bulletsMatch[i]!=null)
 
 }
 var i;
-setInterval( function() { updatePlayers(); }, 1000/30 );
+setInterval( function() { updatePlayers(); }, 1000/60 );
 function updatePlayers(){
-
+  var lastUpdateTime = (new Date()).getTime();
 for(i=0; i<room;i++)
   {
     updateBullet(i);
-    
+    movePlayer(i);
     io.to(i).emit('updatePlayers',playersMatch[i]);
     io.to(i).emit('updateBullets',bulletsMatch[i]); 
 
@@ -435,8 +454,12 @@ function fillPlayer(socket){
     player.team = 1;
     //asignamos el  y posicion inicial
     
-
+      player.right = false;
+      player.left = false;
+      player.up = false;
+      player.down = false;
     switch(io.sockets.adapter.rooms[room].length) {
+      
       case 1:
           player.rol = 0;
           player.fire = false;
