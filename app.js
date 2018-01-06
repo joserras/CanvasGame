@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').Server(app);  
 var io = require('socket.io')(server);
-var MongoClient = require('mongodb').MongoClient;
+//var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mydb";
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
@@ -47,18 +47,18 @@ app.get('/game', function(req, res) {
   res.sendFile( __dirname + "/public/" + "game.html" );
 });
 //conexion a mongo y creaciond e collection
-MongoClient.connect(url, function(err, db) {
+// MongoClient.connect(url, function(err, db) {
   
-  if (err) throw err;
-  console.log("Database created!");
-  db.createCollection("usuarios", function(err, res) {
-    if (err) throw err;
-    console.log("Collection created!");
-    db.close();
-  });
+//   if (err) throw err;
+//   console.log("Database created!");
+//   db.createCollection("usuarios", function(err, res) {
+//     if (err) throw err;
+//     console.log("Collection created!");
+//     db.close();
+//   });
   
 
-});
+// });
 
 var room=0;
 var contador=0;
@@ -510,24 +510,24 @@ app.post('/login', function (req, res) {
   var myobj = { username: req.body.usuario, socketID: req.body.id };
   var query = { username: req.body.usuario };
   //CONEXION A MONGO
-MongoClient.connect(url, function(err, db) {
-  db.collection("usuarios").find(query).toArray(function(err, result) {
-    if (err) throw err; 
-    console.log(result.length);
-    if(result.length == 0)
-      {
-         db.collection("usuarios").insertOne(myobj, function(err, res) {
-            if (err) throw err;
-            console.log("1 document inserted");
-            db.close();
-        });
-      }
-      else{console.log("usuario escogido");}
-    db.close();
-  });
+// MongoClient.connect(url, function(err, db) {
+//   db.collection("usuarios").find(query).toArray(function(err, result) {
+//     if (err) throw err; 
+//     console.log(result.length);
+//     if(result.length == 0)
+//       {
+//          db.collection("usuarios").insertOne(myobj, function(err, res) {
+//             if (err) throw err;
+//             console.log("1 document inserted");
+//             db.close();
+//         });
+//       }
+//       else{console.log("usuario escogido");}
+//     db.close();
+//   });
 
 
-});
+// });
 
 	res.send(req.body);
  
