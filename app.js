@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // // } else {
 //   // Workers can share any TCP connection
 //   // In this case it is an HTTP server
-  server.listen(8080, function() {  
+  server.listen(process.env.PORT || 5000, function() {  
       console.log("Servidor corriendo en http://localhost:8080");
      }); 
 
