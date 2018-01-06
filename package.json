@@ -1,7 +1,7 @@
 {
-  "name": "game.io",
+  "name": "battleship",
   "version": "1.0.0",
-  "description": "",
+  "description": "canvas game",
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.17.2",
@@ -18,5 +18,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joserras/CanvasGame.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joserras/CanvasGame/issues"
+  },
+  "homepage": "https://github.com/joserras/CanvasGame#readme"
 }

@@ -432,7 +432,7 @@ if(bulletsMatch[i]!=null)
 var i;
 setInterval( function() { updatePlayers(); }, 1000/60 );
 function updatePlayers(){
-  var lastUpdateTime = (new Date()).getTime();
+  
 for(i=0; i<room;i++)
   {
     updateBullet(i);
