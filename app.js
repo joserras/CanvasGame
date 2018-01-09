@@ -9,6 +9,7 @@ var multer = require('multer'); // v1.0.5
 var upload = multer(); // for parsing multipart/form-data
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+var SAT = require('sat');
 // const spawn = require('threads').spawn;
 // const spawn1 = spawn.spawn;
 // const thread = spawn(function(input, done) {
@@ -122,14 +123,24 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
       console.log("golpeo");
-      console.log(data);
-      console.log("findBullet");
-      console.log(findBullet(data.id,data.room));
-     if(findBullet(data.id,data.room)!=null) {
-      
-      findBullet(data.id,data.room).destroy=true;  
-
+      console.log(data.bullet.id);
+     var bullet = findBullet(data.bullet.id,data.bullet.room);
+     if(bullet!=null) {
+       console.log(data.ship);
+      var player = findPlayer(data.ship);
+      player.collision.pos.x = player.posicionX;
+      player.collision.pos.y = player.posicionY;
+      player.collision.r = 100;
+      bullet.collision.pos.x = bullet.x;
+      bullet.collision.pos.y = bullet.y;
+      bullet.collision.r = 8;
+      var response = new SAT.Response();
+      bullet.destroy = true;  
+      console.log(SAT.testCircleCircle(player.collision, bullet.collision, response));
+      console.log(findBullet(data.bullet.id,data.bullet.room));
+      console.log(findPlayer(data.ship));
      }
+    
      
     //createBullet(findPlayer(socket.id));
     //sleep(2000);
@@ -175,10 +186,10 @@ function createBullet(player){
       case 0:
        bullet.speed = 20;
        bullet.rol = 0;
-      
        bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
        bullet.x0 = player.posicionX+40*Math.cos(player.rotation-1.5);
        bullet.y0 = player.posicionY+40*Math.sin(player.rotation-1.5);
+       bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
        bullet.x = bullet.x0;
        bullet.y = bullet.y0;
        bullet.rotation = player.rotation;
@@ -192,6 +203,7 @@ function createBullet(player){
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
       bullet.rotation = player.rotation;
@@ -205,6 +217,7 @@ function createBullet(player){
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
       bullet.rotation = player.rotation;     
@@ -409,8 +422,8 @@ if(bulletsMatch[i]!=null)
 
     var a = element.x-element.x0;
     var b = element.y-element.y0;
- 
- 
+ console.log(element.x);
+ console.log(element.y);
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
@@ -458,6 +471,7 @@ function fillPlayer(socket){
       player.left = false;
       player.up = false;
       player.down = false;
+      player.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 50));
     switch(io.sockets.adapter.rooms[room].length) {
       
       case 1:

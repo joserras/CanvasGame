@@ -72,6 +72,9 @@ main.prototype = {
 				ship.body.loadPolygon("scaleRound", "shipRound");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
+				ship.body.id = player.id;
+				ship2.body.id = players[1].id;
+				ship3.body.id = players[2].id;
 
 			
 			}
@@ -88,6 +91,9 @@ main.prototype = {
 				ship.body.loadPolygon("scaleCone", "shipCone");
 				ship2.body.loadPolygon("scaleRound", "shipRound");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
+				ship.body.idPlayer = player.id;
+				ship2.body.idPlayer = players[0].id;
+				ship3.body.idPlayer = players[2].id;
 			
 			}
 			
@@ -95,15 +101,22 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
 				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 				ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
+				
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
+				
 				ship.body.loadPolygon("scaleSpear", "shipSpear");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleRound", "shipRound");
+				ship.body.idPlayer = player.id;
+				ship2.body.idPlayer = players[1].id;
+				ship3.body.idPlayer = players[0].id;
+				console.log(players[1].id);
+				console.log(ship2.body.id);
 		    }
 			
 			ship.body.setZeroDamping();
@@ -199,6 +212,7 @@ main.prototype = {
 		game.world.sendToBack(tileSprite);
 		window.graphics = graphics;
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+		console.log(ship2.body);
 	},
 
 	update: function() {

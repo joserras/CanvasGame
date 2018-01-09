@@ -42,7 +42,7 @@ function myTimer() {
 //http://battleshipa.herokuapp.com/
 //Envía el nombre de usuario y su socket.id al servidor
 function login(data){
-    socket = io.connect('http://battleshipa.herokuapp.com', { 'forceNew': true });
+    socket = io.connect('http://localhost:5000', { 'forceNew': true });
     var usuario = data.nickname.value;
     loading();
     activateSockets();
@@ -68,7 +68,7 @@ function activateSockets(){
     socket.on('startGame', function(data) {
         findPlayer(data,socket.id);
        players = data;
-       console.log(players);
+       
         activateGame();      
     })
     socket.on('updatePlayers', function(data) {
@@ -100,32 +100,39 @@ function activateSockets(){
 
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
- console.log(balasSpriteMatch);
+
  
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){
-    console.log("colision2");
+    
     
     if(equation[0].shapeB.body.parent.miBala!=null){
-        console.log("B");
-        console.log(equation[0].shapeB.body.parent);
+       
         for(i=0;i<balasMatch.length;i++)
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
             {
-                socket.emit('bulletHit',balasMatch[i]);
+                console.log(body);
+                console.log(equation);
+                var bullet = game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
+                if(body!=null)
+                socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
             }
         }
     
     }
      else{
-         console.log("A");
+        
         
         for(i=0;i<balasMatch.length;i++)
         {
             
             if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
-            {console.log("pasoo");
-                socket.emit('bulletHit',balasMatch[i]);
+            {  
+               
+               
+                console.log(body.idPlayer);
+                if(body!=null)
+                socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
             }
         }
      
