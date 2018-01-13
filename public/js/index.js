@@ -12,10 +12,10 @@ var balasMatch;
 //weapons
 var weapon;
 var fireButton;
+var game = null;
+//make a phaser game
 
-
-
-
+var startTime;
 
 
 //rellenamos los consejos
@@ -66,14 +66,14 @@ var balasSpriteMatch=[];
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        findPlayer(data,socket.id);
-       players = data;
-       
-        activateGame();      
+       findPlayer(data,socket.id);
+       players = data;   
+       activateGame();      
     })
     socket.on('updatePlayers', function(data) {
         findPlayer(data,socket.id);
         players = data;
+       
        // console.log(player);
             
     })
@@ -85,8 +85,7 @@ function activateSockets(){
                     balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
                     game.physics.p2.enable(balasSpriteMatch[i], true);                 
                     balasSpriteMatch[i].body.setCircle(6);
-                    balasSpriteMatch[i].body.miBala = balasMatch[i].id; 
-                    
+                    balasSpriteMatch[i].body.miBala = balasMatch[i].id;                
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
                     balasSpriteMatch[i].body.onEndContact.add(blockHitEndBullet, this);     
                     
@@ -94,6 +93,17 @@ function activateSockets(){
             }
       
         //console.log(datosbalas);
+            
+    })
+    socket.on('latency', function(data) {
+        console.log("latency");
+        if(startTime !=null){
+            console.log(Date.now());
+            latency = Date.now() - startTime;
+            console.log("-----");
+            console.log(latency);
+        }
+       // console.log(player);
             
     })
 }
@@ -111,11 +121,11 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
             {
-                console.log(body);
-                console.log(equation);
-                var bullet = game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
+               
+                
                 if(body!=null)
                 socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+              
             }
         }
     
@@ -130,9 +140,10 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
             {  
                
                
-                console.log(body.idPlayer);
+             
                 if(body!=null)
                 socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+               
             }
         }
      

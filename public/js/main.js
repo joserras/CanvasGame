@@ -4,11 +4,10 @@
 canvas_width = window.innerWidth * window.devicePixelRatio; 
 canvas_height = window.innerHeight * window.devicePixelRatio;
 
-//make a phaser game
-game = new Phaser.Game(canvas_width,canvas_height, Phaser.CANVAS,
- 'gameDiv');
- var gameState = new Phaser.Stage(game);
+ game = new Phaser.Game(canvas_width,canvas_height, Phaser.CANVAS,
+    'gameDiv');
 
+ var gameState = new Phaser.Stage(game);
 
 
 var gameProperties = { 
@@ -28,9 +27,9 @@ var main = function(game){
 // add the 
 main.prototype = {
 	preload: function() {
-		 game.load.image("background", "sprites/space.png");
-		 game.load.image("shipCircle", "sprites/descarga.png");
-		 gameState.stage.disableVisibilityChange = true;
+					game.load.image("background", "sprites/space.png");
+					game.load.image("shipCircle", "sprites/descarga.png");
+		 			gameState.stage.disableVisibilityChange = true;
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
 			
 					game.load.atlasJSONHash('ship1', 'sprites/shipCone.png', 'sprites/shipCone.json');
@@ -43,7 +42,7 @@ main.prototype = {
 					game.load.physics("shipRoundCollide", "sprites/shipRoundCollide.json");
 				    game.load.physics("shipSpearCollide", "sprites/shipSpearCollide.json");
 					game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-					
+					game.load.spritesheet('veggies', 'sprites/veggie.png', 64, 64);
 		
     },
 	//this function is fired once when we load the game
@@ -72,9 +71,9 @@ main.prototype = {
 				ship.body.loadPolygon("scaleRound", "shipRound");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
-				ship.body.id = player.id;
-				ship2.body.id = players[1].id;
-				ship3.body.id = players[2].id;
+				ship.body.idPlayer = player.id;
+				ship2.body.idPlayer = players[1].id;
+				ship3.body.idPlayer = players[2].id;
 
 			
 			}
@@ -115,8 +114,7 @@ main.prototype = {
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[0].id;
-				console.log(players[1].id);
-				console.log(ship2.body.id);
+				
 		    }
 			
 			ship.body.setZeroDamping();
@@ -202,7 +200,9 @@ main.prototype = {
 
 		cursors = game.input.keyboard.createCursorKeys();
 		key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-		key1.onDown.add(addPhaserDude, this);
+		key1.onDown.add(shotOne, this);
+		key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+		key2.onDown.add(shotTwo, this);
 		ship.body.onBeginContact.add(blockHit, this);
 		ship.body.onEndContact.add(blockHitEnd, this);
 		ship.body.allowSleep = false;
@@ -213,6 +213,22 @@ main.prototype = {
 		window.graphics = graphics;
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 		console.log(ship2.body);
+
+		// veggies = game.add.group();
+		// veggies.enableBody = true;
+		// veggies.physicsBodyType = Phaser.Physics.P2JS;
+	
+		// var vegFrames = [ 1, 3, 4, 8 ];
+	
+		// for (var i = 0; i < 25; i++)
+		// {
+		// 	var veg = veggies.create(game.world.randomX, game.world.randomY, 'veggies', game.rnd.pick(vegFrames));
+		// 	veg.body.setCircle(26);
+		// 	veg.body.kinematic=true;
+			
+		// }
+
+	
 	},
 
 	update: function() {
@@ -220,7 +236,18 @@ main.prototype = {
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();
+		ship.body.setZeroDamping();
+		ship.body.setZeroForce();
+		ship.body.setZeroRotation();
+		ship2.body.setZeroDamping();
+		ship2.body.setZeroForce();
+		ship2.body.setZeroRotation();
+		ship3.body.setZeroDamping();
+		ship3.body.setZeroForce();
+		ship3.body.setZeroRotation();
 		
+
+		//MOVIMIENTO DE MINIMAP
 		if(game.camera.width>1400){
 			shipCircle.x = game.camera.x+(game.camera.width/1.27)+100+(ship.body.x/14.38)-5;
 			shipCircle.y = game.camera.y+(game.camera.height/1.808)+100+(ship.body.y/14.5);
@@ -247,6 +274,7 @@ main.prototype = {
 			}else{shipCircle3.alpha=0;}
 		}
 		
+		//MOVIMIENTOD E LAS BALAS
 		 if(balasSpriteMatch!=null)
 		 for(i=0;i<balasSpriteMatch.length;i++)
 		 {
@@ -266,7 +294,7 @@ main.prototype = {
 			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);
 			
 			if(ship.body.x >100 && collision ==false)
-			 {
+			 { startTime = Date.now();
 				//ship.body.x -=4;	
 				socket.emit('movement', 'left');
 			 }
@@ -276,6 +304,8 @@ main.prototype = {
 			if(ship.body.x < 2876 && collision ==false)
 			{
 				//ship.body.x +=4;
+				startTime = Date.now();
+				console.log(startTime);
 				socket.emit('movement', 'right');
 			}
 		}
@@ -283,7 +313,7 @@ main.prototype = {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
 		{
 			if(ship.body.y >100 && collision ==false)
-			{
+			{ startTime = Date.now();
 				//ship.body.y -=4;
 				socket.emit('movement', 'up');
 			}
@@ -292,7 +322,9 @@ main.prototype = {
 		{
 			
 			if(ship.body.y < 2900 && collision ==false)
-			{
+			{ startTime = Date.now();
+				
+				
 				//ship.body.y +=4;
 				socket.emit('movement', 'down');
 			}
@@ -304,20 +336,28 @@ main.prototype = {
 			socket.emit('rotation', ship.rotation);
 		};
 
-		// if (game.input.keyboard.onDown(Phaser.Keyboard.SPACEBAR))
-		// {	console.log("fire");
-		// 	//weapon.fire();
-		// 	socket.emit('fireBullet');
-			
-		// }
+	
 		  //fire in here}, this);
 		//Actualizacion de enemigos
 	
 			if(player.rol==0){
 				if((players[0]!=null))
 				{
+					
+					// console.log(game.time.now-game.time.prevTime);
+					// console.log("game.time.now-game.time.prevTime");
+
+					
+					// console.log(players[0].posicionX);
+				
 					ship.body.x = players[0].posicionX;
 					ship.body.y = players[0].posicionY;
+					//if(24<players[0].posicionX-ship.body.x){
+					//tween = game.add.tween(ship.body).to( { x: players[0].posicionX, y: players[0].posicionY }, 100, "Sine.easeInOut");
+					//tween.interpolation(Phaser.Math.bezierInterpolation);
+					//tween.start();
+					
+					//tween.onLoop.add(changeMethod, this);
 				}
 				else{ship.body.x=-200;}
 					if(players[1] !=null)
@@ -340,8 +380,8 @@ main.prototype = {
 			}
 
 			
-			if(player.rol==1){
-				if((players[1]!=null))
+			if(player.rol == 1){
+				if(players[1]!= null)
 				{
 					ship.body.x = players[1].posicionX;
 					ship.body.y = players[1].posicionY;
@@ -396,16 +436,19 @@ main.prototype = {
 }
 
 
-
 // this function is fired when we connect
 function onsocketConnected ()
 {
 	console.log("connected to server"); 
 	
 }
-function addPhaserDude () {
+function shotOne () {
 	socket.emit('fireBullet');
 	console.log(balasMatch);
+}
+function shotTwo () {
+	console.log("special");
+	socket.emit('secondSkill');	
 }
 function blockHit (body, bodyB, shapeA, shapeB, equation) {	
 console.log("hit");
@@ -413,6 +456,7 @@ console.log("hit");
 	}
 
 	function blockHitEnd (body, bodyB, shapeA, shapeB, equation) {
+		console.log("hitEnd");
 		collision = false;	
 	}
 

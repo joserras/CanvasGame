@@ -10,6 +10,7 @@ var upload = multer(); // for parsing multipart/form-data
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 var SAT = require('sat');
+var clockit = require('clockit');
 // const spawn = require('threads').spawn;
 // const spawn1 = spawn.spawn;
 // const thread = spawn(function(input, done) {
@@ -104,7 +105,10 @@ io.on('connection', function(socket) {
             case 'left':
             findPlayer(socket.id).left=true;
             break;
-          }   
+          }  
+          
+        
+          io.to(findPlayer(socket.id).room).emit('latency', 'data');
       })
   //rotation
       socket.on('rotation', function(data) {
@@ -119,26 +123,80 @@ io.on('connection', function(socket) {
      //createBullet(findPlayer(socket.id));
      //sleep(2000);
   })
+  socket.on('secondSkill', function() {
+    console.log("special");
+    var player = findPlayer(socket.id);
+    
+    if(player.special == false){
+      player.clock = clockit.start();
+      console.log(player);
+    }
+    player.special=true;
+    if(player!=null)
+    if(player.clock!=null){
+     
+    console.log(player.clock.ms);
+    }
+
+})
     socket.on('bulletHit', function(data) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
       console.log("golpeo");
-      console.log(data.bullet.id);
+      
      var bullet = findBullet(data.bullet.id,data.bullet.room);
-     if(bullet!=null) {
-       console.log(data.ship);
+    
+     if(bullet!=null && bullet.destroy ==false) {
+       
       var player = findPlayer(data.ship);
-      player.collision.pos.x = player.posicionX;
-      player.collision.pos.y = player.posicionY;
-      player.collision.r = 100;
-      bullet.collision.pos.x = bullet.x;
-      bullet.collision.pos.y = bullet.y;
-      bullet.collision.r = 8;
-      var response = new SAT.Response();
-      bullet.destroy = true;  
-      console.log(SAT.testCircleCircle(player.collision, bullet.collision, response));
-      console.log(findBullet(data.bullet.id,data.bullet.room));
-      console.log(findPlayer(data.ship));
+      
+      if(player !=null){
+       
+        player.collision.pos.x = player.posicionX;
+        player.collision.pos.y = player.posicionY;
+        player.collision.r = 80;
+        bullet.collision.pos.x = bullet.x;
+        bullet.collision.pos.y = bullet.y;
+        bullet.collision.r = 8;
+        var response = new SAT.Response();
+        collided = SAT.testCircleCircle(player.collision, bullet.collision, response);
+        bullet.destroy = collided; 
+        
+        if(collided)
+        {
+          player.life -= bullet.damage;
+          console.log(player.rol);
+          console.log(player.posicionX);
+          if(player.life <=0){
+              switch(player.rol){
+                case 0:
+                player.posicionX = 1300;
+                player.posicionY = 2885;
+                player.life = 200;
+                case 1:
+                player.posicionX = 1500;
+                player.posicionY = 2885;
+                player.life = 100;
+                case 2:
+                player.posicionX = 1700;
+                player.posicionY = 2885;
+                player.life = 70;
+                case 3:
+
+                case 4:
+
+                case 5:
+
+              }
+          }
+          
+
+        }
+        
+
+        
+      }
+      
      }
     
      
@@ -184,6 +242,7 @@ function createBullet(player){
     switch(player.rol)
    {
       case 0:
+       bullet.damage = 10;
        bullet.speed = 20;
        bullet.rol = 0;
        bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -195,9 +254,10 @@ function createBullet(player){
        bullet.rotation = player.rotation;
        bullet.destroy = false;
        bullet.room = player.room;
-       bullet.destroy = false;
+       
       break;
       case 1:
+      bullet.damage = 5;
       bullet.speed = 40;
       bullet.rol = 1;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -212,6 +272,7 @@ function createBullet(player){
     
       break;
       case 2:
+      bullet.damage = 3;
       bullet.speed = 40;
       bullet.rol = 2;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
@@ -392,7 +453,7 @@ if(bulletsMatch[i]!=null)
        var posicion = bulletsMatch[i].indexOf(element);    
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
-      
+       
  
      }
     case 1:
@@ -422,8 +483,7 @@ if(bulletsMatch[i]!=null)
 
     var a = element.x-element.x0;
     var b = element.y-element.y0;
- console.log(element.x);
- console.log(element.y);
+
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
@@ -452,21 +512,18 @@ for(i=0; i<room;i++)
     movePlayer(i);
     io.to(i).emit('updatePlayers',playersMatch[i]);
     io.to(i).emit('updateBullets',bulletsMatch[i]); 
-
   }
 }
 
 function fillPlayer(socket){
   var player = new Object();
   //asignamos como id, nuestro id socket
-  player.id=socket.id;
-  //Asignamos el equipo ES POSIBLE QUE SE PUEDA ELIMINAR
- if(io.sockets.adapter.rooms[room].length>=1 && io.sockets.adapter.rooms[room].length<=3)
-    player.team = 0;
- if(io.sockets.adapter.rooms[room].length>=4 && io.sockets.adapter.rooms[room].length<=6)
-    player.team = 1;
+      player.id=socket.id;
+ 
+
     //asignamos el  y posicion inicial
-    
+      player.special = false;
+      player.clock = null;
       player.right = false;
       player.left = false;
       player.up = false;
@@ -475,30 +532,39 @@ function fillPlayer(socket){
     switch(io.sockets.adapter.rooms[room].length) {
       
       case 1:
+          player.team = 0;
           player.rol = 0;
+          player.life = 200;
           player.fire = false;
           player.posicionX = 1300;
-          player.posicionY = 1500;
+          player.posicionY = 2885;
           break;
       case 2:
+          player.team = 0;
           player.rol = 1;
+          player.life = 100;
           player.fire = false;
-          player.posicionX = 1600;
-          player.posicionY = 1500;
+          player.posicionX = 1500;
+          player.posicionY = 2885;
           break;
       case 3:
+          player.team = 0;
           player.rol = 2;
+          player.life = 70;
           player.fire = false;
-          player.posicionX = 2900;
-          player.posicionY = 1500;
+          player.posicionX = 1700;
+          player.posicionY = 2885;
           break;
       case 4:
           player.rol = 0;
+          player.team = 1;
           break;
       case 5:
           player.rol = 1;
+          player.team = 1;
           break;
       case 6:
+          player.team = 1;
           player.rol = 2;
           break;
   };
