@@ -46,8 +46,18 @@ main.prototype = {
 					game.load.physics("shipConeCollide", "sprites/shipConeCollide.json");
 					game.load.physics("shipRoundCollide", "sprites/shipRoundCollide.json");
 				    game.load.physics("shipSpearCollide", "sprites/shipSpearCollide.json");
-					game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+
 					game.load.spritesheet('veggies', 'sprites/veggie.png', 64, 64);
+					//game.scale.scaleMode = Phaser.ScaleManager.RESIZE;
+					this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+					this.game.scale.setShowAll();
+					window.addEventListener('resize', function () { 
+						console.log("resize");
+						w = window.innerWidth * window.devicePixelRatio; 
+						h = window.innerHeight * window.devicePixelRatio; 
+						game.scale.setGameSize(w, h);
+						this.game.scale.refresh();});
+					this.game.scale.refresh();
 		
     },
 	//this function is fired once when we load the game
@@ -259,12 +269,15 @@ main.prototype = {
 		window.graphics = graphics;
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 		
-		timer = game.time.create(false);
-		if(totalTimer>0){
-			timer.loop(1000, updateCounter, this);
-			timer.start(); 
-			text.fixedToCamera = true; 
-		}
+		// timer = game.time.create(false);
+		// console.log(timer);
+		// if(totalTimer>0){
+		// 	timer.loop(1000, updateCounter, this);
+		// 	timer.start(); 
+		// 	text.fixedToCamera = true; 
+		// }
+
+
 		// veggies = game.add.group();
 		// veggies.enableBody = true;
 		// veggies.physicsBodyType = Phaser.Physics.P2JS;
@@ -278,6 +291,8 @@ main.prototype = {
 		// 	veg.body.kinematic=true;
 			
 		// }
+		console.log(game.camera.height);
+		console.log(game.camera.width);
 
 	},
 
@@ -530,6 +545,24 @@ console.log("hit");
 		console.log("hitEnd");
 		collision = false;	
 	}
+
+	var i = setInterval(function(){
+		totalTimer--;
+		text.setText('Empieza en: ' + totalTimer +'!');
+		if(totalTimer==0)
+		{
+			anim1.play(10, false);
+			anim2.play(10, false);
+			anim3.play(10, false);
+			anim4.play(10, false);
+			anim5.play(10, false);
+			anim6.play(10, false);
+			anim7.play(10, false);
+			anim8.play(10, false);
+			text.destroy();
+			setInterval(i);
+		}
+	}, 1000);
 
 function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale, moveX, moveY){
 	var newData = [];
