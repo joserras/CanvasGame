@@ -68,7 +68,9 @@ function activateSockets(){
     socket.on('startGame', function(data) {
        findPlayer(data,socket.id);
        players = data;   
-       activateGame();      
+       console.log(players);
+       activateGame();
+          
     })
     socket.on('updatePlayers', function(data) {
         findPlayer(data,socket.id);
@@ -96,12 +98,11 @@ function activateSockets(){
             
     })
     socket.on('latency', function(data) {
-        console.log("latency");
+     
         if(startTime !=null){
-            console.log(Date.now());
+           
             latency = Date.now() - startTime;
-            console.log("-----");
-            console.log(latency);
+           
         }
        // console.log(player);
             
@@ -155,17 +156,11 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
             
         }
     
-        function blockHitEndBullet (body, bodyB, shapeA, shapeB, equation) {
+function blockHitEndBullet (body, bodyB, shapeA, shapeB, equation) {
            	console.log("termino");
         }
 
-// function deleteUser(id){
-//     var posicion = players.indexOf(id);
-//     delete players[posicion];
-//     players = players.filter(Boolean);
 
-    
-// }
 //Me encuentro entre los distintos jugadores
    function findPlayer(data,socketID){
     data.forEach(function(element) {

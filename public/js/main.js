@@ -21,6 +21,9 @@ var gameProperties = {
 var collision = false;
 var rec;
 var circle;
+var totalTimer;
+var barrer;
+var anim;
 // this is the main game state
 var main = function(game){
 };
@@ -29,6 +32,8 @@ main.prototype = {
 	preload: function() {
 					game.load.image("background", "sprites/space.png");
 					game.load.image("shipCircle", "sprites/descarga.png");
+					game.load.image("barrera", "sprites/barrera.png");
+					game.load.atlasJSONHash('barrer', 'sprites/barrer.png', 'sprites/barrer.json');
 		 			gameState.stage.disableVisibilityChange = true;
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
 			
@@ -53,7 +58,8 @@ main.prototype = {
 		//automatically emit a “connect” message when the cleint connets.When 
 		//the client connects, call onsocketConnected.  
 		//socket.on("connect", onsocketConnected); 
-		
+		    text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center"}); 
+			text.anchor.setTo(0.5, 0.5);
 			game.physics.startSystem(Phaser.Physics.P2JS);
 			resizePolygon('shipConeCollide', 'scaleCone', 'shipCone', 0.25,254,240);
 			resizePolygon('shipRoundCollide', 'scaleRound', 'shipRound', 0.25,192,190);
@@ -154,15 +160,13 @@ main.prototype = {
 			//  And this starts the animation playing by using its key ("walk")
 			//  30 is the frame rate (30fps)
 			//  true means it will loop when it finishes
-		ship.animations.play('walk', 10, true);
-		ship2.animations.play('walk', 10, true);
-		ship3.animations.play('walk', 10, true);
+	
 		
 		//ship2.animations.play('walk', 10, true);
 		//ship2.animations.play('walk', 10, true);
 		//ship3.animations.play('walk', 10, true);
 		
-		
+		totalTimer = 10;
 
 		//true indica que se mueve con la rotacion
 		weapon.trackSprite(ship, 0, 0, true);
@@ -174,6 +178,48 @@ main.prototype = {
 		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 		
 		//game.add.image(game.world.centerX, game.world.centerY, 'background');
+		//CREANDO LA BASE
+		ship.animations.play('walk', 10, true);
+		ship2.animations.play('walk', 10, true);
+		ship3.animations.play('walk', 10, true);
+			ship.kinematic = true;
+			ship2.kinematic = true;
+			ship3.kinematic = true;
+		//barrer = game.add.sprite(1986, 2700, 'barrer');
+		//anim = barrer.animations.add('barrerWalk');
+
+		var barrera = game.add.image(1986, 2700, 'barrer');
+		anim1 = barrera.animations.add('barrerWalk');
+		var barrera2 = game.add.image(1986, 2435, 'barrer');
+		anim2 = barrera2.animations.add('barrerWalk');
+		var barrera3 = game.add.image(1666, 2400, 'barrer');
+		anim3 = barrera3.animations.add('barrerWalk');
+		var barrera4 = game.add.image(1426, 2400, 'barrer');
+		anim4 = barrera4.animations.add('barrerWalk');
+
+		var barrera5 = game.add.image(1186, 2400, 'barrer');
+		anim5 = barrera5.animations.add('barrerWalk');
+		var barrera6 = game.add.image(946, 2400, 'barrer');
+		anim6 = barrera6.animations.add('barrerWalk');
+
+		var barrera7 = game.add.image(960, 2700, 'barrer');
+		anim7 = barrera7.animations.add('barrerWalk');
+		var barrera8 = game.add.image(960, 2435, 'barrer');
+		anim8 = barrera8.animations.add('barrerWalk');
+
+		barrera.angle = 90;
+		barrera.width = 280;
+		barrera2.width = 300;
+		barrera2.angle = 90;
+		barrera7.angle = 90;
+		barrera8.angle = 90;
+		barrera7.width = 280;
+		barrera8.width = 300;
+		barrera3.width = 282;
+		barrera4.width = 282;
+		barrera5.width = 282;
+		barrera6.width = 282;
+	
 		//MiniMap
 		var graphics = game.add.graphics(100, 100);
 		graphics.beginFill(0x000000, 1);
@@ -212,8 +258,13 @@ main.prototype = {
 		game.world.sendToBack(tileSprite);
 		window.graphics = graphics;
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-		console.log(ship2.body);
-
+		
+		timer = game.time.create(false);
+		if(totalTimer>0){
+			timer.loop(1000, updateCounter, this);
+			timer.start(); 
+			text.fixedToCamera = true; 
+		}
 		// veggies = game.add.group();
 		// veggies.enableBody = true;
 		// veggies.physicsBodyType = Phaser.Physics.P2JS;
@@ -228,7 +279,6 @@ main.prototype = {
 			
 		// }
 
-	
 	},
 
 	update: function() {
@@ -305,7 +355,7 @@ main.prototype = {
 			{
 				//ship.body.x +=4;
 				startTime = Date.now();
-				console.log(startTime);
+				
 				socket.emit('movement', 'right');
 			}
 		}
@@ -313,7 +363,8 @@ main.prototype = {
 		if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
 		{
 			if(ship.body.y >100 && collision ==false)
-			{ startTime = Date.now();
+			{   
+				startTime = Date.now();
 				//ship.body.y -=4;
 				socket.emit('movement', 'up');
 			}
@@ -430,7 +481,10 @@ main.prototype = {
 				else{ship3.body.x=-200;}
 			}
 			//console.log(circle);
-			
+	   
+	   text.x = game.camera.view.centerX;
+	   text.y = game.camera.view.centerY;
+	   
 	},
 	
 }
@@ -449,6 +503,23 @@ function shotOne () {
 function shotTwo () {
 	console.log("special");
 	socket.emit('secondSkill');	
+}
+function updateCounter() {
+	
+	totalTimer--;
+	text.setText('Empieza en: ' + totalTimer +'!');
+	if(totalTimer==0)
+	{
+		anim1.play(10, false);
+		anim2.play(10, false);
+		anim3.play(10, false);
+		anim4.play(10, false);
+		anim5.play(10, false);
+		anim6.play(10, false);
+		anim7.play(10, false);
+		anim8.play(10, false);
+		text.destroy();
+	}
 }
 function blockHit (body, bodyB, shapeA, shapeB, equation) {	
 console.log("hit");

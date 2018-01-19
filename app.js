@@ -90,24 +90,62 @@ io.on('connection', function(socket) {
         });   
   // movimiento   
       socket.on('movement', function(data) {
-          movePlayer(socket.id,data); 
-          
+          //movePlayer(socket.id,data); 
+          var player = findPlayer(socket.id);
+         if(player !=null && player.inmuneClock.ms > 10000) 
           switch(data){
             case 'up':
-            findPlayer(socket.id).up=true;
+            player.up=true;
             break;
             case 'down':
-            findPlayer(socket.id).down=true;
+            player.down=true;
             break;
             case 'right':
-            findPlayer(socket.id).right=true;
+            player.right=true;
             break;
             case 'left':
-            findPlayer(socket.id).left=true;
+            player.left=true;
             break;
           }  
-          
-        
+          else if(player !=null && player.inmuneClock.ms <= 10000) 
+          {
+            
+            if(player.team==0)
+            switch(data){
+              case 'up':
+              if(player.posicionY > 2500)
+              player.up=true;
+              break;
+              case 'down':
+              player.down=true;
+              break;
+              case 'right':
+              if(player.posicionX < 1900)
+              player.right=true;
+              break;
+              case 'left':
+              if(player.posicionX > 1000)
+              player.left=true;
+              break;
+            }  
+            else
+            switch(data){
+              case 'up':
+              player.up=true;
+              break;
+              case 'down':
+              player.down=true;
+              break;
+              case 'right':
+              player.right=true;
+              break;
+              case 'left':
+              player.left=true;
+              break;
+
+            }
+        }
+        //mayor   que >
           io.to(findPlayer(socket.id).room).emit('latency', 'data');
       })
   //rotation
@@ -129,14 +167,10 @@ io.on('connection', function(socket) {
     
     if(player.special == false){
       player.clock = clockit.start();
-      console.log(player);
+      
     }
     player.special=true;
-    if(player!=null)
-    if(player.clock!=null){
-     
-    console.log(player.clock.ms);
-    }
+   
 
 })
     socket.on('bulletHit', function(data) {
@@ -165,22 +199,27 @@ io.on('connection', function(socket) {
         if(collided)
         {
           player.life -= bullet.damage;
-          console.log(player.rol);
-          console.log(player.posicionX);
+         
           if(player.life <=0){
               switch(player.rol){
                 case 0:
                 player.posicionX = 1300;
                 player.posicionY = 2885;
                 player.life = 200;
+                
+                break;
                 case 1:
                 player.posicionX = 1500;
                 player.posicionY = 2885;
                 player.life = 100;
+                
+                break;
                 case 2:
                 player.posicionX = 1700;
                 player.posicionY = 2885;
                 player.life = 70;
+                
+                break;
                 case 3:
 
                 case 4:
@@ -418,8 +457,17 @@ function joinInRoom(socket){
       var data;
       data=playersMatch[room];
       console.log("start game");
+
       allPlayers.push(playersMatch[room]);
+      playersMatch[room].forEach(element => {
+
+        element.inmuneClock = clockit.start();
+
+
+      });
       io.to(room).emit('startGame',data); 
+      
+
       room++;
      
       
