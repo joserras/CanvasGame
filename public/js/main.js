@@ -255,10 +255,6 @@ main.prototype = {
 		//shipCircle.fixedToCamera = true;
 
 		cursors = game.input.keyboard.createCursorKeys();
-		key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-		key1.onDown.add(shotOne, this);
-		key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
-		key2.onDown.add(shotTwo, this);
 		ship.body.onBeginContact.add(blockHit, this);
 		ship.body.onEndContact.add(blockHitEnd, this);
 		ship.body.allowSleep = false;
@@ -519,23 +515,7 @@ function shotTwo () {
 	console.log("special");
 	socket.emit('secondSkill');	
 }
-function updateCounter() {
-	
-	totalTimer--;
-	text.setText('Empieza en: ' + totalTimer +'!');
-	if(totalTimer==0)
-	{
-		anim1.play(10, false);
-		anim2.play(10, false);
-		anim3.play(10, false);
-		anim4.play(10, false);
-		anim5.play(10, false);
-		anim6.play(10, false);
-		anim7.play(10, false);
-		anim8.play(10, false);
-		text.destroy();
-	}
-}
+
 function blockHit (body, bodyB, shapeA, shapeB, equation) {	
 console.log("hit");
 		collision = true;
@@ -560,6 +540,10 @@ console.log("hit");
 			anim7.play(10, false);
 			anim8.play(10, false);
 			text.destroy();
+			key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
+			key1.onDown.add(shotOne, this);
+			key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+			key2.onDown.add(shotTwo, this);
 			setInterval(i);
 		}
 	}, 1000);

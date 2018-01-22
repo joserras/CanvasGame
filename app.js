@@ -92,21 +92,23 @@ io.on('connection', function(socket) {
       socket.on('movement', function(data) {
           //movePlayer(socket.id,data); 
           var player = findPlayer(socket.id);
-         if(player !=null && player.inmuneClock.ms > 10000) 
-          switch(data){
-            case 'up':
-            player.up=true;
-            break;
-            case 'down':
-            player.down=true;
-            break;
-            case 'right':
-            player.right=true;
-            break;
-            case 'left':
-            player.left=true;
-            break;
-          }  
+         if(player !=null && player.inmuneClock.ms > 10000) {
+           console.log( player.inmuneClock);
+            switch(data){
+              case 'up':
+              player.up=true;
+              break;
+              case 'down':
+              player.down=true;
+              break;
+              case 'right':
+              player.right=true;
+              break;
+              case 'left':
+              player.left=true;
+              break;
+            }  
+          }
           else if(player !=null && player.inmuneClock.ms <= 10000) 
           {
             
@@ -127,7 +129,7 @@ io.on('connection', function(socket) {
               if(player.posicionX > 1000)
               player.left=true;
               break;
-            }  
+            }  //Para el player.team 1
             else
             switch(data){
               case 'up':
@@ -156,8 +158,9 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
       
-      
-      findPlayer(socket.id).fire=true;
+      var player = findPlayer(socket.id);
+      if(player !=null && player.inmuneClock.ms > 10000)
+      player.fire=true;
      //createBullet(findPlayer(socket.id));
      //sleep(2000);
   })
@@ -166,8 +169,7 @@ io.on('connection', function(socket) {
     var player = findPlayer(socket.id);
     
     if(player.special == false){
-      player.clock = clockit.start();
-      
+      player.clock = clockit.start();     
     }
     player.special=true;
    
@@ -206,18 +208,21 @@ io.on('connection', function(socket) {
                 player.posicionX = 1300;
                 player.posicionY = 2885;
                 player.life = 200;
+                player.inmuneClock = clockit.start();
                 
                 break;
                 case 1:
                 player.posicionX = 1500;
                 player.posicionY = 2885;
                 player.life = 100;
+                player.inmuneClock = clockit.start();
                 
                 break;
                 case 2:
                 player.posicionX = 1700;
                 player.posicionY = 2885;
                 player.life = 70;
+                player.inmuneClock = clockit.start();
                 
                 break;
                 case 3:
