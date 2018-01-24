@@ -33,6 +33,10 @@ main.prototype = {
 					game.load.image("background", "sprites/space.png");
 					game.load.image("shipCircle", "sprites/descarga.png");
 					game.load.image("barrera", "sprites/barrera.png");
+					game.load.image("miniMap", "sprites/miniMap.jpg");
+					game.load.image("platformGray", "sprites/platformGray.png");
+					game.load.image("platformRed", "sprites/platformRed.png",);
+					game.load.image("platformBlue", "sprites/platformBlue.png");
 					game.load.atlasJSONHash('barrer', 'sprites/barrer.png', 'sprites/barrer.json');
 		 			gameState.stage.disableVisibilityChange = true;
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
@@ -52,18 +56,41 @@ main.prototype = {
 					this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
 					this.game.scale.setShowAll();
 					window.addEventListener('resize', function () { 
-						console.log("resize");
 						w = window.innerWidth * window.devicePixelRatio; 
 						h = window.innerHeight * window.devicePixelRatio; 
 						game.scale.setGameSize(w, h);
-						this.game.scale.refresh();});
+						this.game.scale.refresh();
+					});
 					this.game.scale.refresh();
+		  			game.time.advancedTiming = true;
 		
     },
 	//this function is fired once when we load the game
 	create: function () {
 		gameState.stage.disableVisibilityChange = true;
 		console.log("client started");
+
+
+		//PLATFORMS
+		platformLeft = game.add.sprite(1000,1500, 'platformGray');
+		platformRight = game.add.sprite(2000,2500 ,'platformGray');
+		platformLeft.scale.setTo(0.5, 0.5);
+		platformRight.scale.setTo(0.5, 0.5);
+		console.log(platformLeft);
+		console.log(platformRight);
+		//MINIMAP
+		rec = game.add.sprite(player.posicionX, player.posicionY, 'miniMap');
+		rec.width = 200;
+		rec.height = 200;
+
+		shipCircle = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
+		shipCircle.scale.setTo(0.01, 0.01);
+		shipCircle2 = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
+		shipCircle2.scale.setTo(0.01, 0.01);
+		shipCircle3 = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
+		shipCircle3.scale.setTo(0.01, 0.01);
+
+
 		//listen to the “connect” message from the server. The server 
 		//automatically emit a “connect” message when the cleint connets.When 
 		//the client connects, call onsocketConnected.  
@@ -192,9 +219,7 @@ main.prototype = {
 		ship.animations.play('walk', 10, true);
 		ship2.animations.play('walk', 10, true);
 		ship3.animations.play('walk', 10, true);
-			ship.kinematic = true;
-			ship2.kinematic = true;
-			ship3.kinematic = true;
+			
 		//barrer = game.add.sprite(1986, 2700, 'barrer');
 		//anim = barrer.animations.add('barrerWalk');
 
@@ -229,31 +254,13 @@ main.prototype = {
 		barrera4.width = 282;
 		barrera5.width = 282;
 		barrera6.width = 282;
-	
-		//MiniMap
-		var graphics = game.add.graphics(100, 100);
-		graphics.beginFill(0x000000, 1);
-		graphics.lineStyle(2, 0x0000FF, 1);
-		if(game.camera.width>1400)
-			rec =graphics.drawRect(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 200, 200);
-		else
-			rec =graphics.drawRect(game.camera.x+(game.camera.width/1.4), game.camera.y+(window.innerHeight/1.808), 200, 200);
-		
-		graphics.endFill();
-		graphics.fixedToCamera = true;
-		game.world.sendToBack(graphics);
-		// graphics.beginFill(0xff0000);
-		// circle = graphics.drawCircle((game.camera.x+1100)+(ship.body.x/14.38), (game.camera.y+450)+(ship.body.y/14.5), 10);
-		// graphics.endFill();+(ship.body.x/14.38)+(ship.body.y/14.5)
-		
-		shipCircle = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
-		shipCircle.scale.setTo(0.01, 0.01);
-		shipCircle2 = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
-		shipCircle2.scale.setTo(0.01, 0.01);
-		shipCircle3 = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
-		shipCircle3.scale.setTo(0.01, 0.01);
-		//shipCircle.fixedToCamera = true;
 
+	
+	
+	
+
+
+			//cursores mas contacto +background
 		cursors = game.input.keyboard.createCursorKeys();
 		ship.body.onBeginContact.add(blockHit, this);
 		ship.body.onEndContact.add(blockHitEnd, this);
@@ -262,7 +269,7 @@ main.prototype = {
 		ship3.body.allowSleep = false;
 		tileSprite = game.add.tileSprite(0, 0, 8000, 8000, 'background');
 		game.world.sendToBack(tileSprite);
-		window.graphics = graphics;
+		
 		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 		
 		// timer = game.time.create(false);
@@ -287,9 +294,13 @@ main.prototype = {
 		// 	veg.body.kinematic=true;
 			
 		// }
-		console.log(game.camera.height);
-		console.log(game.camera.width);
-
+		balls = game.add.physicsGroup(Phaser.Physics.P2JS);
+		var ball = balls.create(1986, 2700, 'veggies');
+		ball.body.setCircle(16);
+		ball.body.kinematic = true;
+	
+		console.log(rec);
+		
 	},
 
 	update: function() {
@@ -306,7 +317,8 @@ main.prototype = {
 		ship3.body.setZeroDamping();
 		ship3.body.setZeroForce();
 		ship3.body.setZeroRotation();
-		
+
+	
 
 		//MOVIMIENTO DE MINIMAP
 		if(game.camera.width>1400){
@@ -335,6 +347,16 @@ main.prototype = {
 			}else{shipCircle3.alpha=0;}
 		}
 		
+		if(game.camera.width>1400){
+			rec.x = game.camera.x+(game.camera.width/1.27)+100;
+			rec.y = game.camera.y+(game.camera.height/1.808)+102;
+			
+		}
+		else{
+			rec.x = game.camera.x+(game.camera.width/1.4)+100;
+			rec.y = game.camera.y+(game.camera.height/1.808)+102;
+		}
+
 		//MOVIMIENTOD E LAS BALAS
 		 if(balasSpriteMatch!=null)
 		 for(i=0;i<balasSpriteMatch.length;i++)
@@ -356,7 +378,7 @@ main.prototype = {
 			
 			if(ship.body.x >100 && collision ==false)
 			 { startTime = Date.now();
-				//ship.body.x -=4;	
+				//ship.body.moveLeft(game.time.fps*4);	
 				socket.emit('movement', 'left');
 			 }
 		}
@@ -366,7 +388,7 @@ main.prototype = {
 			{
 				//ship.body.x +=4;
 				startTime = Date.now();
-				
+				//ship.body.moveRight(game.time.fps*4);
 				socket.emit('movement', 'right');
 			}
 		}
@@ -377,6 +399,8 @@ main.prototype = {
 			{   
 				startTime = Date.now();
 				//ship.body.y -=4;
+				
+				//ship.body.moveUp(game.time.fps*4);
 				socket.emit('movement', 'up');
 			}
 		}
@@ -384,9 +408,10 @@ main.prototype = {
 		{
 			
 			if(ship.body.y < 2900 && collision ==false)
-			{ startTime = Date.now();
-				
-				
+			{ 
+				startTime = Date.now();
+				console.log(game.time.fps);
+				//ship.body.moveDown(game.time.fps*4);
 				//ship.body.y +=4;
 				socket.emit('movement', 'down');
 			}

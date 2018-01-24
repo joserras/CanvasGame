@@ -282,7 +282,7 @@ function sleep(miliseconds) {
 }
 
 function createBullet(player){
-  var bullet =new Object();
+  var bullet = new Object();
     switch(player.rol)
    {
       case 0:
@@ -330,7 +330,7 @@ function createBullet(player){
       bullet.destroy = false;
       break;
    } 
-   if(bulletsMatch[player.room] ==undefined)
+   if(bulletsMatch[player.room] == undefined)
    {
      
     bulletsMatch[player.room] = new Array();
