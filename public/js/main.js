@@ -20,6 +20,7 @@ var gameProperties = {
 //espera a colision
 var collision = false;
 var rec;
+var barraSalud;
 var circle;
 var totalTimer;
 var barrer;
@@ -37,6 +38,8 @@ main.prototype = {
 					game.load.image("platformGray", "sprites/platformGray.png");
 					game.load.image("platformRed", "sprites/platformRed.png",);
 					game.load.image("platformBlue", "sprites/platformBlue.png");
+					game.load.image("barraSalud", "sprites/salud.png");
+					game.load.image("barraHP", "sprites/hp.png");
 					game.load.atlasJSONHash('barrer', 'sprites/barrer.png', 'sprites/barrer.json');
 		 			gameState.stage.disableVisibilityChange = true;
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
@@ -67,21 +70,33 @@ main.prototype = {
     },
 	//this function is fired once when we load the game
 	create: function () {
+		//render on loss focus
 		gameState.stage.disableVisibilityChange = true;
+		//star physics
+		game.physics.startSystem(Phaser.Physics.P2JS);
 		console.log("client started");
 
-
+		game.physics.p2.setPostBroadphaseCallback(checkBullet, this);
 		//PLATFORMS
-		platformLeft = game.add.sprite(1000,1500, 'platformGray');
-		platformRight = game.add.sprite(2000,2500 ,'platformGray');
-		platformLeft.scale.setTo(0.5, 0.5);
-		platformRight.scale.setTo(0.5, 0.5);
-		console.log(platformLeft);
-		console.log(platformRight);
-		//MINIMAP
+		 platformLeft = game.add.sprite(350,560, 'platformGray');
+		 platformRight = game.add.sprite(1800,1500 ,'platformGray');
+		 platformLeft.scale.setTo(0.5, 0.5);
+		 platformRight.scale.setTo(0.5, 0.5);
+
+		
+
+		//MINIMAP and HUD
 		rec = game.add.sprite(player.posicionX, player.posicionY, 'miniMap');
 		rec.width = 200;
 		rec.height = 200;
+		barraSalud = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
+		barraSalud.width = 200;
+		barraSalud.height = 100;
+		barraSalud = game.add.sprite(player.posicionX, player.posicionY, 'barraHP');
+		barraHP.width = 195;
+		barraHP.height = 95;
+		console.log(barraHP);
+
 
 		shipCircle = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
 		shipCircle.scale.setTo(0.01, 0.01);
@@ -97,7 +112,7 @@ main.prototype = {
 		//socket.on("connect", onsocketConnected); 
 		    text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center"}); 
 			text.anchor.setTo(0.5, 0.5);
-			game.physics.startSystem(Phaser.Physics.P2JS);
+			
 			resizePolygon('shipConeCollide', 'scaleCone', 'shipCone', 0.25,254,240);
 			resizePolygon('shipRoundCollide', 'scaleRound', 'shipRound', 0.25,192,190);
 			resizePolygon('shipSpearCollide', 'scaleSpear', 'shipSpear', 0.25,190,190);
@@ -270,34 +285,8 @@ main.prototype = {
 		tileSprite = game.add.tileSprite(0, 0, 8000, 8000, 'background');
 		game.world.sendToBack(tileSprite);
 		
-		//fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-		
-		// timer = game.time.create(false);
-		// console.log(timer);
-		// if(totalTimer>0){
-		// 	timer.loop(1000, updateCounter, this);
-		// 	timer.start(); 
-		// 	text.fixedToCamera = true; 
-		// }
-
-
-		// veggies = game.add.group();
-		// veggies.enableBody = true;
-		// veggies.physicsBodyType = Phaser.Physics.P2JS;
 	
-		// var vegFrames = [ 1, 3, 4, 8 ];
 	
-		// for (var i = 0; i < 25; i++)
-		// {
-		// 	var veg = veggies.create(game.world.randomX, game.world.randomY, 'veggies', game.rnd.pick(vegFrames));
-		// 	veg.body.setCircle(26);
-		// 	veg.body.kinematic=true;
-			
-		// }
-		balls = game.add.physicsGroup(Phaser.Physics.P2JS);
-		var ball = balls.create(1986, 2700, 'veggies');
-		ball.body.setCircle(16);
-		ball.body.kinematic = true;
 	
 		console.log(rec);
 		
@@ -308,15 +297,7 @@ main.prototype = {
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();
-		ship.body.setZeroDamping();
-		ship.body.setZeroForce();
-		ship.body.setZeroRotation();
-		ship2.body.setZeroDamping();
-		ship2.body.setZeroForce();
-		ship2.body.setZeroRotation();
-		ship3.body.setZeroDamping();
-		ship3.body.setZeroForce();
-		ship3.body.setZeroRotation();
+		
 
 	
 
@@ -350,32 +331,44 @@ main.prototype = {
 		if(game.camera.width>1400){
 			rec.x = game.camera.x+(game.camera.width/1.27)+100;
 			rec.y = game.camera.y+(game.camera.height/1.808)+102;
-			
+			barraSalud.x = game.camera.x+(game.camera.width/1.27)-100;
+			barraSalud.y = game.camera.y+(game.camera.height/1.808)+230;
+			barraHP.x = game.camera.x+(game.camera.width/1.27)-100;
+			barraHP.y = game.camera.y+(game.camera.height/1.808)+230;
 		}
 		else{
 			rec.x = game.camera.x+(game.camera.width/1.4)+100;
 			rec.y = game.camera.y+(game.camera.height/1.808)+102;
+			barraHP.x = game.camera.x+(game.camera.width/1.4)-100;
+			barraHP.y = game.camera.y+(game.camera.height/1.808)+230;
 		}
 
 		//MOVIMIENTOD E LAS BALAS
 		 if(balasSpriteMatch!=null)
+		 if(balasMatch!=null)
 		 for(i=0;i<balasSpriteMatch.length;i++)
 		 {
 			 if(balasSpriteMatch[i]!=null && balasMatch[i]!=null){
 				 if(balasSpriteMatch[i].body!=null){
+					// console.log(i);
+					 //console.log(balasSpriteMatch[i]);
 					balasSpriteMatch[i].body.x = balasMatch[i].x;
 					balasSpriteMatch[i].body.y = balasMatch[i].y;
 				 }
 			 }
-			 else{
-				balasSpriteMatch[i].body.x =-20;
-				balasSpriteMatch[i].body.y =-20;
-			 }
+			  else if(balasSpriteMatch[i]!=null){	  
+				balasSpriteMatch[i].body.kinematic = true;
+			 	balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
+				balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
+				balasSpriteMatch[i].destroy();
+				console.log(balasSpriteMatch[i]);
+				balasSpriteMatch[i] =null;
+				 
+			  }
 		 }
 		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
 		{  
-			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);
-			
+			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);		
 			if(ship.body.x >100 && collision ==false)
 			 { startTime = Date.now();
 				//ship.body.moveLeft(game.time.fps*4);	
@@ -419,9 +412,9 @@ main.prototype = {
 		ship.body.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui
-		document.getElementById("gameDiv").onmousemove = function(event) {//console.log( game.time.elapsed / 1000);
+		
 			socket.emit('rotation', ship.rotation);
-		};
+		
 
 	
 		  //fire in here}, this);
@@ -542,13 +535,53 @@ function shotTwo () {
 }
 
 function blockHit (body, bodyB, shapeA, shapeB, equation) {	
-console.log("hit");
+if(body.platform==null)
 		collision = true;
 	}
 
 	function blockHitEnd (body, bodyB, shapeA, shapeB, equation) {
 		console.log("hitEnd");
 		collision = false;	
+	}
+	function platformHitRight(platform,ship)
+	{
+		console.log("hitP");
+
+	}
+	function platformHitEndRight(body, bodyB, shapeA, shapeB, equation)
+	{
+		console.log("hitEP");
+		
+	}
+	function platformHitLeft(body1,body2)
+	{
+		console.log("hitP");
+
+	}
+	function platformHitEndLeft(body, bodyB, shapeA, shapeB, equation)
+	{
+		console.log("hitEP");
+		
+	}
+	function checkPlatform(body1, body2) {
+
+		//  To explain - the post broadphase event has collected together all potential collision pairs in the world
+		//  It doesn't mean they WILL collide, just that they might do.
+	
+		//  This callback is sent each collision pair of bodies. It's up to you how you compare them.
+		//  If you return true then the pair will carry on into the narrow phase, potentially colliding.
+		//  If you return false they will be removed from the narrow phase check all together.
+	
+		//  In this simple example if one of the bodies is our space ship, 
+		//  and the other body is the green pepper sprite (frame ID 4) then we DON'T allow the collision to happen.
+		//  Usually you would use a collision mask for something this simple, but it demonstates use.
+	
+
+	if(body1.platform==true)
+	platformHitRight(body1,body2);
+	if(body1.platform==false)
+	platformHitLeft(body1,body2);
+
 	}
 
 	var i = setInterval(function(){
@@ -572,7 +605,31 @@ console.log("hit");
 			setInterval(i);
 		}
 	}, 1000);
+	function checkBullet(body1, body2) {
 
+		//  To explain - the post broadphase event has collected together all potential collision pairs in the world
+		//  It doesn't mean they WILL collide, just that they might do.
+	
+		//  This callback is sent each collision pair of bodies. It's up to you how you compare them.
+		//  If you return true then the pair will carry on into the narrow phase, potentially colliding.
+		//  If you return false they will be removed from the narrow phase check all together.
+	
+		//  In this simple example if one of the bodies is our space ship, 
+		//  and the other body is the green pepper sprite (frame ID 4) then we DON'T allow the collision to happen.
+		//  Usually you would use a collision mask for something this simple, but it demonstates use.
+
+	if(body1.miBala!=null && body2.miBala!=null)
+	{
+		console.log(body1);
+		console.log(body2);
+		console.log("chocan dos balas");
+		return false;
+	}
+	if(body1.idPlayer!=null)
+	 return true;
+
+	 return false;
+	}
 function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale, moveX, moveY){
 	var newData = [];
 	var data = this.game.cache.getPhysicsData(originalPhysicsKey, shapeKey);

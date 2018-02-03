@@ -83,13 +83,17 @@ function activateSockets(){
         balasMatch = data;
         if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
-            {   if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
+            {   
+                if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
                     balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
-                    game.physics.p2.enable(balasSpriteMatch[i], true);                 
+                    game.physics.p2.enable(balasSpriteMatch[i], true);
+                   //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
+                    balasSpriteMatch[i].checkWorldBounds = true;               
                     balasSpriteMatch[i].body.setCircle(6);
+                    balasSpriteMatch[i].body.static= true;
                     balasSpriteMatch[i].body.miBala = balasMatch[i].id;                
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
-                    balasSpriteMatch[i].body.onEndContact.add(blockHitEndBullet, this);     
+                        
                     
                 }
             }
@@ -98,11 +102,8 @@ function activateSockets(){
             
     })
     socket.on('latency', function(data) {
-     
-        if(startTime !=null){
-           
-            latency = Date.now() - startTime;
-           
+        if(startTime !=null){ 
+            latency = Date.now() - startTime; 
         }
        // console.log(player);
             
@@ -112,21 +113,19 @@ function activateSockets(){
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
 
- 
-if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){
-    
-    
-    if(equation[0].shapeB.body.parent.miBala!=null){
-       
+if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
+    if(equation[0].shapeB.body.parent.miBala!=null){  
         for(i=0;i<balasMatch.length;i++)
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
             {
                
                 
-                if(body!=null)
+                if(body!=null){        
+                balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
+				balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
                 socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
-              
+                }
             }
         }
     
@@ -135,16 +134,13 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
         
         
         for(i=0;i<balasMatch.length;i++)
-        {
-            
+        {         
             if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
-            {  
-               
-               
+            {                        
              
-                if(body!=null)
+                if(body!=null){           
                 socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
-               
+                }
             }
         }
      
@@ -156,9 +152,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
             
         }
     
-function blockHitEndBullet (body, bodyB, shapeA, shapeB, equation) {
-           	console.log("termino");
-        }
+
 
 
 //Me encuentro entre los distintos jugadores

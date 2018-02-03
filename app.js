@@ -48,19 +48,7 @@ app.use(express.static('public'));
 app.get('/game', function(req, res) {  
   res.sendFile( __dirname + "/public/" + "game.html" );
 });
-//conexion a mongo y creaciond e collection
-// MongoClient.connect(url, function(err, db) {
-  
-//   if (err) throw err;
-//   console.log("Database created!");
-//   db.createCollection("usuarios", function(err, res) {
-//     if (err) throw err;
-//     console.log("Collection created!");
-//     db.close();
-//   });
-  
 
-// });
 
 var room=0;
 var contador=0;
@@ -68,7 +56,10 @@ var playersMatch = new Array();
 var allPlayers = new Array();
 var allPlayers2 = new Array();
 var bulletsMatch = new Array();
-var allBullets = new Array();
+var platformLeft = new SAT.Circle(new SAT.Vector(740,850), 240);
+var platformRight = new SAT.Circle(new SAT.Vector(2190,1790), 240);
+var roomMatch = new Array();
+var baseDown = new SAT.Box(new SAT.Vector(950,2490), 1040, 590).toPolygon();
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -93,7 +84,7 @@ io.on('connection', function(socket) {
           //movePlayer(socket.id,data); 
           var player = findPlayer(socket.id);
          if(player !=null && player.inmuneClock.ms > 10000) {
-           console.log( player.inmuneClock);
+           
             switch(data){
               case 'up':
               player.up=true;
@@ -157,10 +148,12 @@ io.on('connection', function(socket) {
     socket.on('fireBullet', function() {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
-      
+      var response = new SAT.Response();
       var player = findPlayer(socket.id);
-      if(player !=null && player.inmuneClock.ms > 10000)
+      if(player !=null && SAT.testPolygonCircle(baseDown, player.collision, response)==false)
+      {
       player.fire=true;
+      }
      //createBullet(findPlayer(socket.id));
      //sleep(2000);
   })
@@ -178,8 +171,7 @@ io.on('connection', function(socket) {
     socket.on('bulletHit', function(data) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
-      console.log("golpeo");
-      
+     console.log("golpeo"); 
      var bullet = findBullet(data.bullet.id,data.bullet.room);
     
      if(bullet!=null && bullet.destroy ==false) {
@@ -307,7 +299,7 @@ function createBullet(player){
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
-      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
+      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
       bullet.rotation = player.rotation;
@@ -322,7 +314,7 @@ function createBullet(player){
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
-      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
+      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
       bullet.rotation = player.rotation;     
@@ -332,7 +324,6 @@ function createBullet(player){
    } 
    if(bulletsMatch[player.room] == undefined)
    {
-     
     bulletsMatch[player.room] = new Array();
    }
    
@@ -351,12 +342,10 @@ function createBullet(player){
 
 function movePlayer(i){
   if(playersMatch[i]!=null){
-  playersMatch[i].forEach(element => {
-  
-    
+  playersMatch[i].forEach(element => { 
       if(element.up==true && element.posicionY>100){
         element.posicionY-=4;
-        element.up=false;
+        element.up=false;  
       }
       if(element.down ==true && element.posicionY < 2900){
         element.posicionY+=4;
@@ -370,7 +359,155 @@ function movePlayer(i){
         element.posicionX-=4;
         element.left=false;
       }
+   element.collision.pos.x = element.posicionX;
+   element.collision.pos.y = element.posicionY;
+   var responseLeft = new SAT.Response();
+   var responseRight = new SAT.Response();
+   var rl = SAT.testCircleCircle(element.collision, platformLeft, responseLeft);  
+   var rr = SAT.testCircleCircle(element.collision, platformRight, responseRight); 
+     if(rl == true)
+     {
+      console.log("responseLeft");
+        if(element.team==0)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][0].r01 = true;
+            break;
+            case 1:
+            roomMatch[i][0].r02 = true;
+            break;
+            case 2:
+            roomMatch[i][0].r03 = true;
+            break;
+          }
+        }
+        if(element.team ==1)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][0].r11 = true;
+            break;
+            case 1:
+            roomMatch[i][0].r12 = true;
+            break;
+            case 2:
+            roomMatch[i][0].r13 = true;
+            break;
+          }
+        }
+      
+     }
+     else
+     {
+
+      if(element.team==0)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][0].r01 = false;
+            break;
+            case 1:
+            roomMatch[i][0].r02 = false;
+            break;
+            case 2:
+            roomMatch[i][0].r03 = false;
+            break;
+          }
+        }
+        if(element.team ==1)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][0].r11 = false;
+            break;
+            case 1:
+            roomMatch[i][0].r12 = false;
+            break;
+            case 2:
+            roomMatch[i][0].r13 = false;
+            break;
+          }
+        }
+      
+     }
+     if(rr == true)
+     {
+      console.log("responseRight");
+        if(element.team==0)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][1].r01 = true;
+            break;
+            case 1:
+            roomMatch[i][1].r02 = true;
+            break;
+            case 2:
+            roomMatch[i][1].r03 = true;
+            break;
+          }
+        }
+        if(element.team ==1)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][1].r11 = true;
+            break;
+            case 1:
+            roomMatch[i][1].r12 = true;
+            break;
+            case 2:
+            roomMatch[i][1].r13 = true;
+            break;
+          }
+        }
+      
+     }
+     else
+     {
+
+      if(element.team==0)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][1].r01 = false;
+
+            break;
+            case 1:
+            roomMatch[i][1].r02 = false;
+            break;
+            case 2:
+            roomMatch[i][1].r03 = false;
+            break;
+          }
+        }
+        if(element.team ==1)
+        {
+          switch(element.rol)
+          {
+            case 0:
+            roomMatch[i][1].r11 = false;
+            break;
+            case 1:
+            roomMatch[i][1].r12 = false;
+            break;
+            case 2:
+            roomMatch[i][1].r13 = false;
+            break;
+          }
+        }
+      
+     }
      
+
   });
 }
 }
@@ -401,46 +538,41 @@ function deleteUser(id){
      
   for(i=0; i<playersMatch.length;i++){
     for(x=0; x<playersMatch[i].length;x++){
-      
       if(playersMatch[i][x]!=null)
       if(playersMatch[i][x].id == String(id))
-      {
-        
+      {  
         delete playersMatch[i][x];
         playersMatch[i] = playersMatch[i].filter(Boolean);
-for(j=0;j<playersMatch[i].length;j++)
-      {
-                
-            switch(j){
-              case 0:
-                playersMatch[i][j].rol = 0;
-                playersMatch[i][j].posicionX = 1300;
-                playersMatch[i][j].posicionY = 1500;
-                
-              break;
-              case 1:
-                playersMatch[i][j].rol = 1;
-                playersMatch[i][j].posicionX = 1600;
-                playersMatch[i][j].posicionY = 1500;
-              break;
-              case 2:
-                playersMatch[i][j].rol = 2;
-                playersMatch[i][j].posicionX = 1900;
-                playersMatch[i][j].posicionY = 1500;
-              break;
-              case 3:
-                player.rol = 0;
-              break;
-              case 4:
-                player.rol = 1;
-              break;
-              case 5:
-                player.rol = 2;
-              break;
-            }
-          
-        }
-        
+        for(j=0;j<playersMatch[i].length;j++)
+              {      
+                switch(j){
+                  case 0:
+                    playersMatch[i][j].rol = 0;
+                    playersMatch[i][j].posicionX = 1300;
+                    playersMatch[i][j].posicionY = 1500;
+                    
+                  break;
+                  case 1:
+                    playersMatch[i][j].rol = 1;
+                    playersMatch[i][j].posicionX = 1600;
+                    playersMatch[i][j].posicionY = 1500;
+                  break;
+                  case 2:
+                    playersMatch[i][j].rol = 2;
+                    playersMatch[i][j].posicionX = 1900;
+                    playersMatch[i][j].posicionY = 1500;
+                  break;
+                  case 3:
+                    player.rol = 0;
+                  break;
+                  case 4:
+                    player.rol = 1;
+                  break;
+                  case 5:
+                    player.rol = 2;
+                  break;
+                  }
+                }  
       }
     }
   }
@@ -465,20 +597,44 @@ function joinInRoom(socket){
 
       allPlayers.push(playersMatch[room]);
       playersMatch[room].forEach(element => {
-
-        element.inmuneClock = clockit.start();
-
-
+        element.inmuneClock = clockit.start(); 
       });
+      var dataRoom = new Object();
+      dataRoom.r01 = false;   dataRoom.r11 = false;
+      dataRoom.r02 = false;   dataRoom.r12 = false;
+      dataRoom.r03 = false;   dataRoom.r13 = false;
+      dataRoom.team0 = 0;
+      dataRoom.team1 = 0;
+      dataRoom.time = clockit.start(); 
+      roomMatch[room] = new Array();
+      roomMatch[room].push(dataRoom);
+      roomMatch[room].push(dataRoom);
       io.to(room).emit('startGame',data); 
-      
-
-      room++;
-     
-      
+      room++;     
     } 
   }
   
+}
+
+function updateRoom(i)
+{
+ //si cualquier del equi 0 esta en la paltaforma left y ninguno del equipo 1
+  if(roomMatch[i][0].r01 == true || roomMatch[i][0].r02 == true || roomMatch[i][0].r03 == true)
+    if(roomMatch[i][0].r11 == false && roomMatch[i][0].r12 == false && roomMatch[i][0].r13 == false)
+       roomMatch[i][0].team0 +=0.0625;
+ //si cualquier del equi 0 esta en la paltaforma right y ninguno del equipo 1      
+  if(roomMatch[i][1].r01 == true || roomMatch[i][1].r02 == true || roomMatch[i][1].r03 == true)
+    if(roomMatch[i][1].r11 == false && roomMatch[i][1].r12 == false && roomMatch[i][1].r13 == false)
+       roomMatch[i][0].team0 +=0.0625;  
+  //si cualquier del equi 0 esta en la paltaforma left y ninguno del equipo 1
+  if(roomMatch[i][0].r11 == true || roomMatch[i][0].r12 == true || roomMatch[i][0].r13 == true)
+    if(roomMatch[i][0].r01 == false && roomMatch[i][0].r02 == false && roomMatch[i][0].r03 == false)
+      roomMatch[i][0].team1 +=0.0625;
+  //si cualquier del equi 0 esta en la paltaforma right y ninguno del equipo 1      
+  if(roomMatch[i][1].r11 == true || roomMatch[i][1].r12 == true || roomMatch[i][1].r13 == true)
+    if(roomMatch[i][1].r01 == false && roomMatch[i][1].r02 == false && roomMatch[i][1].r03 == false)
+      roomMatch[i][0].team1 +=0.0625;  
+ 
 }
 
 
@@ -537,6 +693,7 @@ if(bulletsMatch[i]!=null)
     var a = element.x-element.x0;
     var b = element.y-element.y0;
 
+
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
@@ -563,6 +720,7 @@ for(i=0; i<room;i++)
   {
     updateBullet(i);
     movePlayer(i);
+    updateRoom(i);
     io.to(i).emit('updatePlayers',playersMatch[i]);
     io.to(i).emit('updateBullets',bulletsMatch[i]); 
   }
@@ -581,7 +739,7 @@ function fillPlayer(socket){
       player.left = false;
       player.up = false;
       player.down = false;
-      player.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 50));
+  
     switch(io.sockets.adapter.rooms[room].length) {
       
       case 1:
@@ -591,6 +749,7 @@ function fillPlayer(socket){
           player.fire = false;
           player.posicionX = 1300;
           player.posicionY = 2885;
+          
           break;
       case 2:
           player.team = 0;
@@ -620,7 +779,9 @@ function fillPlayer(socket){
           player.team = 1;
           player.rol = 2;
           break;
+     
   };
+  player.collision = new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY, 50));
    //Asignamos velocidad
    player.speed = 20;
    player.room = room;
