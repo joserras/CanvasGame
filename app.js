@@ -127,12 +127,15 @@ io.on('connection', function(socket) {
               player.up=true;
               break;
               case 'down':
+              if(player.posicionY < 1000)
               player.down=true;
               break;
               case 'right':
+              if(player.posicionX < 1900)
               player.right=true;
               break;
               case 'left':
+              if(player.posicionX > 1000)
               player.left=true;
               break;
 
@@ -358,7 +361,34 @@ function movePlayer(i){
       if(element.left==true && element.posicionX  > 100){
         element.posicionX-=4;
         element.left=false;
+      }if(element.clock!=null)
+      
+      //ACTUALIZACION DE LOS ESPECIAL
+      switch(element.rol)
+      { case 0:
+        if(element.clock!=null)
+        if(element.clock.ms >10000)
+        { 
+          element.clock = null;
+          element.special = false;
+        }
+        case 1:
+        if(element.clock!=null)
+        if(element.clock.ms >10000)
+        { 
+          element.clock = null;
+          element.special = false;
+        }
+
+        case 2:
+        if(element.clock!=null)
+        if(element.clock.ms >10000)
+        { 
+          element.clock = null;
+          element.special = false;
+        }
       }
+      //COLISIONES CON LA BASE
    element.collision.pos.x = element.posicionX;
    element.collision.pos.y = element.posicionY;
    var responseLeft = new SAT.Response();
@@ -367,7 +397,8 @@ function movePlayer(i){
    var rr = SAT.testCircleCircle(element.collision, platformRight, responseRight); 
      if(rl == true)
      {
-      console.log("responseLeft");
+     
+      console.log("izq");
         if(element.team==0)
         {
           switch(element.rol)
@@ -398,11 +429,11 @@ function movePlayer(i){
             break;
           }
         }
-      
+      console.log(roomMatch[i][0]);
      }
-     else
+     else if(rl == false)
      {
-
+     
       if(element.team==0)
         {
           switch(element.rol)
@@ -437,7 +468,7 @@ function movePlayer(i){
      }
      if(rr == true)
      {
-      console.log("responseRight");
+      console.log("dere");
         if(element.team==0)
         {
           switch(element.rol)
@@ -470,7 +501,7 @@ function movePlayer(i){
         }
       
      }
-     else
+     else if(rr == false)
      {
 
       if(element.team==0)
@@ -603,12 +634,17 @@ function joinInRoom(socket){
       dataRoom.r01 = false;   dataRoom.r11 = false;
       dataRoom.r02 = false;   dataRoom.r12 = false;
       dataRoom.r03 = false;   dataRoom.r13 = false;
+      var dataRoom2 = new Object();
+      dataRoom2.r01 = false;   dataRoom2.r11 = false;
+      dataRoom2.r02 = false;   dataRoom2.r12 = false;
+      dataRoom2.r03 = false;   dataRoom2.r13 = false;
       dataRoom.team0 = 0;
-      dataRoom.team1 = 0;
+      dataRoom2.team1 = 0;
       dataRoom.time = clockit.start(); 
+      dataRoom2.time = clockit.start(); 
       roomMatch[room] = new Array();
       roomMatch[room].push(dataRoom);
-      roomMatch[room].push(dataRoom);
+      roomMatch[room].push(dataRoom2);
       io.to(room).emit('startGame',data); 
       room++;     
     } 
@@ -661,8 +697,7 @@ if(bulletsMatch[i]!=null)
     
        var posicion = bulletsMatch[i].indexOf(element);    
        delete bulletsMatch[i][posicion];
-       bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
-       
+       bulletsMatch[i] = bulletsMatch[i].filter(Boolean);      
  
      }
     case 1:
@@ -698,13 +733,9 @@ if(bulletsMatch[i]!=null)
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
      {
-       
-       
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
-     
- 
      }
 
     }
@@ -723,6 +754,7 @@ for(i=0; i<room;i++)
     updateRoom(i);
     io.to(i).emit('updatePlayers',playersMatch[i]);
     io.to(i).emit('updateBullets',bulletsMatch[i]); 
+    io.to(i).emit('updateRoom',roomMatch[i]); 
   }
 }
 
@@ -804,24 +836,24 @@ app.post('/login', function (req, res) {
   var myobj = { username: req.body.usuario, socketID: req.body.id };
   var query = { username: req.body.usuario };
   //CONEXION A MONGO
-// MongoClient.connect(url, function(err, db) {
-//   db.collection("usuarios").find(query).toArray(function(err, result) {
-//     if (err) throw err; 
-//     console.log(result.length);
-//     if(result.length == 0)
-//       {
-//          db.collection("usuarios").insertOne(myobj, function(err, res) {
-//             if (err) throw err;
-//             console.log("1 document inserted");
-//             db.close();
-//         });
-//       }
-//       else{console.log("usuario escogido");}
-//     db.close();
-//   });
+MongoClient.connect(url, function(err, db) {
+  db.collection("usuarios").find(query).toArray(function(err, result) {
+    if (err) throw err; 
+    console.log(result.length);
+    if(result.length == 0)
+      {
+         db.collection("usuarios").insertOne(myobj, function(err, res) {
+            if (err) throw err;
+            console.log("1 document inserted");
+            db.close();
+        });
+      }
+      else{console.log("usuario escogido");}
+    db.close();
+  });
 
 
-// });
+ });
 
 	res.send(req.body);
  

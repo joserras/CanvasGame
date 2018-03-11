@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link href="https://fonts.googleapis.com/css?family=Erica+One" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Alfa+Slab+One" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/phaser2.min.js"></script>
+    <script
+        src="http://code.jquery.com/jquery-3.2.1.min.js"
+        integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+        crossorigin="anonymous">
+    </script>
+    <input type="submit" id="form__buttonLogin"  value="Login">
+    <input type="submit" id="form__buttonRegistro"  value="Registro">
+    <title>BattleRoyal</title>
+</head>
+<body style="margin:0 auto;">
+    <div id="content" >
+        <div class="tittle">
+            <h1>BattleRoyal</h1>
+        </div>
+        <form class="form" onsubmit="login(this)" accept-charset="UTF-8"  method="POST" action="javascript:void(0);">
+            <p id="form__advises">Play in team with other 5 players!</p>           
+            <input type="text" name="nickname" id="form__input" required placeholder="Nickname" maxlength="12" minlength="4">
+            <input type="submit" id="form__button"  value="Play!">
+            <div class="sk-circle" style="display:none">
+                <div class="sk-circle1 sk-child"></div>
+                <div class="sk-circle2 sk-child"></div>
+                <div class="sk-circle3 sk-child"></div>
+                <div class="sk-circle4 sk-child"></div>
+                <div class="sk-circle5 sk-child"></div>
+                <div class="sk-circle6 sk-child"></div>
+                <div class="sk-circle7 sk-child"></div>
+                <div class="sk-circle8 sk-child"></div>
+                <div class="sk-circle9 sk-child"></div>
+                <div class="sk-circle10 sk-child"></div>
+                <div class="sk-circle11 sk-child"></div>
+                <div class="sk-circle12 sk-child"></div>
+              </div>
+        </form>
+    </div>
+   
+
+</body>
+<footer id="footer" > 
+    <img src="css/images/twitter.png" alt="twitter" width="80px" height="74px">
+    <img src="css/images/facebook.png" alt="facebook" width="80px" height="74px">
+    <a href="">privacy &nbsp </a>
+    <a href=""> &nbsp about me</a>
+</footer>
+</html>
+
