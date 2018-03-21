@@ -49,12 +49,42 @@ h1 {
     margin:0 auto;
     margin-top: 342px;
 }
-#form__input, #form__button{
+#form__input, #form__button {
     margin:0 auto;  
     display:block;
     border-radius: 19px;
     width: 80px;
     height: 35px;
+}
+#form__buttonLogin{
+box-shadow: rgb(0, 0, 0) 0px -1px 30px;
+font-family: 'Erica one',cursive;
+background-color: #da3e3e;
+border-color: black;
+height: 45px;
+font-size: larger;
+opacity: 1;
+box-sizing: border-box;
+border-radius: 19px;
+position:absolute;
+top:10;
+right: 10;
+}
+#form__buttonRegistro
+{
+  box-shadow: rgb(0, 0, 0) 0px -1px 30px;
+  font-family: 'Erica one',cursive;
+  background-color: #da3e3e;
+  border-color: black;
+  height: 45px;
+  font-size: larger;
+  opacity: 1;
+  box-sizing: border-box;
+  border-radius: 19px;
+  position:absolute;
+  top:10;
+  right: 100;
+
 }
 #form__advises{
   text-align: center;

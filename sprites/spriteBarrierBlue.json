@@ -1,0 +1,44 @@
+{"frames": [
+
+{
+	"filename": "barrierBlue1.png",
+	"frame": {"x":0,"y":0,"w":73,"h":70},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":73,"h":70},
+	"sourceSize": {"w":73,"h":70}
+},
+{
+	"filename": "barrierBlue2.png",
+	"frame": {"x":0,"y":70,"w":73,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":73,"h":69},
+	"sourceSize": {"w":73,"h":69}
+},
+{
+	"filename": "barrierBlue3.png",
+	"frame": {"x":0,"y":139,"w":73,"h":69},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":73,"h":69},
+	"sourceSize": {"w":73,"h":69}
+},
+{
+	"filename": "barrierBlue4.png",
+	"frame": {"x":0,"y":208,"w":73,"h":68},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":73,"h":68},
+	"sourceSize": {"w":73,"h":68}
+}],
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "spriteBarrierBlue.png",
+	"format": "RGBA8888",
+	"size": {"w":73,"h":276},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:c90ba94b99f0b343b9324e91806f42d3:21beb6d75f5eff72b4a2e4cadc64fa09:94db92bb884e18e641921fb441ba2268$"
+}
+}

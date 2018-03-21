@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').Server(app);  
 var io = require('socket.io')(server);
-//var MongoClient = require('mongodb').MongoClient;
+var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mydb";
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
@@ -165,7 +165,9 @@ io.on('connection', function(socket) {
     var player = findPlayer(socket.id);
     
     if(player.special == false){
-      player.clock = clockit.start();     
+      player.clock = clockit.start();  
+      if(player.rol==0){ secondSkillBarrier(player.room,player.team); }
+
     }
     player.special=true;
    
@@ -175,6 +177,10 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
      console.log("golpeo"); 
+     console.log(data.bullet.id); 
+     console.log("socketID"); 
+     console.log(socket.id); 
+     //COMPROBAR SUBRS DE IF(data.bullet.id !=socket.id) ME ESTAN HUANKEANDO
      var bullet = findBullet(data.bullet.id,data.bullet.room);
     
      if(bullet!=null && bullet.destroy ==false) {
@@ -192,7 +198,7 @@ io.on('connection', function(socket) {
         var response = new SAT.Response();
         collided = SAT.testCircleCircle(player.collision, bullet.collision, response);
         bullet.destroy = collided; 
-        
+        console.log(player);
         if(collided)
         {
           player.life -= bullet.damage;
@@ -231,19 +237,31 @@ io.on('connection', function(socket) {
           
 
         }
+        else{
+          bullet.destroy = true; 
+        }
+        
         
 
         
       }
+      else{
+        bullet.destroy = true; 
+      }
       
      }
+     
     
      
     //createBullet(findPlayer(socket.id));
     //sleep(2000);
   })
 });
+function secondSkillBarrier(room,team){
+  console.log("entra");
+  io.to(room).emit('secondSkillBarrier',team);
 
+}
 function findBullet(socketID,i){
 
   for(var x=0;x<bulletsMatch[i].length;x++)
@@ -398,7 +416,7 @@ function movePlayer(i){
      if(rl == true)
      {
      
-      console.log("izq");
+      
         if(element.team==0)
         {
           switch(element.rol)
@@ -429,7 +447,7 @@ function movePlayer(i){
             break;
           }
         }
-      console.log(roomMatch[i][0]);
+      
      }
      else if(rl == false)
      {
@@ -468,7 +486,7 @@ function movePlayer(i){
      }
      if(rr == true)
      {
-      console.log("dere");
+      
         if(element.team==0)
         {
           switch(element.rol)

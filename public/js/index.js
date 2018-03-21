@@ -1,4 +1,5 @@
 var socket;
+var room;
 var advises = [10];
 //ME
 var player;
@@ -15,6 +16,10 @@ var fireButton;
 var game = null;
 //make a phaser game
 
+
+//fisrt skill
+var spriteBarrierRedSkill;
+var spriteBarrierBlueSkill;
 var startTime;
 
 
@@ -76,10 +81,15 @@ function activateSockets(){
         findPlayer(data,socket.id);
         players = data;
        
-       // console.log(player);
+       
             
     })
-    socket.on('updateBullets', function(data) {
+    socket.on('updateRoom', function(data) {     
+        room = data;    
+      
+            
+    })
+    socket.on('updateBullets', function(data) {     
         balasMatch = data;
         if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
@@ -91,36 +101,70 @@ function activateSockets(){
                     balasSpriteMatch[i].checkWorldBounds = true;               
                     balasSpriteMatch[i].body.setCircle(6);
                     balasSpriteMatch[i].body.static= true;
-                    balasSpriteMatch[i].body.miBala = balasMatch[i].id;                
+                    balasSpriteMatch[i].body.miBala = balasMatch[i].id;
+                    balasSpriteMatch[i].body.rol = balasMatch[i].rol;
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
                         
                     
                 }
             }
       
-        //console.log(datosbalas);
+     
             
     })
     socket.on('latency', function(data) {
         if(startTime !=null){ 
             latency = Date.now() - startTime; 
         }
-       // console.log(player);
+       
+            
+    })
+    socket.on('secondSkillBarrier', function(data) {    
+        console.log('data');
+        console.log(data); 
+        if(data==0){
+        spriteBarrierRedSkill = game.add.sprite(player.posicionX, player.posicionY, 'barrerSkillRed');
+        spriteBarrierRedSkill.alpha = 0.4;
+        game.physics.p2.enable(spriteBarrierRedSkill, true);
+        //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);             
+        spriteBarrierRedSkill.body.setCircle(90);
+        spriteBarrierRedSkill.body.static= true;
+        var spbared = spriteBarrierRedSkill.animations.add('walk');
+        spriteBarrierRedSkill.animations.play('walk', 10, true);
+        spriteBarrierRedSkill.anchor.setTo(0.5, 0.5);
+        spriteBarrierRedSkill.scale.setTo(3.7, 3.7);
+	
+       
+        
+            console.log('data');
+        }
+        else if(data==1){  
+            spriteBarrierBlueSkill = game.add.sprite(player.posicionX, player.posicionY, 'barrerSkillBlue');  
+            spriteBarrierBlueSkill.alpha = 0.4;
+            game.physics.p2.enable(spriteBarrierBlueSkill, true);
+            //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);             
+            spriteBarrierBlueSkill.body.setCircle(90);
+            spriteBarrierBlueSkill.body.static= true;
+            var spbared = spriteBarrierBlueSkill.animations.add('walk');
+            spriteBarrierBlueSkill.animations.play('walk', 10, true);
+            spriteBarrierBlueSkill.anchor.setTo(0.5, 0.5);
+            spriteBarrierBlueSkill.body.scale.setTo(3.7, 3.7);
+            
+        }
+      
             
     })
 }
 
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
-
+console.log('golpeo');
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
         for(i=0;i<balasMatch.length;i++)
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
-            {
-               
-                
+            {         
                 if(body!=null){        
                 balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
 				balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
@@ -153,7 +197,14 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
         }
     
 
+function barrierHitBullet(body, bodyB, shapeA, shapeB, equation){
+    console.log('hit');
+    console.log(body);
+    console.log(bodyB);
 
+
+
+}
 
 //Me encuentro entre los distintos jugadores
    function findPlayer(data,socketID){

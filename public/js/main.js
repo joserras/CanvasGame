@@ -21,10 +21,19 @@ var gameProperties = {
 var collision = false;
 var rec;
 var barraSalud;
+var barraEspecial;
 var circle;
 var totalTimer;
 var barrer;
 var anim;
+var barraHP;
+var barWinRed;
+var barWinBlue;
+var barraES;
+var HPTotal;
+var HPActual;
+var pointBarBlue;
+var pointBarRed;
 // this is the main game state
 var main = function(game){
 };
@@ -39,8 +48,16 @@ main.prototype = {
 					game.load.image("platformRed", "sprites/platformRed.png",);
 					game.load.image("platformBlue", "sprites/platformBlue.png");
 					game.load.image("barraSalud", "sprites/salud.png");
+				    game.load.image("barraES", "sprites/es.png");
 					game.load.image("barraHP", "sprites/hp.png");
+					game.load.image("winBarRed", "sprites/PointBar1.png");
+					game.load.image("winBarBlue", "sprites/winBar2.png");
+					game.load.image("pointBarBlue", "sprites/pointBarBlue.png");
+					game.load.image("pointBarRed", "sprites/pointBarRed.png");
 					game.load.atlasJSONHash('barrer', 'sprites/barrer.png', 'sprites/barrer.json');
+
+					game.load.atlasJSONHash('barrerSkillRed', 'sprites/spriteBarrierRed.png', 'sprites/spriteBarrierRed.json');
+					game.load.atlasJSONHash('barrerSkillBlue', 'sprites/spriteBarrierBlue.png', 'sprites/spriteBarrierBlue.json');
 		 			gameState.stage.disableVisibilityChange = true;
 					game.load.atlasJSONHash('ship0', 'sprites/shipRound.png', 'sprites/shipRound.json');
 			
@@ -92,10 +109,29 @@ main.prototype = {
 		barraSalud = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
 		barraSalud.width = 200;
 		barraSalud.height = 100;
-		barraSalud = game.add.sprite(player.posicionX, player.posicionY, 'barraHP');
-		barraHP.width = 195;
-		barraHP.height = 95;
-		console.log(barraHP);
+		barraEspecial = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
+		barraEspecial.width = 200;
+		barraEspecial.height = 100;
+		barraES = game.add.sprite(player.posicionX, player.posicionY, 'barraES');
+		barraES.width = 94;
+		barraES.height = 16;
+		barraES.alpha = 0.8;
+		barraHP = game.add.sprite(player.posicionX, player.posicionY, 'barraHP');
+		barraHP.width = 94;
+		barraHP.height = 16;
+		barWinRed = game.add.sprite(player.posicionX, player.posicionY, 'winBarRed');
+		barWinRed.width = 400;
+		barWinRed.height = 100;
+		barWinBlue = game.add.sprite(player.posicionX, player.posicionY, 'winBarBlue');
+		barWinBlue.width = 400;
+		barWinBlue.height = 100;
+		pointBarRed = game.add.sprite(player.posicionX, player.posicionY, 'pointBarRed');
+		pointBarRed.width = 239;
+		pointBarRed.height = 15;
+		pointBarBlue = game.add.sprite(player.posicionX, player.posicionY, 'pointBarBlue');
+		pointBarBlue.width = 239;
+		pointBarBlue.height = 15;
+		
 
 
 		shipCircle = game.add.sprite(game.camera.x+(game.camera.width/1.27), game.camera.y+(window.innerHeight/1.808), 'shipCircle');
@@ -230,6 +266,8 @@ main.prototype = {
 		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
 		
 		//game.add.image(game.world.centerX, game.world.centerY, 'background');
+
+
 		//CREANDO LA BASE
 		ship.animations.play('walk', 10, true);
 		ship2.animations.play('walk', 10, true);
@@ -269,6 +307,45 @@ main.prototype = {
 		barrera4.width = 282;
 		barrera5.width = 282;
 		barrera6.width = 282;
+		//CREANDO LA BASE
+		ship.animations.play('walk', 10, true);
+		ship2.animations.play('walk', 10, true);
+		ship3.animations.play('walk', 10, true);
+			
+		//barrer = game.add.sprite(1986, 2700, 'barrer');
+		//anim = barrer.animations.add('barrerWalk');
+
+		var barreraBlue = game.add.image(1986, 0, 'barrer');
+		animBlue1 = barreraBlue.animations.add('barrerWalk');
+		var barreraBlue2 = game.add.image(1986, 245, 'barrer');
+		animBlue2 = barreraBlue2.animations.add('barrerWalk');
+		var barreraBlue3 = game.add.image(1666, 530, 'barrer');
+		animBlue3 = barreraBlue3.animations.add('barrerWalk');
+		var barreraBlue4 = game.add.image(1426, 530, 'barrer');
+		animBlue4 = barreraBlue4.animations.add('barrerWalk');
+
+		var barreraBlue5 = game.add.image(1186, 530, 'barrer');
+		animBlue5 = barreraBlue5.animations.add('barrerWalk');
+		var barreraBlue6 = game.add.image(946, 530, 'barrer');
+		animBlue6 = barreraBlue6.animations.add('barrerWalk');
+
+		var barreraBlue7 = game.add.image(960, 0, 'barrer');
+		animBlue7 = barreraBlue7.animations.add('barrerWalk');
+		var barreraBlue8 = game.add.image(960, 245, 'barrer');
+		animBlue8 = barreraBlue8.animations.add('barrerWalk');
+
+		barreraBlue.angle = 90;
+		barreraBlue.width = 280;
+		barreraBlue2.width = 300;
+		barreraBlue2.angle = 90;
+		barreraBlue7.angle = 90;
+		barreraBlue8.angle = 90;
+		barreraBlue7.width = 280;
+		barreraBlue8.width = 300;
+		barreraBlue3.width = 282;
+		barreraBlue4.width = 282;
+		barreraBlue5.width = 282;
+		barreraBlue6.width = 282;
 
 	
 	
@@ -287,8 +364,8 @@ main.prototype = {
 		
 	
 	
-	
-		console.log(rec);
+	    HPTotal = player.life;
+		console.log(player);
 		
 	},
 
@@ -297,10 +374,25 @@ main.prototype = {
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();
-		
-
+		//reglas de trois para actualizar bars
+		barraHP.width = (94 * player.life)/HPTotal;
+		pointBarRed.width = (239*room[0].team0)/3000;
+		pointBarBlue.width = (239*room[1].team1)/3000;
 	
-
+		//barraHP.x += 232-barraHP.width;
+		if(player.clock!=null)
+		{   barraES.alpha = 0.5;
+			switch(player.rol)
+			{
+			case 0:
+			barraES.width = (94 * player.clock.ms)/10000;
+			case 1:
+			barraES.width = (94 * player.clock.ms)/10000;
+			case 2:
+			barraES.width = (94 * player.clock.ms)/10000;
+			}
+		}
+		else{barraES.alpha = 1; barraES.width = 94;}
 		//MOVIMIENTO DE MINIMAP
 		if(game.camera.width>1400){
 			shipCircle.x = game.camera.x+(game.camera.width/1.27)+100+(ship.body.x/14.38)-5;
@@ -327,20 +419,60 @@ main.prototype = {
 				shipCircle3.y = game.camera.y+(game.camera.height/1.808)+100+(ship3.body.y/14.5);
 			}else{shipCircle3.alpha=0;}
 		}
-		
+		//pintamos barra salud, especial, puntos...
 		if(game.camera.width>1400){
 			rec.x = game.camera.x+(game.camera.width/1.27)+100;
 			rec.y = game.camera.y+(game.camera.height/1.808)+102;
 			barraSalud.x = game.camera.x+(game.camera.width/1.27)-100;
 			barraSalud.y = game.camera.y+(game.camera.height/1.808)+230;
-			barraHP.x = game.camera.x+(game.camera.width/1.27)-100;
-			barraHP.y = game.camera.y+(game.camera.height/1.808)+230;
+
+			barraEspecial.x = game.camera.x+(game.camera.width/1.27)-100;
+			barraEspecial.y = game.camera.y+(game.camera.height/1.808)+170;
+
+			barraES.x = game.camera.x+(game.camera.width/1.27)-7;
+			barraES.y = game.camera.y+(game.camera.height/1.808)+215;
+
+			barraHP.x = game.camera.x+(game.camera.width/1.27)-7;
+			barraHP.y = game.camera.y+(game.camera.height/1.808)+274;
+
+			barWinBlue.x = game.camera.x+(game.camera.width/1.27)-1050;
+			barWinBlue.y = game.camera.y;
+
+			barWinRed.x = game.camera.x+(game.camera.width/1.27)-550;
+			barWinRed.y = game.camera.y;
+
+			pointBarRed.x = game.camera.x+(game.camera.width/1.27)-440;
+			pointBarRed.y = game.camera.y+34;
+
+			pointBarBlue.x = game.camera.x+(game.camera.width/1.27)-999;
+			pointBarBlue.y = game.camera.y+34;
 		}
 		else{
 			rec.x = game.camera.x+(game.camera.width/1.4)+100;
 			rec.y = game.camera.y+(game.camera.height/1.808)+102;
-			barraHP.x = game.camera.x+(game.camera.width/1.4)-100;
-			barraHP.y = game.camera.y+(game.camera.height/1.808)+230;
+			barraEspecial.x = game.camera.x+(game.camera.width/1.4)-100;
+			barraEspecial.y = game.camera.y+(game.camera.height/1.808)+170;
+
+			barraSalud.x = game.camera.x+(game.camera.width/1.4)-100;
+			barraSalud.y = game.camera.y+(game.camera.height/1.808)+230;
+
+			barraES.x = game.camera.x+(game.camera.width/1.4)-7;
+			barraES.y = game.camera.y+(game.camera.height/1.808)+215;
+
+			barraHP.x = game.camera.x+(game.camera.width/1.4)-7;
+			barraHP.y = game.camera.y+(game.camera.height/1.808)+274;
+
+			barWinBlue.x = game.camera.x+(game.camera.width/1.4)-700;
+			barWinBlue.y = game.camera.y;
+
+			barWinRed.x = game.camera.x+(game.camera.width/1.4)-300;
+			barWinRed.y = game.camera.y;
+
+			pointBarRed.x = game.camera.x+(game.camera.width/1.4)-190;
+			pointBarRed.y = game.camera.y+34;
+
+			pointBarBlue.x = game.camera.x+(game.camera.width/1.4)-649;
+			pointBarBlue.y = game.camera.y+34;
 		}
 
 		//MOVIMIENTOD E LAS BALAS
@@ -354,19 +486,34 @@ main.prototype = {
 					 //console.log(balasSpriteMatch[i]);
 					balasSpriteMatch[i].body.x = balasMatch[i].x;
 					balasSpriteMatch[i].body.y = balasMatch[i].y;
+					if(spriteBarrierBlueSkill!=null)
+					if(balasSpriteMatch[i].body.rol!=0)
+					if (checkOverlap(spriteBarrierBlueSkill, balasSpriteMatch[i]))
+					{
+						
+						socket.emit('bulletHit',{bullet:balasMatch[i], ship:null  });
+					}
+					if(spriteBarrierRedSkill!=null)
+					if(balasSpriteMatch[i].body.rol!=0)
+					if (checkOverlap(spriteBarrierRedSkill, balasSpriteMatch[i]))
+					{	
+						socket.emit('bulletHit',{bullet:balasMatch[i], ship:null });
+						console.log('overlap');
+						
+					}
 				 }
 			 }
 			  else if(balasSpriteMatch[i]!=null){	  
 				balasSpriteMatch[i].body.kinematic = true;
-			 	balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
-				balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
+			 	balasSpriteMatch[i].body.x =-200;
+				balasSpriteMatch[i].body.y =-200;
 				balasSpriteMatch[i].destroy();
-				console.log(balasSpriteMatch[i]);
+				
 				balasSpriteMatch[i] =null;
 				 
 			  }
 		 }
-		if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
+		if (game.input.keyboard.isDown(Phaser.Keyboard.A))
 		{  
 			//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);		
 			if(ship.body.x >100 && collision ==false)
@@ -375,7 +522,7 @@ main.prototype = {
 				socket.emit('movement', 'left');
 			 }
 		}
-		else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
+		if (game.input.keyboard.isDown(Phaser.Keyboard.D))
 		{
 			if(ship.body.x < 2876 && collision ==false)
 			{
@@ -383,10 +530,12 @@ main.prototype = {
 				startTime = Date.now();
 				//ship.body.moveRight(game.time.fps*4);
 				socket.emit('movement', 'right');
+				console.log(room);
+				
 			}
 		}
 	
-		if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
+		if (game.input.keyboard.isDown(Phaser.Keyboard.W))
 		{
 			if(ship.body.y >100 && collision ==false)
 			{   
@@ -397,7 +546,7 @@ main.prototype = {
 				socket.emit('movement', 'up');
 			}
 		}
-		else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
+		 if (game.input.keyboard.isDown(Phaser.Keyboard.S))
 		{
 			
 			if(ship.body.y < 2900 && collision ==false)
@@ -409,6 +558,8 @@ main.prototype = {
 				socket.emit('movement', 'down');
 			}
 		}
+		if(game.input.activePointer.leftButton.isDown==true){shotOne (); }
+
 		ship.body.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		ship.rotation = game.physics.arcade.angleToPointer(ship)+1.5;
 		//todo tocar aqui
@@ -424,14 +575,30 @@ main.prototype = {
 				if((players[0]!=null))
 				{
 					
-					// console.log(game.time.now-game.time.prevTime);
-					// console.log("game.time.now-game.time.prevTime");
 
-					
-					// console.log(players[0].posicionX);
-				
 					ship.body.x = players[0].posicionX;
 					ship.body.y = players[0].posicionY;
+
+					//SECOND SKILL ROL 0
+					if(spriteBarrierRedSkill!=null)
+					{
+						spriteBarrierRedSkill.body.x = players[0].posicionX;
+						spriteBarrierRedSkill.body.y = players[0].posicionY;
+						
+					}
+				   
+					if(players[0].clock !=null && players[0].clock.ms>3000){
+						if(spriteBarrierRedSkill!=null)
+							spriteBarrierRedSkill.destroy();
+							spriteBarrierRedSkill=null;
+					}
+					if(players[0].clock==null)
+					{
+						if(spriteBarrierRedSkill!=null)
+							spriteBarrierRedSkill.destroy();
+							spriteBarrierRedSkill=null;
+
+					}
 					//if(24<players[0].posicionX-ship.body.x){
 					//tween = game.add.tween(ship.body).to( { x: players[0].posicionX, y: players[0].posicionY }, 100, "Sine.easeInOut");
 					//tween.interpolation(Phaser.Math.bezierInterpolation);
@@ -439,13 +606,16 @@ main.prototype = {
 					
 					//tween.onLoop.add(changeMethod, this);
 				}
-				else{ship.body.x=-200;}
+				else{ship.body.x=-200;
+				
+				}
 					if(players[1] !=null)
 					{
 						ship2.rotation = players[1].rotation;
 						ship2.body.rotation = players[1].rotation;
 						ship2.body.x = players[1].posicionX;
 						ship2.body.y = players[1].posicionY;
+						
 					}
 					else{ship2.body.x=-200;}
 					if(players[2] !=null)
@@ -458,13 +628,13 @@ main.prototype = {
 					else{ship3.body.x=-200;}
 			
 			}
-
 			
 			if(player.rol == 1){
 				if(players[1]!= null)
 				{
 					ship.body.x = players[1].posicionX;
 					ship.body.y = players[1].posicionY;
+					
 				}
 				else{ship.body.x=-200;}
 				if(players[0]!=null)
@@ -474,6 +644,26 @@ main.prototype = {
 					ship2.body.y = players[0].posicionY;
 					ship2.body.rotation = players[0].rotation;
 					ship2.rotation = players[0].rotation;
+					if(spriteBarrierRedSkill!=null)
+					{   if(players[0].rol==0){
+						spriteBarrierRedSkill.body.x = players[0].posicionX;
+						spriteBarrierRedSkill.body.y = players[0].posicionY;
+					    }		
+					}
+					if(players[0].clock !=null && players[0].clock.ms>3000){
+						if(spriteBarrierRedSkill!=null)
+							spriteBarrierRedSkill.destroy();
+							spriteBarrierRedSkill=null;
+					}
+					if(players[0].clock==null)
+					{
+						if(spriteBarrierRedSkill!=null)
+							spriteBarrierRedSkill.destroy();
+							spriteBarrierRedSkill=null;
+
+					}
+				      
+					
 				}
 				else{ship2.body.x=-200;}
 				if(players[2]!=null){
@@ -481,6 +671,8 @@ main.prototype = {
 					ship3.body.y = players[2].posicionY;
 					ship3.rotation = players[2].rotation;
 					ship3.body.rotation = players[2].rotation;
+
+					
 				}
 				else{ship3.body.x=-200;}
 			}
@@ -490,7 +682,9 @@ main.prototype = {
 			if(player.rol==2){	
 				if(players[2]!=null){
 					ship.body.x = players[2].posicionX;
-					ship.body.y = players[2].posicionY;		
+					ship.body.y = players[2].posicionY;	
+					
+					
 				}
 				else{ship.body.x=-200;}
 
@@ -499,6 +693,9 @@ main.prototype = {
 						ship2.body.y = players[1].posicionY;
 						ship2.rotation = players[1].rotation;
 						ship2.body.rotation = players[1].rotation;
+						
+						
+						
 					}
 					else{ship2.body.x=-200;}
 					if(players[0]!=null){
@@ -506,18 +703,92 @@ main.prototype = {
 						ship3.body.y = players[0].posicionY;
 						ship3.rotation = players[0].rotation;
 						ship3.body.rotation = players[0].rotation;
+
+						if(spriteBarrierRedSkill!=null)
+						{   if(players[0].rol==0){
+							spriteBarrierRedSkill.body.x = players[0].posicionX;
+							spriteBarrierRedSkill.body.y = players[0].posicionY;
+						    }
+				
+						}
+
+						if(players[0].clock !=null && players[0].clock.ms>3000){
+							if(spriteBarrierRedSkill!=null)
+								spriteBarrierRedSkill.destroy();
+								spriteBarrierRedSkill=null;
+						}
+						if(players[0].clock==null)
+					{
+						if(spriteBarrierRedSkill!=null)
+							spriteBarrierRedSkill.destroy();
+							spriteBarrierRedSkill=null;
+
+					}
+
+					
 			     	}
 				else{ship3.body.x=-200;}
 			}
 			//console.log(circle);
+
+			//ACTUALIZACION DE LAS PLATAFORMAS
+			var derechaGray = false; 
+			var izquierdaGray = false;
+			//si cualquier del equi 0 esta en la paltaforma left y ninguno del equipo 1
+			if(room[0].r01 == true || room[0].r02 == true || room[0].r03 == true)
+				if(room[0].r11 == false && room[0].r12 == false && room[0].r13 == false)
+				{
+					platformLeft.loadTexture('platformRed');
+					izquierdaGray = true;
+				}
+			//si cualquier del equi 0 esta en la paltaforma right y ninguno del equipo 1      
+			if(room[1].r01 == true || room[1].r02 == true || room[1].r03 == true)
+				if(room[1].r11 == false && room[1].r12 == false && room[1].r13 == false)
+				{
+					platformRight.loadTexture('platformRed');
+					derechaGray = true;
+				}
+			//si cualquier del equi 1 esta en la paltaforma left y ninguno del equipo 0
+			if(room[0].r11 == true || room[0].r12 == true || room[0].r13 == true)
+				if(room[0].r01 == false && room[0].r02 == false && room[0].r03 == false)
+				{
+					platformLeft.loadTexture('platformBlue');
+					izquierdaGray = true;
+				}
+			//si cualquier del equi 1 esta en la paltaforma right y ninguno del equipo 0      
+			if(room[1].r11 == true || room[1].r12 == true || room[1].r13 == true)
+				if(room[1].r01 == false && room[1].r02 == false && room[1].r03 == false)
+				{
+					platformRight.loadTexture('platformBlue');
+					derechaGray = true;
+				}
+			if(!izquierdaGray)
+			{
+			platformLeft.loadTexture('platformGray');
+			}
+			if(!derechaGray)
+			{
+			platformRight.loadTexture('platformGray');
+			}
+
+			 
 	   
 	   text.x = game.camera.view.centerX;
 	   text.y = game.camera.view.centerY;
-	   
+	      
 	},
 	
 }
 
+//overlap sprites
+function checkOverlap(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
+}
 
 // this function is fired when we connect
 function onsocketConnected ()
@@ -527,11 +798,12 @@ function onsocketConnected ()
 }
 function shotOne () {
 	socket.emit('fireBullet');
-	console.log(balasMatch);
+	console.log('balas 1');
 }
 function shotTwo () {
 	console.log("special");
 	socket.emit('secondSkill');	
+	console.log(player);
 }
 
 function blockHit (body, bodyB, shapeA, shapeB, equation) {	
@@ -597,14 +869,25 @@ if(body.platform==null)
 			anim6.play(10, false);
 			anim7.play(10, false);
 			anim8.play(10, false);
+			animBlue1.play(10, false);
+			animBlue2.play(10, false);
+			animBlue3.play(10, false);
+			animBlue4.play(10, false);
+			animBlue5.play(10, false);
+			animBlue6.play(10, false);
+			animBlue7.play(10, false);
+			animBlue8.play(10, false);
 			text.destroy();
-			key1 = game.input.keyboard.addKey(Phaser.Keyboard.ONE);
-			key1.onDown.add(shotOne, this);
-			key2 = game.input.keyboard.addKey(Phaser.Keyboard.TWO);
+			// console.log(game.input.activePointer.leftButton.isDown);
+			// key1 = game.input.mouse.addKey(Phaser.Mouse.LEFT_BUTTON);
+			// key1.onDown.add(shotOne, this);
+			
+			key2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 			key2.onDown.add(shotTwo, this);
 			setInterval(i);
 		}
 	}, 1000);
+
 	function checkBullet(body1, body2) {
 
 		//  To explain - the post broadphase event has collected together all potential collision pairs in the world
@@ -617,7 +900,6 @@ if(body.platform==null)
 		//  In this simple example if one of the bodies is our space ship, 
 		//  and the other body is the green pepper sprite (frame ID 4) then we DON'T allow the collision to happen.
 		//  Usually you would use a collision mask for something this simple, but it demonstates use.
-
 	if(body1.miBala!=null && body2.miBala!=null)
 	{
 		console.log(body1);
