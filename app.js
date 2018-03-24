@@ -639,7 +639,7 @@ function joinInRoom(socket){
   fillPlayer(socket);
   if(io.sockets.adapter.rooms[room]!=null){
     //hay que cambiarlo a ==6
-    if(io.sockets.adapter.rooms[room].length==3){
+    if(io.sockets.adapter.rooms[room].length==4){
       var data;
       data=playersMatch[room];
       console.log("start game");
@@ -820,6 +820,10 @@ function fillPlayer(socket){
       case 4:
           player.rol = 0;
           player.team = 1;
+          layer.life = 200;
+          player.fire = false;
+          player.posicionX = 1300;
+          player.posicionY = 885;
           break;
       case 5:
           player.rol = 1;
