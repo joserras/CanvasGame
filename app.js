@@ -820,7 +820,7 @@ function fillPlayer(socket){
       case 4:
           player.rol = 0;
           player.team = 1;
-          layer.life = 200;
+          player.life = 200;
           player.fire = false;
           player.posicionX = 1300;
           player.posicionY = 885;

@@ -123,7 +123,7 @@ function activateSockets(){
         console.log('data');
         console.log(data); 
         if(data==0){
-        spriteBarrierRedSkill = game.add.sprite(player.posicionX, player.posicionY, 'barrerSkillRed');
+        spriteBarrierRedSkill = game.add.sprite(players[0].posicionX, players[0].posicionY, 'barrerSkillRed');
         spriteBarrierRedSkill.alpha = 0.4;
         game.physics.p2.enable(spriteBarrierRedSkill, true);
         //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);             
@@ -136,10 +136,10 @@ function activateSockets(){
 	
        
         
-            console.log('data');
+            
         }
         else if(data==1){  
-            spriteBarrierBlueSkill = game.add.sprite(player.posicionX, player.posicionY, 'barrerSkillBlue');  
+            spriteBarrierBlueSkill = game.add.sprite(players[3].posicionX, players[3].posicionY, 'barrerSkillBlue');  
             spriteBarrierBlueSkill.alpha = 0.4;
             game.physics.p2.enable(spriteBarrierBlueSkill, true);
             //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);             
@@ -148,7 +148,8 @@ function activateSockets(){
             var spbared = spriteBarrierBlueSkill.animations.add('walk');
             spriteBarrierBlueSkill.animations.play('walk', 10, true);
             spriteBarrierBlueSkill.anchor.setTo(0.5, 0.5);
-            spriteBarrierBlueSkill.body.scale.setTo(3.7, 3.7);
+            spriteBarrierBlueSkill.scale.setTo(3.7, 3.7);
+            console.log('blueSkill');
             
         }
       
