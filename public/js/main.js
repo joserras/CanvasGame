@@ -770,7 +770,7 @@ main.prototype = {
 				if (ship.body.x > 100 && collision == false) {
 					startTime = Date.now();
 					//ship.body.moveLeft(game.time.fps*4);	
-					console.log('izq');
+					
 					socket.emit('movement', 'left');
 				}
 			}
@@ -778,7 +778,7 @@ main.prototype = {
 				if (ship.body.x < 2876 && collision == false) {
 					//ship.body.x +=4;
 					startTime = Date.now();
-					console.log('dere');
+					
 					//ship.body.moveRight(game.time.fps*4);
 					socket.emit('movement', 'right');
 
@@ -853,7 +853,7 @@ main.prototype = {
 					if (spriteBarrierRedSkill != null) {
 						spriteBarrierRedSkill.body.x = players[0].posicionX;
 						spriteBarrierRedSkill.body.y = players[0].posicionY;
-
+						console.log("enter");
 					}
 
 					if (players[0].clock != null && players[0].clock.ms > 3000) {
@@ -865,7 +865,7 @@ main.prototype = {
 						if (spriteBarrierRedSkill != null)
 							spriteBarrierRedSkill.destroy();
 						spriteBarrierRedSkill = null;
-
+						
 					}
 					//if(24<players[0].posicionX-ship.body.x){
 					//tween = game.add.tween(ship.body).to( { x: players[0].posicionX, y: players[0].posicionY }, 100, "Sine.easeInOut");
@@ -906,8 +906,7 @@ main.prototype = {
 				if (spriteBarrierBlueSkill != null) {
 					spriteBarrierBlueSkill.body.x = players[3].posicionX;
 					spriteBarrierBlueSkill.body.y = players[3].posicionY;
-					spriteBarrierBlueSkill.x = players[3].posicionX;
-					spriteBarrierBlueSkill.y = players[3].posicionY;
+					
 					console.log('entra');
 					console.log(players[3]);
 

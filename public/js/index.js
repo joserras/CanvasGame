@@ -133,7 +133,7 @@ function activateSockets(){
         spriteBarrierRedSkill.animations.play('walk', 10, true);
         spriteBarrierRedSkill.anchor.setTo(0.5, 0.5);
         spriteBarrierRedSkill.scale.setTo(3.7, 3.7);
-	
+	    players[0].special=true;
        
         
             
@@ -150,7 +150,7 @@ function activateSockets(){
             spriteBarrierBlueSkill.anchor.setTo(0.5, 0.5);
             spriteBarrierBlueSkill.scale.setTo(3.7, 3.7);
             console.log('blueSkill');
-            
+            players[3].special=true;
         }
       
             
