@@ -176,10 +176,7 @@ io.on('connection', function(socket) {
     socket.on('bulletHit', function(data) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
-     console.log("golpeo"); 
-     console.log(data.bullet.id); 
-     console.log("socketID"); 
-     console.log(socket.id); 
+    
      //COMPROBAR SUBRS DE IF(data.bullet.id !=socket.id) ME ESTAN HUANKEANDO
      var bullet = findBullet(data.bullet.id,data.bullet.room);
     
@@ -198,7 +195,7 @@ io.on('connection', function(socket) {
         var response = new SAT.Response();
         collided = SAT.testCircleCircle(player.collision, bullet.collision, response);
         bullet.destroy = collided; 
-        console.log(player);
+        
         if(collided)
         {
           player.life -= bullet.damage;

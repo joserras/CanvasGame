@@ -367,7 +367,8 @@ main.prototype = {
 	},
 
 	update: function() {
-		
+		console.log(HPTotal);
+		console.log(player.life);
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();

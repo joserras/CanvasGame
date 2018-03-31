@@ -580,12 +580,12 @@ main.prototype = {
 
 
 		HPTotal = player.life;
-		console.log(player);
+	
 
 	},
 
 	update: function () {
-		
+		console.log(room[1].team1);
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();

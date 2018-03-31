@@ -120,8 +120,7 @@ function activateSockets(){
             
     })
     socket.on('secondSkillBarrier', function(data) {    
-        console.log('data');
-        console.log(data); 
+        
         if(data==0){
         spriteBarrierRedSkill = game.add.sprite(players[0].posicionX, players[0].posicionY, 'barrerSkillRed');
         spriteBarrierRedSkill.alpha = 0.4;
@@ -149,7 +148,7 @@ function activateSockets(){
             spriteBarrierBlueSkill.animations.play('walk', 10, true);
             spriteBarrierBlueSkill.anchor.setTo(0.5, 0.5);
             spriteBarrierBlueSkill.scale.setTo(3.7, 3.7);
-            console.log('blueSkill');
+            
             players[3].special=true;
         }
       
