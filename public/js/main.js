@@ -593,7 +593,7 @@ main.prototype = {
 		//reglas de trois para actualizar bars
 		barraHP.width = (94 * player.life) / HPTotal;
 		pointBarRed.width = (239 * room[0].team0) / 3000;
-		pointBarBlue.width = (239 * room[1].team1) / 3000;
+		pointBarBlue.width = (239 * room[0].team1) / 3000;
 		text.x = game.camera.view.centerX;
 		text.y = game.camera.view.centerY;
 		//barraHP.x += 232-barraHP.width;

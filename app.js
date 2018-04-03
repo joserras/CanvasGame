@@ -435,6 +435,7 @@ function movePlayer(i){
           {
             case 0:
             roomMatch[i][0].r11 = true;
+            console.log('rl');
             break;
             case 1:
             roomMatch[i][0].r12 = true;
@@ -505,6 +506,7 @@ function movePlayer(i){
           {
             case 0:
             roomMatch[i][1].r11 = true;
+            console.log('rr');
             break;
             case 1:
             roomMatch[i][1].r12 = true;
@@ -654,7 +656,7 @@ function joinInRoom(socket){
       dataRoom2.r02 = false;   dataRoom2.r12 = false;
       dataRoom2.r03 = false;   dataRoom2.r13 = false;
       dataRoom.team0 = 0;
-      dataRoom2.team1 = 0;
+      dataRoom.team1 = 0;
       dataRoom.time = clockit.start(); 
       dataRoom2.time = clockit.start(); 
       roomMatch[room] = new Array();
@@ -681,11 +683,12 @@ function updateRoom(i)
   if(roomMatch[i][0].r11 == true || roomMatch[i][0].r12 == true || roomMatch[i][0].r13 == true)
     if(roomMatch[i][0].r01 == false && roomMatch[i][0].r02 == false && roomMatch[i][0].r03 == false)
       roomMatch[i][0].team1 +=0.0625;
+
   //si cualquier del equi 0 esta en la paltaforma right y ninguno del equipo 1      
   if(roomMatch[i][1].r11 == true || roomMatch[i][1].r12 == true || roomMatch[i][1].r13 == true)
     if(roomMatch[i][1].r01 == false && roomMatch[i][1].r02 == false && roomMatch[i][1].r03 == false)
       roomMatch[i][0].team1 +=0.0625;  
- 
+
 }
 
 
