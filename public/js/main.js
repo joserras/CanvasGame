@@ -188,7 +188,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
 				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "scaleCone");
+				ship5.body.loadPolygon("scaleCone", "shipCone");
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[2].id;
@@ -224,7 +224,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleRound", "shipRound");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
 				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "scaleCone");
+				ship5.body.loadPolygon("scaleCone", "shipCone");
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[0].id;
 				ship3.body.idPlayer = players[2].id;
@@ -260,7 +260,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleRound", "shipRound");
 				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "scaleCone");
+				ship5.body.loadPolygon("scaleCone", "shipCone");
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[0].id;
@@ -297,7 +297,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
 				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "scaleCone");
+				ship5.body.loadPolygon("scaleCone", "shipCone");
 				ship.body.idPlayer = players[0].id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[2].id;
@@ -332,7 +332,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleRound", "shipRound");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
 				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "scaleCone");
+				ship5.body.loadPolygon("scaleCone", "shipCone");
 
 				ship.body.idPlayer = players[1].id;
 				ship2.body.idPlayer = players[0].id;
@@ -368,7 +368,7 @@ main.prototype = {
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleRound", "shipRound");
 				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "scaleCone");
+				ship5.body.loadPolygon("scaleCone", "shipCone");
 				ship.body.idPlayer = players[2].id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[0].id;
