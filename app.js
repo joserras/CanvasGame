@@ -203,31 +203,48 @@ io.on('connection', function(socket) {
           if(player.life <=0){
               switch(player.rol){
                 case 0:
-                player.posicionX = 1300;
-                player.posicionY = 2885;
-                player.life = 200;
-                player.inmuneClock = clockit.start();
-                
+                if(player.team==0){
+                  player.posicionX = 1300;
+                  player.posicionY = 2885;
+                  player.life = 200;
+                  player.inmuneClock = clockit.start();
+                }
+                if(player.team==1){
+                  player.posicionX = 1300;
+                  player.posicionY = 2885;
+                  player.life = 200;
+                  player.inmuneClock = clockit.start();
+                }
                 break;
                 case 1:
-                player.posicionX = 1500;
+                if(player.team==0){
+                  player.posicionX = 1500;
+                  player.posicionY = 2885;
+                  player.life = 100;
+                  player.inmuneClock = clockit.start();
+               }
+               if(player.team==1){
+                player.posicionX = 1300;
                 player.posicionY = 2885;
                 player.life = 100;
                 player.inmuneClock = clockit.start();
-                
+               }
                 break;
                 case 2:
-                player.posicionX = 1700;
+                if(player.team==0){
+                  player.posicionX = 1700;
+                  player.posicionY = 2885;
+                  player.life = 70;
+                  player.inmuneClock = clockit.start();
+               }
+               if(player.team==1){
+                player.posicionX = 1300;
                 player.posicionY = 2885;
-                player.life = 70;
+                player.life = 700;
                 player.inmuneClock = clockit.start();
-                
+               }
                 break;
-                case 3:
-
-                case 4:
-
-                case 5:
+                
 
               }
           }
@@ -435,7 +452,7 @@ function movePlayer(i){
           {
             case 0:
             roomMatch[i][0].r11 = true;
-            console.log('rl');
+            
             break;
             case 1:
             roomMatch[i][0].r12 = true;
@@ -638,7 +655,7 @@ function joinInRoom(socket){
   fillPlayer(socket);
   if(io.sockets.adapter.rooms[room]!=null){
     //hay que cambiarlo a ==6
-    if(io.sockets.adapter.rooms[room].length==4){
+    if(io.sockets.adapter.rooms[room].length==5){
       var data;
       data=playersMatch[room];
       console.log("start game");
@@ -823,15 +840,23 @@ function fillPlayer(socket){
           player.life = 200;
           player.fire = false;
           player.posicionX = 1300;
-          player.posicionY = 885;
+          player.posicionY = 485;
           break;
       case 5:
           player.rol = 1;
           player.team = 1;
+          player.life = 100;
+          player.fire = false;
+          player.posicionX = 1500;
+          player.posicionY = 485;
           break;
       case 6:
           player.team = 1;
           player.rol = 2;
+          player.life = 70;
+          player.fire = false;
+          player.posicionX = 1700;
+          player.posicionY = 485;
           break;
      
   };
