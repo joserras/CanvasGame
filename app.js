@@ -607,43 +607,47 @@ function deleteUser(id){
       if(playersMatch[i][x].id == String(id))
       {  
         delete playersMatch[i][x];
-        playersMatch[i] = playersMatch[i].filter(Boolean);
-        for(j=0;j<playersMatch[i].length;j++)
-              {      
-                switch(j){
-                  case 0:
-                    playersMatch[i][j].rol = 0;
-                    playersMatch[i][j].posicionX = 1300;
-                    playersMatch[i][j].posicionY = 1500;
+        console.log(playersMatch[i]);
+        //playersMatch[i] = playersMatch[i].filter(Boolean);
+        console.log("I "+ i);
+        console.log("X "+ x);
+        console.log(playersMatch[i]);
+        // for(j=0;j<playersMatch[i].length;j++)
+        //       {      
+        //         switch(j){
+        //           case 0:
+        //             playersMatch[i][j].rol = 0;
+        //             playersMatch[i][j].posicionX = 1300;
+        //             playersMatch[i][j].posicionY = 1500;
                     
-                  break;
-                  case 1:
-                    playersMatch[i][j].rol = 1;
-                    playersMatch[i][j].posicionX = 1600;
-                    playersMatch[i][j].posicionY = 1500;
-                  break;
-                  case 2:
-                    playersMatch[i][j].rol = 2;
-                    playersMatch[i][j].posicionX = 1900;
-                    playersMatch[i][j].posicionY = 1500;
-                  break;
-                  case 3:
-                  playersMatch[i][j].rol = 0;
-                  playersMatch[i][j].posicionX = 1300;
-                  playersMatch[i][j].posicionY = 1500;
-                  break;
-                  case 4:
-                  playersMatch[i][j].rol = 1;
-                  playersMatch[i][j].posicionX = 1300;
-                  playersMatch[i][j].posicionY = 1500;
-                  break;
-                  case 5:
-                  playersMatch[i][j].rol = 2;
-                  playersMatch[i][j].posicionX = 1300;
-                  playersMatch[i][j].posicionY = 1500;
-                  break;
-                  }
-                }  
+        //           break;
+        //           case 1:
+        //             playersMatch[i][j].rol = 1;
+        //             playersMatch[i][j].posicionX = 1600;
+        //             playersMatch[i][j].posicionY = 1500;
+        //           break;
+        //           case 2:
+        //             playersMatch[i][j].rol = 2;
+        //             playersMatch[i][j].posicionX = 1900;
+        //             playersMatch[i][j].posicionY = 1500;
+        //           break;
+        //           case 3:
+        //           playersMatch[i][j].rol = 0;
+        //           playersMatch[i][j].posicionX = 1300;
+        //           playersMatch[i][j].posicionY = 1500;
+        //           break;
+        //           case 4:
+        //           playersMatch[i][j].rol = 1;
+        //           playersMatch[i][j].posicionX = 1300;
+        //           playersMatch[i][j].posicionY = 1500;
+        //           break;
+        //           case 5:
+        //           playersMatch[i][j].rol = 2;
+        //           playersMatch[i][j].posicionX = 1300;
+        //           playersMatch[i][j].posicionY = 1500;
+        //           break;
+        //           }
+        //         }  
       }
     }
   }
