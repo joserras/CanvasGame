@@ -628,13 +628,19 @@ function deleteUser(id){
                     playersMatch[i][j].posicionY = 1500;
                   break;
                   case 3:
-                    player.rol = 0;
+                  playersMatch[i][j].rol = 0;
+                  playersMatch[i][j].posicionX = 1300;
+                  playersMatch[i][j].posicionY = 1500;
                   break;
                   case 4:
-                    player.rol = 1;
+                  playersMatch[i][j].rol = 1;
+                  playersMatch[i][j].posicionX = 1300;
+                  playersMatch[i][j].posicionY = 1500;
                   break;
                   case 5:
-                    player.rol = 2;
+                  playersMatch[i][j].rol = 2;
+                  playersMatch[i][j].posicionX = 1300;
+                  playersMatch[i][j].posicionY = 1500;
                   break;
                   }
                 }  
@@ -655,7 +661,7 @@ function joinInRoom(socket){
   fillPlayer(socket);
   if(io.sockets.adapter.rooms[room]!=null){
     //hay que cambiarlo a ==6
-    if(io.sockets.adapter.rooms[room].length==5){
+    if(io.sockets.adapter.rooms[room].length==6){
       var data;
       data=playersMatch[room];
       console.log("start game");
