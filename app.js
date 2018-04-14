@@ -83,7 +83,7 @@ io.on('connection', function(socket) {
       socket.on('movement', function(data) {
           //movePlayer(socket.id,data); 
           var player = findPlayer(socket.id);
-         if(player !=null && player.inmuneClock.ms > 10000) {
+         if(player !=null && player.inmuneClock !=null && player.inmuneClock.ms > 10000) {
            
             switch(data){
               case 'up':
@@ -100,7 +100,7 @@ io.on('connection', function(socket) {
               break;
             }  
           }
-          else if(player !=null && player.inmuneClock.ms <= 10000) 
+          else if(player !=null && player.inmuneClock!=null && player.inmuneClock.ms <= 10000) 
           {
             
             if(player.team==0)
@@ -161,12 +161,12 @@ io.on('connection', function(socket) {
      //sleep(2000);
   })
   socket.on('secondSkill', function() {
-    console.log("special");
-    var player = findPlayer(socket.id);
     
-    if(player.special == false){
+    var player = findPlayer(socket.id);    
+    if(player.special == false && player.clock==null){
       player.clock = clockit.start();  
       if(player.rol==0){ secondSkillBarrier(player.room,player.team); }
+      if(player.rol==1){ secondSkillSpy(player.room,player.team); }
 
     }
     player.special=true;
@@ -177,7 +177,7 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
     
-     //COMPROBAR SUBRS DE IF(data.bullet.id !=socket.id) ME ESTAN HUANKEANDO
+     //TODO COMPROBAR SUBRS DE IF(data.bullet.id !=socket.id) ME ESTAN HUANKEANDO
      var bullet = findBullet(data.bullet.id,data.bullet.room);
     
      if(bullet!=null && bullet.destroy ==false) {
@@ -195,7 +195,7 @@ io.on('connection', function(socket) {
         var response = new SAT.Response();
         collided = SAT.testCircleCircle(player.collision, bullet.collision, response);
         bullet.destroy = collided; 
-        
+        //TODO utilizar el clock para comprobar 3s de la second skill y ver si se puede hacer daño
         if(collided)
         {
           player.life -= bullet.damage;
@@ -271,6 +271,12 @@ io.on('connection', function(socket) {
     //sleep(2000);
   })
 });
+function secondSkillSpy(room,team){
+  console.log("entra");
+  io.to(room).emit('secondSkillSpy',team);
+
+
+}
 function secondSkillBarrier(room,team){
   console.log("entra");
   io.to(room).emit('secondSkillBarrier',team);
@@ -409,9 +415,13 @@ function movePlayer(i){
         if(element.clock.ms >10000)
         { 
           element.clock = null;
+          
+        }
+        if(element.clock!=null)
+        if(element.clock.ms >3000)
+        {
           element.special = false;
         }
-
         case 2:
         if(element.clock!=null)
         if(element.clock.ms >10000)

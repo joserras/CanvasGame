@@ -119,6 +119,42 @@ function activateSockets(){
        
             
     })
+    socket.on('secondSkillSpy', function(data) {
+        console.log('spia activo');
+
+if(player!=null)
+  if(player.team==0){ 
+      shipCircle4.alpha = 1.0;
+      shipCircle5.alpha = 1.0;
+      shipCircle6.alpha = 1.0;
+  }
+  if(player!=null)
+  if(player.team==1){ 
+      shipCircle.alpha = 1.0;
+      shipCircle2.alpha = 1.0;
+      shipCircle3.alpha = 1.0;
+  }
+  var myinterval;
+  myinterval=setInterval(myFunction, 3000);
+  function myFunction()
+  {
+      console.log("only once!");
+            if(player!=null)
+            if(player.team==0){ 
+                shipCircle4.alpha = 0.0;
+                shipCircle5.alpha = 0.0;
+                shipCircle6.alpha = 0.0;
+            }
+            if(player!=null)
+            if(player.team==1){ 
+                shipCircle.alpha = 0.0;
+                shipCircle2.alpha = 0.0;
+                shipCircle3.alpha = 0.0;
+            }
+      clearInterval(myinterval);
+  } 
+            
+    })
     socket.on('secondSkillBarrier', function(data) {    
         
         if(data==0){
@@ -154,6 +190,7 @@ function activateSockets(){
       
             
     })
+    
 }
 
 

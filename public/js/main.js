@@ -143,7 +143,7 @@ main.prototype = {
 		shipCircle6 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
 		shipCircle6.scale.setTo(0.01, 0.01);
 	
-
+//minimapa circulos
 		if(player.team==0){ 
 			shipCircle4.alpha = 0.0;
 		    shipCircle5.alpha = 0.0;
@@ -646,7 +646,8 @@ main.prototype = {
 		else { barraES.alpha = 1; barraES.width = 94; }
 
 		//MOVIMIENTO DE MINIMAP
-		if (player.team == 0) {
+		if (player.team == 0 || (players[4]!=null && players[4].special==true)) {
+			console.log(players[4].special);
 			if (game.camera.width > 1400) {
 				shipCircle.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship.body.x / 14.38) - 5;
 				shipCircle.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship.body.y / 14.5);
@@ -673,8 +674,7 @@ main.prototype = {
 				} else { shipCircle3.alpha = 0; }
 			}
 		}
-		 if (player.team == 1) {
-
+		 if (player.team == 1 || (players[1]!=null && players[1].special==true)) {
 		 	if (game.camera.width > 1400) {
 				if (ship4.body.x > -100) {
 		 		shipCircle4.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship4.body.x / 14.38) - 5;
@@ -1258,7 +1258,7 @@ function shotOne() {
 function shotTwo() {
 	console.log("special");
 	socket.emit('secondSkill');
-	console.log(player);
+	
 }
 
 function blockHit(body, bodyB, shapeA, shapeB, equation) {
