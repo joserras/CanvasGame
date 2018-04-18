@@ -34,6 +34,7 @@ var HPTotal;
 var HPActual;
 var pointBarBlue;
 var pointBarRed;
+var ship, ship2, ship3,ship4, ship5, ship6;
 // this is the main game state
 var main = function (game) {
 };
@@ -42,7 +43,10 @@ main.prototype = {
 	preload: function () {
 		game.load.image("background", "sprites/space.png");
 		game.load.image("shipCircle", "sprites/descarga.png");
-		game.load.image("shipCircle2", "sprites/descarga.png");
+		game.load.image("secondSkillBulletBlue", "sprites/bullet_blue.png");
+		game.load.image("secondSkillBulletRed", "sprites/bullet_red.png");
+
+		game.load.image("shipCircle2", "sprites/descargaBlue.png");
 		game.load.image("barrera", "sprites/barrera.png");
 		game.load.image("miniMap", "sprites/miniMap.jpg");
 		game.load.image("platformGray", "sprites/platformGray.png");
@@ -172,36 +176,36 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
 				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 				ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
-				ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
-				ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
-				ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
+				// ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
+				// ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
+				// ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
 
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
-				game.physics.p2.enable(ship4, true);
-				game.physics.p2.enable(ship5, true);
-				game.physics.p2.enable(ship6, true);
+				// game.physics.p2.enable(ship4, true);
+				// game.physics.p2.enable(ship5, true);
+				// game.physics.p2.enable(ship6, true);
 
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
-				ship4.body.clearShapes();
-				ship5.body.clearShapes();
-				ship6.body.clearShapes();
+				// ship4.body.clearShapes();
+				// ship5.body.clearShapes();
+				// ship6.body.clearShapes();
 
 				ship.body.loadPolygon("scaleRound", "shipRound");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
-				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "shipCone");
-				ship6.body.loadPolygon("scaleSpear", "shipSpear");
+				// ship4.body.loadPolygon("scaleRound", "shipRound");
+				// ship5.body.loadPolygon("scaleCone", "shipCone");
+				// ship6.body.loadPolygon("scaleSpear", "shipSpear");
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[2].id;
-				ship4.body.idPlayer = players[3].id;
-				ship5.body.idPlayer = players[4].id;
-				ship6.body.idPlayer = players[5].id;
+				// ship4.body.idPlayer = players[3].id;
+				// ship5.body.idPlayer = players[4].id;
+				// ship6.body.idPlayer = players[5].id;
 
 
 			}
@@ -209,36 +213,36 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
 				ship2 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
 				ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
-				ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
-				ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
-				ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
+				// ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
+				// ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
+				// ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
 
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
-				game.physics.p2.enable(ship4, true);
-				game.physics.p2.enable(ship5, true);
-				game.physics.p2.enable(ship6, true);
+				// game.physics.p2.enable(ship4, true);
+				// game.physics.p2.enable(ship5, true);
+				// game.physics.p2.enable(ship6, true);
 
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
-				ship4.body.clearShapes();
-				ship5.body.clearShapes();
-				ship6.body.clearShapes();
+				// ship4.body.clearShapes();
+				// ship5.body.clearShapes();
+				// ship6.body.clearShapes();
 
 				ship.body.loadPolygon("scaleCone", "shipCone");
 				ship2.body.loadPolygon("scaleRound", "shipRound");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
-				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "shipCone");
-				ship6.body.loadPolygon("scaleSpear", "shipSpear");
+				// ship4.body.loadPolygon("scaleRound", "shipRound");
+				// ship5.body.loadPolygon("scaleCone", "shipCone");
+				// ship6.body.loadPolygon("scaleSpear", "shipSpear");
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[0].id;
 				ship3.body.idPlayer = players[2].id;
-				ship4.body.idPlayer = players[3].id;
-				ship5.body.idPlayer = players[4].id;
-				ship6.body.idPlayer = players[5].id;
+				// ship4.body.idPlayer = players[3].id;
+				// ship5.body.idPlayer = players[4].id;
+				// ship6.body.idPlayer = players[5].id;
 
 			}
 
@@ -246,36 +250,36 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
 				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 				ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
-				ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
-				ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
-				ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
+				// ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
+				// ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
+				// ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
 
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
-				game.physics.p2.enable(ship4, true);
-				game.physics.p2.enable(ship5, true);
-				game.physics.p2.enable(ship6, true);
+				// game.physics.p2.enable(ship4, true);
+				// game.physics.p2.enable(ship5, true);
+				// game.physics.p2.enable(ship6, true);
 
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
-				ship4.body.clearShapes();
-				ship5.body.clearShapes();
-				ship6.body.clearShapes();
+				// ship4.body.clearShapes();
+				// ship5.body.clearShapes();
+				// ship6.body.clearShapes();
 
 				ship.body.loadPolygon("scaleSpear", "shipSpear");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleRound", "shipRound");
-				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "shipCone");
-				ship6.body.loadPolygon("scaleSpear", "shipSpear");
+				// ship4.body.loadPolygon("scaleRound", "shipRound");
+				// ship5.body.loadPolygon("scaleCone", "shipCone");
+				// ship6.body.loadPolygon("scaleSpear", "shipSpear");
 				ship.body.idPlayer = player.id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[0].id;
-				ship4.body.idPlayer = players[3].id;
-				ship5.body.idPlayer = players[4].id;
-				ship6.body.idPlayer = players[5].id;
+				// ship4.body.idPlayer = players[3].id;
+				// ship5.body.idPlayer = players[4].id;
+				// ship6.body.idPlayer = players[5].id;
 
 			}
 		}
@@ -284,36 +288,36 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship0');
 				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 				ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
-				ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
-				ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
-				ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
+				// ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
+				// ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
+				// ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
 
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
-				game.physics.p2.enable(ship4, true);
-				game.physics.p2.enable(ship5, true);
-				game.physics.p2.enable(ship6, true);
+				// game.physics.p2.enable(ship4, true);
+				// game.physics.p2.enable(ship5, true);
+				// game.physics.p2.enable(ship6, true);
 
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
-				ship4.body.clearShapes();
-				ship5.body.clearShapes();
-				ship6.body.clearShapes();
+				// ship4.body.clearShapes();
+				// ship5.body.clearShapes();
+				// ship6.body.clearShapes();
 
 				ship.body.loadPolygon("scaleRound", "shipRound");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
-				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "shipCone");
-				ship6.body.loadPolygon("scaleSpear", "shipSpear");
+				// ship4.body.loadPolygon("scaleRound", "shipRound");
+				// ship5.body.loadPolygon("scaleCone", "shipCone");
+				// ship6.body.loadPolygon("scaleSpear", "shipSpear");
 				ship.body.idPlayer = players[0].id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[2].id;
-				ship4.body.idPlayer = players[3].id;
-				ship5.body.idPlayer = players[4].id;
-				ship6.body.idPlayer = players[5].id;
+				// ship4.body.idPlayer = players[3].id;
+				// ship5.body.idPlayer = players[4].id;
+				// ship6.body.idPlayer = players[5].id;
 
 
 			}
@@ -321,36 +325,36 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship1');
 				ship2 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
 				ship3 = game.add.sprite(players[2].posicionX, players[2].posicionY, 'ship2');
-				ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
-				ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
-				ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
+				// ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
+				// ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
+				// ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
 
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
-				game.physics.p2.enable(ship4, true);
-				game.physics.p2.enable(ship5, true);
-				game.physics.p2.enable(ship6, true);
+				// game.physics.p2.enable(ship4, true);
+				// game.physics.p2.enable(ship5, true);
+				// game.physics.p2.enable(ship6, true);
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
-				ship4.body.clearShapes();
-				ship5.body.clearShapes();
-				ship6.body.clearShapes();
+				// ship4.body.clearShapes();
+				// ship5.body.clearShapes();
+				// ship6.body.clearShapes();
 
 				ship.body.loadPolygon("scaleCone", "shipCone");
 				ship2.body.loadPolygon("scaleRound", "shipRound");
 				ship3.body.loadPolygon("scaleSpear", "shipSpear");
-				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "shipCone");
-				ship6.body.loadPolygon("scaleSpear", "shipSpear");
+				// ship4.body.loadPolygon("scaleRound", "shipRound");
+				// ship5.body.loadPolygon("scaleCone", "shipCone");
+				// ship6.body.loadPolygon("scaleSpear", "shipSpear");
 
 				ship.body.idPlayer = players[1].id;
 				ship2.body.idPlayer = players[0].id;
 				ship3.body.idPlayer = players[2].id;
-				ship4.body.idPlayer = players[3].id;
-				ship5.body.idPlayer = players[4].id;
-				ship6.body.idPlayer = players[5].id;
+				// ship4.body.idPlayer = players[3].id;
+				// ship5.body.idPlayer = players[4].id;
+				// ship6.body.idPlayer = players[5].id;
 
 			}
 
@@ -358,36 +362,36 @@ main.prototype = {
 				ship = game.add.sprite(player.posicionX, player.posicionY, 'ship2');
 				ship2 = game.add.sprite(players[1].posicionX, players[1].posicionY, 'ship1');
 				ship3 = game.add.sprite(players[0].posicionX, players[0].posicionY, 'ship0');
-				ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
-				ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
-				ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
+				// ship4 = game.add.sprite(players[3].posicionX, players[3].posicionY, 'ship3');
+				// ship5 = game.add.sprite(players[4].posicionX, players[4].posicionY, 'ship4');
+				// ship6 = game.add.sprite(players[5].posicionX, players[5].posicionY, 'ship5');
 
 				game.physics.p2.enable(ship, true);
 				game.physics.p2.enable(ship2, true);
 				game.physics.p2.enable(ship3, true);
-				game.physics.p2.enable(ship4, true);
-				game.physics.p2.enable(ship5, true);
-				game.physics.p2.enable(ship6, true);
+				// game.physics.p2.enable(ship4, true);
+				// game.physics.p2.enable(ship5, true);
+				// game.physics.p2.enable(ship6, true);
 				ship.body.clearShapes();
 				ship2.body.clearShapes();
 				ship3.body.clearShapes();
-				ship4.body.clearShapes();
-				ship5.body.clearShapes();
-				ship6.body.clearShapes();
+				// ship4.body.clearShapes();
+				// ship5.body.clearShapes();
+				// ship6.body.clearShapes();
 
 				ship.body.loadPolygon("scaleSpear", "shipSpear");
 				ship2.body.loadPolygon("scaleCone", "shipCone");
 				ship3.body.loadPolygon("scaleRound", "shipRound");
-				ship4.body.loadPolygon("scaleRound", "shipRound");
-				ship5.body.loadPolygon("scaleCone", "shipCone");
-				ship6.body.loadPolygon("scaleSpear", "shipSpear");
+				// ship4.body.loadPolygon("scaleRound", "shipRound");
+				// ship5.body.loadPolygon("scaleCone", "shipCone");
+				// ship6.body.loadPolygon("scaleSpear", "shipSpear");
 				ship.body.idPlayer = players[2].id;
 				ship2.body.idPlayer = players[1].id;
 				ship3.body.idPlayer = players[0].id;
-				ship4.body.idPlayer = players[3].id;
+				// ship4.body.idPlayer = players[3].id;
 				
-				ship5.body.idPlayer = players[4].id;
-				ship6.body.idPlayer = players[5].id;
+				// ship5.body.idPlayer = players[4].id;
+				// ship6.body.idPlayer = players[5].id;
 
 			}
 
@@ -403,19 +407,19 @@ main.prototype = {
 		ship2.body.fixedRotation = true;
 		ship3.body.setZeroDamping();
 		ship3.body.fixedRotation = true;
-		ship4.body.setZeroDamping();
-		ship4.body.fixedRotation = true;
-		ship5.body.setZeroDamping();
-		ship5.body.fixedRotation = true;
-		ship6.body.setZeroDamping();
-		ship6.body.fixedRotation = true;
+		// ship4.body.setZeroDamping();
+		// ship4.body.fixedRotation = true;
+		// ship5.body.setZeroDamping();
+		// ship5.body.fixedRotation = true;
+		// ship6.body.setZeroDamping();
+		// ship6.body.fixedRotation = true;
 
 		var walk = ship.animations.add('walk');
 		var walk2 = ship2.animations.add('walk');
 		var walk3 = ship3.animations.add('walk');
-		var walk4 = ship4.animations.add('walk');
-		var walk5 = ship5.animations.add('walk');
-		var walk6 = ship6.animations.add('walk');
+		// var walk4 = ship4.animations.add('walk');
+		// var walk5 = ship5.animations.add('walk');
+		// var walk6 = ship6.animations.add('walk');
 		//  Creates 30 bullets, using the 'bullet' graphic
 		weapon = game.add.weapon(1, 'bullet');
 
@@ -436,12 +440,12 @@ main.prototype = {
 		ship2.scale.setTo(0.25, 0.25);
 		ship3.anchor.setTo(0.5, 0.5);
 		ship3.scale.setTo(0.25, 0.25);
-		ship4.anchor.setTo(0.5, 0.5);
-		ship4.scale.setTo(0.25, 0.25);
-		 ship5.anchor.setTo(0.5, 0.5);
-		 ship5.scale.setTo(0.25, 0.25);
-		 ship6.anchor.setTo(0.5, 0.5);
-		 ship6.scale.setTo(0.25, 0.25);
+		// ship4.anchor.setTo(0.5, 0.5);
+		// ship4.scale.setTo(0.25, 0.25);
+		//  ship5.anchor.setTo(0.5, 0.5);
+		//  ship5.scale.setTo(0.25, 0.25);
+		//  ship6.anchor.setTo(0.5, 0.5);
+		//  ship6.scale.setTo(0.25, 0.25);
 		// ship2.anchor.setTo(0.5, 0.5);
 		// ship2.scale.setTo(0.25, 0.25);
 		// ship3.anchor.setTo(0.5, 0.5);
@@ -483,9 +487,9 @@ main.prototype = {
 		ship.animations.play('walk', 10, true);
 		ship2.animations.play('walk', 10, true);
 		ship3.animations.play('walk', 10, true);
-		ship4.animations.play('walk', 10, true);
-		ship5.animations.play('walk', 10, true);
-		ship6.animations.play('walk', 10, true);
+		// ship4.animations.play('walk', 10, true);
+		// ship5.animations.play('walk', 10, true);
+		// ship6.animations.play('walk', 10, true);
 
 		//barrer = game.add.sprite(1986, 2700, 'barrer');
 		//anim = barrer.animations.add('barrerWalk');
@@ -525,7 +529,7 @@ main.prototype = {
 		ship.animations.play('walk', 10, true);
 		ship2.animations.play('walk', 10, true);
 		ship3.animations.play('walk', 10, true);
-		ship4.animations.play('walk', 10, true);
+		//ship4.animations.play('walk', 10, true);
 		//barrer = game.add.sprite(1986, 2700, 'barrer');
 		//anim = barrer.animations.add('barrerWalk');
 
@@ -604,9 +608,9 @@ main.prototype = {
 		ship.body.allowSleep = false;
 		ship2.body.allowSleep = false;
 		ship3.body.allowSleep = false;
-		ship4.body.allowSleep = false;
-		ship5.body.allowSleep = false;
-		ship6.body.allowSleep = false;
+		// ship4.body.allowSleep = false;
+		// ship5.body.allowSleep = false;
+		// ship6.body.allowSleep = false;
 		tileSprite = game.add.tileSprite(0, 0, 8000, 8000, 'background');
 		game.world.sendToBack(tileSprite);
 
@@ -622,9 +626,9 @@ main.prototype = {
 		ship.body.setZeroVelocity();
 		ship2.body.setZeroVelocity();
 		ship3.body.setZeroVelocity();
-		ship4.body.setZeroVelocity();
-		ship5.body.setZeroVelocity();
-		ship6.body.setZeroVelocity();
+		// ship4.body.setZeroVelocity();
+		// ship5.body.setZeroVelocity();
+		// ship6.body.setZeroVelocity();
 		//reglas de trois para actualizar bars
 		barraHP.width = (94 * player.life) / HPTotal;
 		pointBarRed.width = (239 * room[0].team0) / 3000;
@@ -647,28 +651,31 @@ main.prototype = {
 
 		//MOVIMIENTO DE MINIMAP
 		if (player.team == 0 || (players[4]!=null && players[4].special==true)) {
-			console.log(players[4].special);
+			
 			if (game.camera.width > 1400) {
+				if (ship!=null && ship.body.x > -100) {
 				shipCircle.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship.body.x / 14.38) - 5;
 				shipCircle.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship.body.y / 14.5);
-
-				if (ship2.body.x > -100) {
+				}
+				if (ship2!=null && ship2.body.x > -100) {
 					shipCircle2.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship2.body.x / 14.38) - 5;
 					shipCircle2.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship2.body.y / 14.5);
 				} else { shipCircle2.alpha = 0; }
-				if (ship3.body.x > -100) {
+				if (ship3!=null &&  ship3.body.x > -100) {
 					shipCircle3.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship3.body.x / 14.38) - 5;
 					shipCircle3.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship3.body.y / 14.5);
 				} else { shipCircle3.alpha = 0; }
 			}
 			else {
+				if (ship!=null && ship.body.x > -100) {
 				shipCircle.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship.body.x / 14.38) - 5;
 				shipCircle.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship.body.y / 14.5);
-				if (ship2.body.x > -100) {
+				}
+				if (ship2!=null && ship2.body.x > -100) {
 					shipCircle2.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship2.body.x / 14.38) - 5;
 					shipCircle2.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship2.body.y / 14.5);
 				} else { shipCircle2.alpha = 0; }
-				if (ship3.body.x > -100) {
+				if (ship3!=null && ship3.body.x > -100) {
 					shipCircle3.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship3.body.x / 14.38) - 5;
 					shipCircle3.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship3.body.y / 14.5);
 				} else { shipCircle3.alpha = 0; }
@@ -676,31 +683,31 @@ main.prototype = {
 		}
 		 if (player.team == 1 || (players[1]!=null && players[1].special==true)) {
 		 	if (game.camera.width > 1400) {
-				if (ship4.body.x > -100) {
+				if (ship4!=null && ship4.body.x > -100) {
 		 		shipCircle4.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship4.body.x / 14.38) - 5;
 		 		shipCircle4.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship4.body.y / 14.5);
 				}
 				else { shipCircle4.alpha = 0; }
-		 		if (ship5.body.x > -100) {
+		 		if (ship5!=null && ship5.body.x > -100) {
 		 			shipCircle5.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship5.body.x / 14.38) - 5;
 		 			shipCircle5.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship5.body.y / 14.5);
 		 		} else { shipCircle5.alpha = 0; }
-		 		if (ship6.body.x > -100) {
+		 		if (ship6!=null && ship6.body.x > -100) {
 		 			shipCircle6.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship6.body.x / 14.38) - 5;
 		 			shipCircle6.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship6.body.y / 14.5);
 		 		} else { shipCircle6.alpha = 0; }
 		 	}
 		 	else {
-				if (ship4.body.x > -100) {
+				if (ship3!=null && ship4.body.x > -100) {
 		 		shipCircle4.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship4.body.x / 14.38) - 5;
 				shipCircle4.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship4.body.y / 14.5);
 				}
 				else { shipCircle4.alpha = 0; }
-		 		if (ship5.body.x > -100) {
+		 		if (ship5!=null && ship5.body.x > -100) {
 		 			shipCircle5.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship5.body.x / 14.38) - 5;
 		 			shipCircle5.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship5.body.y / 14.5);
 		 		} else { shipCircle5.alpha = 0; }
-		 		if (ship6.body.x > -100) {
+		 		if (ship6!=null && ship6.body.x > -100) {
 		 			shipCircle6.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship6.body.x / 14.38) - 5;
 		 			shipCircle6.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship6.body.y / 14.5);
 		 		} else { shipCircle6.alpha = 0; }
@@ -915,8 +922,8 @@ main.prototype = {
 					//tween.onLoop.add(changeMethod, this);
 				}
 				else {
+					if(ship!=null)
 					ship.body.x = -200;
-
 				}
 				if (players[1] != null) {
 					ship2.rotation = players[1].rotation;
@@ -969,7 +976,8 @@ main.prototype = {
 
 				//tween.onLoop.add(changeMethod, this);
 			}
-			else {
+			else if(ship4!=null){
+				
 				ship4.body.x = -200;
 
 			}
@@ -980,14 +988,14 @@ main.prototype = {
 				ship5.body.y = players[4].posicionY;
 
 			}
-			else { ship5.body.x = -200; }
+			else  if(ship5!=null){ ship5.body.x = -200; }
 			if (players[5] != null) {
 				ship6.body.x = players[5].posicionX;
 				ship6.body.y = players[5].posicionY;
 				ship6.rotation = players[5].rotation;
 				ship6.body.rotation = players[5].rotation;
 			}
-			else { ship6.body.x = -200; }
+			else if(ship6!=null){ ship6.body.x = -200; }
 		}
 		
 
@@ -997,7 +1005,7 @@ main.prototype = {
 				ship.body.y = players[1].posicionY;
 
 			}
-			else { ship.body.x = -200; }
+			else if(ship!=null){ ship.body.x = -200; }
 			if (players[0] != null) {
 
 				ship2.body.x = players[0].posicionX;
@@ -1024,7 +1032,7 @@ main.prototype = {
 
 
 			}
-			else { ship2.body.x = -200; }
+			else if(ship2!=null){ ship2.body.x = -200; }
 			if (players[2] != null) {
 				ship3.body.x = players[2].posicionX;
 				ship3.body.y = players[2].posicionY;
@@ -1033,7 +1041,7 @@ main.prototype = {
 
 
 			}
-			else { ship3.body.x = -200; }
+			else if(ship3!=null){ ship3.body.x = -200; }
 			if ((players[3] != null)) {
 
 
@@ -1065,7 +1073,7 @@ main.prototype = {
 
 				//tween.onLoop.add(changeMethod, this);
 			}
-			else {
+			else if(ship4!=null){
 				ship4.body.x = -200;
 
 			}
@@ -1076,14 +1084,14 @@ main.prototype = {
 				ship5.body.y = players[4].posicionY;
 
 			}
-			else { ship5.body.x = -200; }
+			else if(ship5!=null){ ship5.body.x = -200; }
 			if (players[5] != null) {
 				ship6.body.x = players[5].posicionX;
 				ship6.body.y = players[5].posicionY;
 				ship6.rotation = players[5].rotation;
 				ship6.body.rotation = players[5].rotation;
 			}
-			else { ship6.body.x = -200; }
+			else if(ship6!=null){ ship6.body.x = -200; }
 		}
 
 
@@ -1095,7 +1103,7 @@ main.prototype = {
 
 
 			}
-			else { ship.body.x = -200; }
+			else if(ship!=null){ ship.body.x = -200; }
 
 			if (players[1] != null) {
 				ship2.body.x = players[1].posicionX;
@@ -1106,7 +1114,7 @@ main.prototype = {
 
 
 			}
-			else { ship2.body.x = -200; }
+			else if(ship2!=null){ ship2.body.x = -200; }
 			if (players[0] != null) {
 				ship3.body.x = players[0].posicionX;
 				ship3.body.y = players[0].posicionY;
@@ -1135,7 +1143,7 @@ main.prototype = {
 
 
 			}
-			else { ship3.body.x = -200; }
+			else if(ship3!=null){ ship3.body.x = -200; }
 			if ((players[3] != null)) {
 
 
@@ -1167,7 +1175,7 @@ main.prototype = {
 
 				//tween.onLoop.add(changeMethod, this);
 			}
-			else {
+			else if(ship4!=null){
 				ship4.body.x = -200;
 
 			}
@@ -1178,14 +1186,14 @@ main.prototype = {
 				ship5.body.y = players[4].posicionY;
 
 			}
-			else { ship5.body.x = -200; }
+			else if(ship5!=null){ ship5.body.x = -200; }
 			if (players[5] != null) {
 				ship6.body.x = players[5].posicionX;
 				ship6.body.y = players[5].posicionY;
 				ship6.rotation = players[5].rotation;
 				ship6.body.rotation = players[5].rotation;
 			}
-			else { ship6.body.x = -200; }
+			else if(ship6!=null){ ship6.body.x = -200; }
 		}
 		//}
 

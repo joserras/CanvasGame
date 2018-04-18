@@ -167,6 +167,7 @@ io.on('connection', function(socket) {
       player.clock = clockit.start();  
       if(player.rol==0){ secondSkillBarrier(player.room,player.team); }
       if(player.rol==1){ secondSkillSpy(player.room,player.team); }
+      if(player.rol==2){ createBulletSpecial(player.room,player.team); }
 
     }
     player.special=true;
@@ -177,7 +178,7 @@ io.on('connection', function(socket) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
     
-     //TODO COMPROBAR SUBRS DE IF(data.bullet.id !=socket.id) ME ESTAN HUANKEANDO
+     //TODO COMPROBAR SUBRStrings DE IF(data.bullet.id !=socket.id) ME ESTAN HUANKEANDO
      var bullet = findBullet(data.bullet.id,data.bullet.room);
     
      if(bullet!=null && bullet.destroy ==false) {
@@ -313,7 +314,29 @@ function sleep(miliseconds) {
   while (currentTime + miliseconds >= new Date().getTime()) {
   }
 }
+function createBulletSpecial(player){
+  var bullet = new Object();
+    bullet.damage = 15;
+      bullet.speed = 40;
+      bullet.rol = 2;
+      bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
+      bullet.x = bullet.x0;
+      bullet.y = bullet.y0;
+      bullet.rotation = player.rotation;     
+      bullet.room = player.room;
+      bullet.destroy = false;
+      bullet.special = true;
+      if(bulletsMatch[player.room] == undefined)
+      {
+       bulletsMatch[player.room] = new Array();
+      }
+      
+      bulletsMatch[player.room].push(bullet); 
 
+}
 function createBullet(player){
   var bullet = new Object();
     switch(player.rol)
@@ -617,11 +640,9 @@ function deleteUser(id){
       if(playersMatch[i][x].id == String(id))
       {  
         delete playersMatch[i][x];
-        console.log(playersMatch[i]);
+        
         //playersMatch[i] = playersMatch[i].filter(Boolean);
-        console.log("I "+ i);
-        console.log("X "+ x);
-        console.log(playersMatch[i]);
+        
         // for(j=0;j<playersMatch[i].length;j++)
         //       {      
         //         switch(j){
@@ -675,7 +696,7 @@ function joinInRoom(socket){
   fillPlayer(socket);
   if(io.sockets.adapter.rooms[room]!=null){
     //hay que cambiarlo a ==6
-    if(io.sockets.adapter.rooms[room].length==6){
+    if(io.sockets.adapter.rooms[room].length==3){
       var data;
       data=playersMatch[room];
       console.log("start game");
