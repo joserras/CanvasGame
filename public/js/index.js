@@ -95,6 +95,8 @@ function activateSockets(){
             for(i=0;i<balasMatch.length;i++)
             {   
                 if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
+                    if(balasMatch[i].special==null)
+                    {
                     balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
                     game.physics.p2.enable(balasSpriteMatch[i], true);
                    //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
@@ -104,7 +106,23 @@ function activateSockets(){
                     balasSpriteMatch[i].body.miBala = balasMatch[i].id;
                     balasSpriteMatch[i].body.rol = balasMatch[i].rol;
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
-                        
+                    }
+                    //solo para balas especial
+                    else if (balasMatch[i].special==true){
+                        if(bullet.team==1)
+                        balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');
+                        else
+                        balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletRed');
+                        game.physics.p2.enable(balasSpriteMatch[i], true);
+                    //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
+                        balasSpriteMatch[i].checkWorldBounds = true;               
+                        balasSpriteMatch[i].body.setCircle(9);
+                        balasSpriteMatch[i].body.static= true;
+                        balasSpriteMatch[i].body.miBala = balasMatch[i].id;
+                        balasSpriteMatch[i].body.rol = balasMatch[i].rol;
+                        balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
+                    }
+                                            
                     
                 }
             }

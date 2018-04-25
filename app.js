@@ -319,6 +319,7 @@ function createBulletSpecial(player){
     bullet.damage = 15;
       bullet.speed = 40;
       bullet.rol = 2;
+      bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
@@ -345,6 +346,7 @@ function createBullet(player){
        bullet.damage = 10;
        bullet.speed = 20;
        bullet.rol = 0;
+       bullet.team = player.team;
        bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
        bullet.x0 = player.posicionX+40*Math.cos(player.rotation-1.5);
        bullet.y0 = player.posicionY+40*Math.sin(player.rotation-1.5);
@@ -360,6 +362,7 @@ function createBullet(player){
       bullet.damage = 5;
       bullet.speed = 40;
       bullet.rol = 1;
+      bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
@@ -375,6 +378,7 @@ function createBullet(player){
       bullet.damage = 3;
       bullet.speed = 40;
       bullet.rol = 2;
+      bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
