@@ -109,7 +109,7 @@ function activateSockets(){
                     }
                     //solo para balas especial
                     else if (balasMatch[i].special==true){
-                        if(bullet.team==1)
+                        if(balasMatch[i].team==1)
                         balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');
                         else
                         balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletRed');

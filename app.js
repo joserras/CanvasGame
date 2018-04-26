@@ -167,7 +167,7 @@ io.on('connection', function(socket) {
       player.clock = clockit.start();  
       if(player.rol==0){ secondSkillBarrier(player.room,player.team); }
       if(player.rol==1){ secondSkillSpy(player.room,player.team); }
-      if(player.rol==2){ createBulletSpecial(player.room,player.team); }
+      if(player.rol==2){ createBulletSpecial(player); }
 
     }
     player.special=true;
@@ -315,6 +315,7 @@ function sleep(miliseconds) {
   }
 }
 function createBulletSpecial(player){
+  console.log(player);
   var bullet = new Object();
     bullet.damage = 15;
       bullet.speed = 40;
@@ -330,12 +331,12 @@ function createBulletSpecial(player){
       bullet.room = player.room;
       bullet.destroy = false;
       bullet.special = true;
-      if(bulletsMatch[player.room] == undefined)
-      {
-       bulletsMatch[player.room] = new Array();
-      }
+       if(bulletsMatch[player.room] == undefined)
+       {
+        bulletsMatch[player.room] = new Array();
+       }
+       bulletsMatch[player.room].push(bullet); 
       
-      bulletsMatch[player.room].push(bullet); 
 
 }
 function createBullet(player){
@@ -560,7 +561,7 @@ function movePlayer(i){
           {
             case 0:
             roomMatch[i][1].r11 = true;
-            console.log('rr');
+            
             break;
             case 1:
             roomMatch[i][1].r12 = true;
