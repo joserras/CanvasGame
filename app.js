@@ -182,7 +182,7 @@ io.on('connection', function(socket) {
      var bullet = findBullet(data.bullet.id,data.bullet.room);
     
      if(bullet!=null && bullet.destroy ==false) {
-       
+        
       var player = findPlayer(data.ship);
       
       if(player !=null){
