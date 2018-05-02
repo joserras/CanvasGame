@@ -241,7 +241,7 @@ io.on('connection', function(socket) {
                if(player.team==1){
                 player.posicionX = 1300;
                 player.posicionY = 2885;
-                player.life = 700;
+                player.life = 70;
                 player.inmuneClock = clockit.start();
                }
                 break;
@@ -272,6 +272,37 @@ io.on('connection', function(socket) {
     //sleep(2000);
   })
 });
+//todo 9 bullets
+function secondSkillBullets(bulletParam){
+  var aux=4.7;
+  for(var i=0;i<8;i++){
+    
+  var bullet = new Object();
+  bullet.damage = 5;
+  bullet.speed = 40;
+  bullet.rol = 2;
+  bullet.team = bulletParam.team;
+  bullet.id = bulletParam.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
+  bullet.x0 = bulletParam.posicionX+100*Math.cos(player.rotation-1.5);
+  bullet.y0 = bulletParam.posicionY+100*Math.sin(player.rotation-1.5);
+  bullet.collision = bulletParam.collision;
+  bullet.x = bulletParam.collision.x0;
+  bullet.y = bulletParam.collision.y0;
+  bullet.rotation = aux;     
+  bullet.room = bulletParam.collision.room;
+  bullet.destroy = false;
+  bullet.special2 = true;
+  aux=aux-0.8;
+  if(bulletsMatch[player.room] == undefined)
+  {
+   bulletsMatch[player.room] = new Array();
+  }
+  bulletsMatch[player.room].push(bullet);
+
+  }
+
+
+}
 function secondSkillSpy(room,team){
   console.log("entra");
   io.to(room).emit('secondSkillSpy',team);
@@ -360,7 +391,7 @@ function createBullet(player){
        
       break;
       case 1:
-      bullet.damage = 5;
+      bullet.damage = 3;
       bullet.speed = 40;
       bullet.rol = 1;
       bullet.team = player.team;
@@ -376,7 +407,7 @@ function createBullet(player){
     
       break;
       case 2:
-      bullet.damage = 3;
+      bullet.damage = 5;
       bullet.speed = 40;
       bullet.rol = 2;
       bullet.team = player.team;
@@ -791,7 +822,7 @@ if(bulletsMatch[i]!=null)
  
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
      {
      
        //console.log(element.room);
@@ -812,11 +843,15 @@ if(bulletsMatch[i]!=null)
 
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
      {
+       if(element.special==true)
+       secondSkillBullets(element);
+
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
+       
      }
 
     }

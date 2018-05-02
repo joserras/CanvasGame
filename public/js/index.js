@@ -110,10 +110,17 @@ function activateSockets(){
                     //solo para balas especial
                     else if (balasMatch[i].special==true){
                         if(balasMatch[i].team==1)
-                        balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');
+                        balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');        
                         else
                         balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletRed');
+                       
                         game.physics.p2.enable(balasSpriteMatch[i], true);
+
+                         if(balasSpriteMatch[i]!=null && balasSpriteMatch[i].body!=null)
+                        {
+                        
+                        balasSpriteMatch[i].body.rotation = player.rotation;
+                        }
                     //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
                         balasSpriteMatch[i].checkWorldBounds = true;               
                         balasSpriteMatch[i].body.setCircle(9);

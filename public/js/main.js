@@ -698,7 +698,7 @@ main.prototype = {
 		 		} else { shipCircle6.alpha = 0; }
 		 	}
 		 	else {
-				if (ship3!=null && ship4.body.x > -100) {
+				if (ship4!=null && ship4.body.x > -100) {
 		 		shipCircle4.x = game.camera.x + (game.camera.width / 1.4) + 100 + (ship4.body.x / 14.38) - 5;
 				shipCircle4.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship4.body.y / 14.5);
 				}
