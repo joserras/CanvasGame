@@ -98,6 +98,7 @@ function activateSockets(){
                     if(balasMatch[i].special==null)
                     {
                     balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
+                    
                     game.physics.p2.enable(balasSpriteMatch[i], true);
                    //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
                     balasSpriteMatch[i].checkWorldBounds = true;               

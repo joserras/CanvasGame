@@ -275,31 +275,40 @@ io.on('connection', function(socket) {
 //todo 9 bullets
 function secondSkillBullets(bulletParam){
   var aux=4.7;
+  
+  var bullet = new Object(); 
+  bullet.rotation = 0.012345; 
+  bullet.special2 = true;
+  if(bulletsMatch[bulletParam.room] == undefined)
+  {
+   bulletsMatch[bulletParam.room] = new Array();
+  }
+  bulletsMatch[bulletParam.room].push(bullet);
   for(var i=0;i<8;i++){
-    
-  var bullet = new Object();
+   bullet = new Object(); 
+  
   bullet.damage = 5;
   bullet.speed = 40;
   bullet.rol = 2;
   bullet.team = bulletParam.team;
   bullet.id = bulletParam.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-  bullet.x0 = bulletParam.posicionX+100*Math.cos(player.rotation-1.5);
-  bullet.y0 = bulletParam.posicionY+100*Math.sin(player.rotation-1.5);
+  bullet.x0 = bulletParam.x;
+  bullet.y0 = bulletParam.y;
   bullet.collision = bulletParam.collision;
-  bullet.x = bulletParam.collision.x0;
-  bullet.y = bulletParam.collision.y0;
+  bullet.x = bulletParam.x;
+  bullet.y = bulletParam.y;
   bullet.rotation = aux;     
-  bullet.room = bulletParam.collision.room;
+  bullet.room = bulletParam.room;
   bullet.destroy = false;
   bullet.special2 = true;
   aux=aux-0.8;
-  if(bulletsMatch[player.room] == undefined)
-  {
-   bulletsMatch[player.room] = new Array();
-  }
-  bulletsMatch[player.room].push(bullet);
 
+  
+  bulletsMatch[bulletParam.room].push(bullet);
+  
   }
+ 
+
 
 
 }
@@ -346,7 +355,7 @@ function sleep(miliseconds) {
   }
 }
 function createBulletSpecial(player){
-  console.log(player);
+ 
   var bullet = new Object();
     bullet.damage = 15;
       bullet.speed = 40;
@@ -845,12 +854,15 @@ if(bulletsMatch[i]!=null)
      //Borrado de balas
      if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
      {
-       if(element.special==true)
-       secondSkillBullets(element);
-
+      
+       var copy = Object.assign({}, element);
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
        bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
+       
+       if(copy.special==true)
+        secondSkillBullets(copy);
+
        
      }
 

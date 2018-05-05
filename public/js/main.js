@@ -786,6 +786,7 @@ main.prototype = {
 								//console.log(balasSpriteMatch[i]);
 								balasSpriteMatch[i].body.x = balasMatch[i].x;
 								balasSpriteMatch[i].body.y = balasMatch[i].y;
+								
 								if (spriteBarrierBlueSkill != null)
 									if (balasSpriteMatch[i].body.rol != 0)
 										if (checkOverlap(spriteBarrierBlueSkill, balasSpriteMatch[i])) {
@@ -800,6 +801,20 @@ main.prototype = {
 
 										}
 							}
+							//caso especial apra la bala especial no le da tiempo a destruirse antes de genrar las otras balas
+							if(balasMatch[i].special2==true && balasMatch[i].rotation == 0.012345)
+							{
+							
+							balasSpriteMatch[i].body.kinematic = true;
+							balasSpriteMatch[i].body.x = -200;
+							balasSpriteMatch[i].body.y = -200;
+							balasSpriteMatch[i].destroy();
+
+							balasSpriteMatch[i] = null;
+
+							}
+
+							
 						}
 						else if (balasSpriteMatch[i] != null) {
 							balasSpriteMatch[i].body.kinematic = true;
