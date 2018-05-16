@@ -49,17 +49,19 @@ app.get('/game', function(req, res) {
   res.sendFile( __dirname + "/public/" + "game.html" );
 });
 
-
+var response = new SAT.Response();
+var responseBaseCollision = new SAT.Response();
 var room=0;
 var contador=0;
 var playersMatch = new Array();
 var allPlayers = new Array();
 var allPlayers2 = new Array();
 var bulletsMatch = new Array();
-var platformLeft = new SAT.Circle(new SAT.Vector(740,850), 240);
+var platformLeft = new SAT.Circle(new SAT.Vector(740,1250), 240);
 var platformRight = new SAT.Circle(new SAT.Vector(2190,1790), 240);
 var roomMatch = new Array();
-var baseDown = new SAT.Box(new SAT.Vector(950,2490), 1040, 590).toPolygon();
+var baseUp = new SAT.Box(new SAT.Vector(950,0), 1090, 620).toPolygon();
+var baseDown = new SAT.Box(new SAT.Vector(950,2490), 1060, 750).toPolygon();
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -153,8 +155,10 @@ io.on('connection', function(socket) {
       //findPlayer(socket.id).fire=true; 
       var response = new SAT.Response();
       var player = findPlayer(socket.id);
-      if(player !=null && SAT.testPolygonCircle(baseDown, player.collision, response)==false)
+      
+      if(player !=null && SAT.testPolygonCircle(baseDown, player.collision, response)==false && SAT.testPolygonCircle(baseUp, player.collision, response)==false)
       {
+        
       player.fire=true;
       }
      //createBullet(findPlayer(socket.id));
@@ -209,12 +213,14 @@ io.on('connection', function(socket) {
                   player.posicionY = 2885;
                   player.life = 200;
                   player.inmuneClock = clockit.start();
+                  player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                 }
                 if(player.team==1){
                   player.posicionX = 1300;
                   player.posicionY = 2885;
                   player.life = 200;
                   player.inmuneClock = clockit.start();
+                  player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                 }
                 break;
                 case 1:
@@ -223,12 +229,15 @@ io.on('connection', function(socket) {
                   player.posicionY = 2885;
                   player.life = 100;
                   player.inmuneClock = clockit.start();
+                  player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                }
+               //TODO cambiar posiciones de muerte equipo 1
                if(player.team==1){
                 player.posicionX = 1300;
                 player.posicionY = 2885;
                 player.life = 100;
                 player.inmuneClock = clockit.start();
+                player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                }
                 break;
                 case 2:
@@ -237,12 +246,14 @@ io.on('connection', function(socket) {
                   player.posicionY = 2885;
                   player.life = 70;
                   player.inmuneClock = clockit.start();
+                  player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                }
                if(player.team==1){
                 player.posicionX = 1300;
                 player.posicionY = 2885;
                 player.life = 70;
                 player.inmuneClock = clockit.start();
+                player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                }
                 break;
                 
@@ -315,7 +326,6 @@ function secondSkillBullets(bulletParam){
 function secondSkillSpy(room,team){
   console.log("entra");
   io.to(room).emit('secondSkillSpy',team);
-
 
 }
 function secondSkillBarrier(room,team){
@@ -453,20 +463,45 @@ function movePlayer(i){
   if(playersMatch[i]!=null){
   playersMatch[i].forEach(element => { 
       if(element.up==true && element.posicionY>100){
+
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
         element.posicionY-=4;
-        element.up=false;  
+        element.up=false; 
+        }
+        else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+          element.posicionY+=32;
+          element.up=false; 
+        } 
       }
       if(element.down ==true && element.posicionY < 2900){
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
         element.posicionY+=4;
         element.down=false;
+        }
+        // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+        //   element.posicionY-=16;
+        //   element.down=false;
+        // } 
       }
       if(element.right==true && element.posicionX < 2876){
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
         element.posicionX+=4;
         element.right=false;
+        }
+        else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+          element.posicionX-=32;
+          element.right=false;
+        } 
       }
       if(element.left==true && element.posicionX  > 100){
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
         element.posicionX-=4;
         element.left=false;
+        }
+        else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+          element.posicionX+=32;
+          element.left=false;
+        } 
       }if(element.clock!=null)
       
       //ACTUALIZACION DE LOS ESPECIAL
@@ -806,14 +841,15 @@ if(bulletsMatch[i]!=null)
     case 0:
     element.x+=2*Math.cos(element.rotation-1.5);
     element.y+=2*Math.sin(element.rotation-1.5);
-
+    element.collision.pos.x=element.x;
+    element.collision.pos.y=element.y;
     var a = element.x-element.x0;
     var b = element.y-element.y0;
  
  
    
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true)
      {
     
        var posicion = bulletsMatch[i].indexOf(element);    
@@ -824,16 +860,17 @@ if(bulletsMatch[i]!=null)
     case 1:
     element.x+=4*Math.cos(element.rotation-1.5);
     element.y+=4*Math.sin(element.rotation-1.5);
-
+    element.collision.pos.x=element.x;
+    element.collision.pos.y=element.y;
     var a = element.x-element.x0;
     var b = element.y-element.y0;
  
  
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true)
      {
-     
+      
        //console.log(element.room);
        var posicion = bulletsMatch[i].indexOf(element);
        delete bulletsMatch[i][posicion];
@@ -845,14 +882,15 @@ if(bulletsMatch[i]!=null)
     case 2:
     element.x+=6*Math.cos(element.rotation-1.5);
     element.y+=6*Math.sin(element.rotation-1.5);
-
+    element.collision.pos.x=element.x;
+    element.collision.pos.y=element.y;
     var a = element.x-element.x0;
     var b = element.y-element.y0;
 
 
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true)
      {
       
        var copy = Object.assign({}, element);
@@ -953,7 +991,7 @@ function fillPlayer(socket){
           break;
      
   };
-  player.collision = new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY, 50));
+  player.collision = new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
    //Asignamos velocidad
    player.speed = 20;
    player.room = room;

@@ -107,7 +107,7 @@ main.prototype = {
 
 		game.physics.p2.setPostBroadphaseCallback(checkBullet, this);
 		//PLATFORMS
-		platformLeft = game.add.sprite(350, 560, 'platformGray');
+		platformLeft = game.add.sprite(350, 960, 'platformGray');
 		platformRight = game.add.sprite(1800, 1500, 'platformGray');
 		platformLeft.scale.setTo(0.5, 0.5);
 		platformRight.scale.setTo(0.5, 0.5);
@@ -469,14 +469,14 @@ main.prototype = {
 
 		//camera
 		if(player.team==0)
-		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+		game.camera.follow(ship, Phaser.Camera.FOLLOW_PLATFORMER , 0.1, 0.1);
 		else{
 			if(player.rol==0)
-			game.camera.follow(ship4, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+			game.camera.follow(ship4, Phaser.Camera.FOLLOW_PLATFORMER , 0.1, 0.1);
 			if(player.rol==1)
-			game.camera.follow(ship5, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+			game.camera.follow(ship5, Phaser.Camera.FOLLOW_PLATFORMER , 0.1, 0.1);
 			if(player.rol==2)
-			game.camera.follow(ship6, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
+			game.camera.follow(ship6, Phaser.Camera.FOLLOW_PLATFORMER , 0.1, 0.1);
 		}
 		
 
@@ -984,12 +984,7 @@ main.prototype = {
 					spriteBarrierBlueSkill = null;
 
 				}
-				//if(24<players[0].posicionX-ship.body.x){
-				//tween = game.add.tween(ship.body).to( { x: players[0].posicionX, y: players[0].posicionY }, 100, "Sine.easeInOut");
-				//tween.interpolation(Phaser.Math.bezierInterpolation);
-				//tween.start();
-
-				//tween.onLoop.add(changeMethod, this);
+		
 			}
 			else if(ship4!=null){
 				
@@ -1081,12 +1076,7 @@ main.prototype = {
 					spriteBarrierBlueSkill = null;
 
 				}
-				//if(24<players[0].posicionX-ship.body.x){
-				//tween = game.add.tween(ship.body).to( { x: players[0].posicionX, y: players[0].posicionY }, 100, "Sine.easeInOut");
-				//tween.interpolation(Phaser.Math.bezierInterpolation);
-				//tween.start();
-
-				//tween.onLoop.add(changeMethod, this);
+			
 			}
 			else if(ship4!=null){
 				ship4.body.x = -200;
