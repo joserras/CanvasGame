@@ -46,7 +46,14 @@ main.prototype = {
 		game.load.image("secondSkillBulletBlue", "sprites/bullet_blue.png");
 		game.load.image("secondSkillBulletRed", "sprites/bullet_red.png");
 
-		game.load.image("shipCircle2", "sprites/descargaBlue.png");
+		game.load.image("meteorito1", "sprites/meteorito1.png");
+		game.load.image("meteorito2", "sprites/meteorito2.png");
+		game.load.image("meteorito3", "sprites/meteorito3.png");
+		game.load.image("meteorito4", "sprites/meteorito4.png");
+		game.load.image("meteorito5", "sprites/meteorito5.png");
+		game.load.image("meteorito6", "sprites/meteorito6.png");
+		
+
 		game.load.image("barrera", "sprites/barrera.png");
 		game.load.image("miniMap", "sprites/miniMap.jpg");
 		game.load.image("platformGray", "sprites/platformGray.png");
@@ -1271,7 +1278,7 @@ function onsocketConnected() {
 }
 function shotOne() {
 	socket.emit('fireBullet');
-	console.log('balas 1');
+	
 }
 function shotTwo() {
 	console.log("special");
@@ -1369,8 +1376,7 @@ function checkBullet(body1, body2) {
 	//  and the other body is the green pepper sprite (frame ID 4) then we DON'T allow the collision to happen.
 	//  Usually you would use a collision mask for something this simple, but it demonstates use.
 	if (body1.miBala != null && body2.miBala != null) {
-		console.log(body1);
-		console.log(body2);
+		
 		console.log("chocan dos balas");
 		return false;
 	}
