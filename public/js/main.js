@@ -105,6 +105,10 @@ main.prototype = {
 		game.physics.startSystem(Phaser.Physics.P2JS);
 		console.log("client started");
 
+
+		
+
+
 		game.physics.p2.setPostBroadphaseCallback(checkBullet, this);
 		//PLATFORMS
 		platformLeft = game.add.sprite(350, 960, 'platformGray');
@@ -114,51 +118,6 @@ main.prototype = {
 
 
 
-		//MINIMAP and HUD
-		rec = game.add.sprite(player.posicionX, player.posicionY, 'miniMap');
-		rec.width = 200;
-		rec.height = 200;
-		barraSalud = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
-		barraSalud.width = 200;
-		barraSalud.height = 100;
-		barraEspecial = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
-		barraEspecial.width = 200;
-		barraEspecial.height = 100;
-		barraES = game.add.sprite(player.posicionX, player.posicionY, 'barraES');
-		barraES.width = 94;
-		barraES.height = 16;
-		barraES.alpha = 0.8;
-		barraHP = game.add.sprite(player.posicionX, player.posicionY, 'barraHP');
-		barraHP.width = 94;
-		barraHP.height = 16;
-
-	
-		shipCircle = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle');
-		shipCircle.scale.setTo(0.01, 0.01);
-		shipCircle2 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle');
-		shipCircle2.scale.setTo(0.01, 0.01);
-		shipCircle3 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle');
-		shipCircle3.scale.setTo(0.01, 0.01);
-
-		shipCircle4 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
-		shipCircle4.scale.setTo(0.01, 0.01);
-		shipCircle5 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
-		shipCircle5.scale.setTo(0.01, 0.01);
-		shipCircle6 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
-		shipCircle6.scale.setTo(0.01, 0.01);
-	
-//minimapa circulos
-		if(player.team==0){ 
-			shipCircle4.alpha = 0.0;
-		    shipCircle5.alpha = 0.0;
-		    shipCircle6.alpha = 0.0;
-		}
-		if(player.team==1){ 
-			shipCircle.alpha = 0.0;
-		    shipCircle2.alpha = 0.0;
-		    shipCircle3.alpha = 0.0;
-		}
-	
 
 
 		//listen to the “connect” message from the server. The server 
@@ -612,6 +571,52 @@ main.prototype = {
 		// ship5.body.allowSleep = false;
 		// ship6.body.allowSleep = false;
 		tileSprite = game.add.tileSprite(0, 0, 8000, 8000, 'background');
+
+		//MINIMAP and HUD
+		rec = game.add.sprite(player.posicionX, player.posicionY, 'miniMap');
+		rec.width = 200;
+		rec.height = 200;
+		barraSalud = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
+		barraSalud.width = 200;
+		barraSalud.height = 100;
+		barraEspecial = game.add.sprite(player.posicionX, player.posicionY, 'barraSalud');
+		barraEspecial.width = 200;
+		barraEspecial.height = 100;
+		barraES = game.add.sprite(player.posicionX, player.posicionY, 'barraES');
+		barraES.width = 94;
+		barraES.height = 16;
+		barraES.alpha = 0.8;
+		barraHP = game.add.sprite(player.posicionX, player.posicionY, 'barraHP');
+		barraHP.width = 94;
+		barraHP.height = 16;
+
+	
+		shipCircle = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle');
+		shipCircle.scale.setTo(0.01, 0.01);
+		shipCircle2 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle');
+		shipCircle2.scale.setTo(0.01, 0.01);
+		shipCircle3 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle');
+		shipCircle3.scale.setTo(0.01, 0.01);
+
+		shipCircle4 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
+		shipCircle4.scale.setTo(0.01, 0.01);
+		shipCircle5 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
+		shipCircle5.scale.setTo(0.01, 0.01);
+		shipCircle6 = game.add.sprite(game.camera.x + (game.camera.width / 1.27), game.camera.y + (window.innerHeight / 1.808), 'shipCircle2');
+		shipCircle6.scale.setTo(0.01, 0.01);
+	
+//minimapa circulos
+		if(player.team==0){ 
+			shipCircle4.alpha = 0.0;
+		    shipCircle5.alpha = 0.0;
+		    shipCircle6.alpha = 0.0;
+		}
+		if(player.team==1){ 
+			shipCircle.alpha = 0.0;
+		    shipCircle2.alpha = 0.0;
+		    shipCircle3.alpha = 0.0;
+		}
+	
 		game.world.sendToBack(tileSprite);
 
 
