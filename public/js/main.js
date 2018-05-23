@@ -447,7 +447,12 @@ main.prototype = {
 		
 
 		//game.add.image(game.world.centerX, game.world.centerY, 'background');
-
+		meteorito1 = game.add.sprite(1300, 1600, 'meteorito1');
+		meteorito2 = game.add.sprite(2000, 1000, 'meteorito2');
+		meteorito3 = game.add.sprite(300, 2000, 'meteorito3');
+		meteorito4 = game.add.sprite(2300, 2300, 'meteorito4');
+		meteorito5 = game.add.sprite(200, 400, 'meteorito5');
+		meteorito6 = game.add.sprite(800, 800, 'meteorito6');
 
 		//CREANDO LA BASE
 		ship.animations.play('walk', 10, true);
@@ -572,12 +577,6 @@ main.prototype = {
 		}
 
 
-		meteorito1 = game.add.sprite(800, 800, 'meteorito1');
-		meteorito2 = game.add.sprite(2000, 1000, 'meteorito2');
-		meteorito3 = game.add.sprite(300, 2000, 'meteorito3');
-		meteorito4 = game.add.sprite(2300, 2300, 'meteorito4');
-		meteorito5 = game.add.sprite(200, 400, 'meteorito5');
-		meteorito6 = game.add.sprite(1300, 1600, 'meteorito6');
 
 		//todo
 		ship.body.allowSleep = false;
@@ -632,6 +631,8 @@ main.prototype = {
 		    shipCircle2.alpha = 0.0;
 		    shipCircle3.alpha = 0.0;
 		}
+	
+		
 	
 		game.world.sendToBack(tileSprite);
 

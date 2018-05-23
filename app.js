@@ -62,6 +62,12 @@ var platformRight = new SAT.Circle(new SAT.Vector(2190,1790), 240);
 var roomMatch = new Array();
 var baseUp = new SAT.Box(new SAT.Vector(950,0), 1090, 620).toPolygon();
 var baseDown = new SAT.Box(new SAT.Vector(950,2490), 1060, 750).toPolygon();
+var meteorito1 = new SAT.Circle(new SAT.Vector(1400,1700), 100);
+var meteorito2 = new SAT.Circle(new SAT.Vector(2100,1100), 100);
+var meteorito3 = new SAT.Circle(new SAT.Vector(400,2100), 100);
+var meteorito4 = new SAT.Circle(new SAT.Vector(2400,2400), 100);
+var meteorito5 = new SAT.Circle(new SAT.Vector(300,500), 100);
+var meteorito6 = new SAT.Circle(new SAT.Vector(900,900), 100);
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -89,16 +95,27 @@ io.on('connection', function(socket) {
            
             switch(data){
               case 'up':
+             
+              if(player.up==false)
+              player.collision.pos.y -= 16;
               player.up=true;
+             
               break;
               case 'down':
+              if(player.down==false)
+              player.collision.pos.y += 16;
               player.down=true;
               break;
               case 'right':
+              if(player.right==false)
+              player.collision.pos.x += 16;
               player.right=true;
               break;
               case 'left':
+              if(player.left==false)
+              player.collision.pos.x -= 16;
               player.left=true;
+             
               break;
             }  
           }
@@ -108,17 +125,23 @@ io.on('connection', function(socket) {
             if(player.team==0)
             switch(data){
               case 'up':
+              
               if(player.posicionY > 2500)
               player.up=true;
               break;
               case 'down':
+              
+              
               player.down=true;
+            
               break;
               case 'right':
+             
               if(player.posicionX < 1900)
               player.right=true;
               break;
               case 'left':
+             
               if(player.posicionX > 1000)
               player.left=true;
               break;
@@ -126,17 +149,21 @@ io.on('connection', function(socket) {
             else
             switch(data){
               case 'up':
+              
               player.up=true;
               break;
               case 'down':
+             
               if(player.posicionY < 1000)
               player.down=true;
               break;
               case 'right':
+              
               if(player.posicionX < 1900)
               player.right=true;
               break;
               case 'left':
+             
               if(player.posicionX > 1000)
               player.left=true;
               break;
@@ -463,20 +490,45 @@ function movePlayer(i){
   if(playersMatch[i]!=null){
   playersMatch[i].forEach(element => { 
       if(element.up==true && element.posicionY>100){
-
-        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
+   
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false
+        && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionY-=4;
-        element.up=false; 
+        
         }
-        else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
-          element.posicionY+=32;
-          element.up=false; 
-        } 
+        // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+        //   element.posicionY+=32;
+       
+        // } 
       }
       if(element.down ==true && element.posicionY < 2900){
-        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false&& SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionY+=4;
-        element.down=false;
+       
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
         //   element.posicionY-=16;
@@ -484,24 +536,48 @@ function movePlayer(i){
         // } 
       }
       if(element.right==true && element.posicionX < 2876){
-        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false&& SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionX+=4;
-        element.right=false;
+      
         }
-        else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
-          element.posicionX-=32;
-          element.right=false;
-        } 
+        // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+        //   element.posicionX-=32;
+          
+        // } 
       }
       if(element.left==true && element.posicionX  > 100){
-        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false){
+        if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
+        && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionX-=4;
-        element.left=false;
+        
         }
-        else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
-          element.posicionX+=32;
-          element.left=false;
-        } 
+        // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
+        //   element.posicionX+=32;
+          
+        // } 
       }if(element.clock!=null)
       
       //ACTUALIZACION DE LOS ESPECIAL
@@ -533,9 +609,32 @@ function movePlayer(i){
           element.special = false;
         }
       }
+     
       //COLISIONES CON LA BASE
    element.collision.pos.x = element.posicionX;
    element.collision.pos.y = element.posicionY;
+   if(element.left==true)
+   {
+     console.log('left');
+   element.collision.pos.x += 16; 
+   }
+   if(element.up==true)
+   {
+   element.collision.pos.y += 16; 
+   }
+   if(element.down==true)
+   {
+   element.collision.pos.y -= 16; 
+   }
+   if(element.right==true)
+   {
+   element.collision.pos.x -= 16; 
+   }
+
+   element.left=false;
+   element.up=false;
+   element.down=false;
+   element.right=false;
    var responseLeft = new SAT.Response();
    var responseRight = new SAT.Response();
    var rl = SAT.testCircleCircle(element.collision, platformLeft, responseLeft);  
@@ -721,44 +820,7 @@ function deleteUser(id){
       {  
         delete playersMatch[i][x];
         
-        //playersMatch[i] = playersMatch[i].filter(Boolean);
-        
-        // for(j=0;j<playersMatch[i].length;j++)
-        //       {      
-        //         switch(j){
-        //           case 0:
-        //             playersMatch[i][j].rol = 0;
-        //             playersMatch[i][j].posicionX = 1300;
-        //             playersMatch[i][j].posicionY = 1500;
-                    
-        //           break;
-        //           case 1:
-        //             playersMatch[i][j].rol = 1;
-        //             playersMatch[i][j].posicionX = 1600;
-        //             playersMatch[i][j].posicionY = 1500;
-        //           break;
-        //           case 2:
-        //             playersMatch[i][j].rol = 2;
-        //             playersMatch[i][j].posicionX = 1900;
-        //             playersMatch[i][j].posicionY = 1500;
-        //           break;
-        //           case 3:
-        //           playersMatch[i][j].rol = 0;
-        //           playersMatch[i][j].posicionX = 1300;
-        //           playersMatch[i][j].posicionY = 1500;
-        //           break;
-        //           case 4:
-        //           playersMatch[i][j].rol = 1;
-        //           playersMatch[i][j].posicionX = 1300;
-        //           playersMatch[i][j].posicionY = 1500;
-        //           break;
-        //           case 5:
-        //           playersMatch[i][j].rol = 2;
-        //           playersMatch[i][j].posicionX = 1300;
-        //           playersMatch[i][j].posicionY = 1500;
-        //           break;
-        //           }
-        //         }  
+       
       }
     }
   }
@@ -849,7 +911,15 @@ if(bulletsMatch[i]!=null)
  
    
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true 
+     || SAT.testPolygonCircle(baseDown, element.collision, response)==true 
+     || SAT.testPolygonCircle(baseUp, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito1, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito2, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito3, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito4, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito5, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito6, element.collision, response)==true)
      {
     
        var posicion = bulletsMatch[i].indexOf(element);    
@@ -868,7 +938,12 @@ if(bulletsMatch[i]!=null)
  
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 7800000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true|| SAT.testCircleCircle(meteorito1, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito2, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito3, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito4, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito5, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito6, element.collision, response)==true)
      {
       
        //console.log(element.room);
@@ -890,7 +965,12 @@ if(bulletsMatch[i]!=null)
 
    // console.log(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)));
      //Borrado de balas
-     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true)
+     if(Math.sqrt(Math.pow(a,2)+Math.pow(b,2)  > 480000) || element.destroy==true || SAT.testPolygonCircle(baseDown, element.collision, response)==true || SAT.testPolygonCircle(baseUp, element.collision, response)==true|| SAT.testCircleCircle(meteorito1, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito2, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito3, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito4, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito5, element.collision, response)==true
+     || SAT.testCircleCircle(meteorito6, element.collision, response)==true)
      {
       
        var copy = Object.assign({}, element);
