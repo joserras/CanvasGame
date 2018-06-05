@@ -847,7 +847,9 @@ main.prototype = {
 							balasSpriteMatch[i] = null;
 
 						}
+						
 					}
+					balasMatch=null;
 			if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 			
 				//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);		
@@ -886,6 +888,7 @@ main.prototype = {
 
 					//ship.body.moveDown(game.time.fps*4);
 					//ship.body.y +=4;
+
 					socket.emit('movement', 'down');
 				}
 			}
@@ -1302,7 +1305,7 @@ function blockHit(body, bodyB, shapeA, shapeB, equation) {
 }
 
 function blockHitEnd(body, bodyB, shapeA, shapeB, equation) {
-	console.log("hitEnd");
+	
 	collision = false;
 }
 function platformHitRight(platform, ship) {

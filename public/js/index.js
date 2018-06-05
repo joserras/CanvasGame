@@ -135,7 +135,7 @@ function activateSockets(){
                 }
             }
       
-     
+           
             
     })
     socket.on('latency', function(data) {
@@ -224,6 +224,7 @@ function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {
 console.log('golpeo');
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
+        if(balasMatch!=null)
         for(i=0;i<balasMatch.length;i++)
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
@@ -239,7 +240,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
     }
      else{
         
-        
+        if(balasMatch!=null)
         for(i=0;i<balasMatch.length;i++)
         {         
             if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))

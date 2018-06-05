@@ -62,12 +62,12 @@ var platformRight = new SAT.Circle(new SAT.Vector(2190,1790), 240);
 var roomMatch = new Array();
 var baseUp = new SAT.Box(new SAT.Vector(950,0), 1090, 620).toPolygon();
 var baseDown = new SAT.Box(new SAT.Vector(950,2490), 1060, 750).toPolygon();
-var meteorito1 = new SAT.Circle(new SAT.Vector(1400,1700), 100);
-var meteorito2 = new SAT.Circle(new SAT.Vector(2100,1100), 100);
-var meteorito3 = new SAT.Circle(new SAT.Vector(400,2100), 100);
-var meteorito4 = new SAT.Circle(new SAT.Vector(2400,2400), 100);
-var meteorito5 = new SAT.Circle(new SAT.Vector(300,500), 100);
-var meteorito6 = new SAT.Circle(new SAT.Vector(900,900), 100);
+var meteorito1 = new SAT.Circle(new SAT.Vector(1400,1700), 80);
+var meteorito2 = new SAT.Circle(new SAT.Vector(2100,1100), 80);
+var meteorito3 = new SAT.Circle(new SAT.Vector(400,2100), 80);
+var meteorito4 = new SAT.Circle(new SAT.Vector(2400,2400), 80);
+var meteorito5 = new SAT.Circle(new SAT.Vector(300,500), 80);
+var meteorito6 = new SAT.Circle(new SAT.Vector(900,900), 80);
 //CONEXION DE LOS USUARIOS
 io.on('connection', function(socket) {  
   socket.on('disconnect', function(){
@@ -343,7 +343,7 @@ function secondSkillBullets(bulletParam){
 
   
   bulletsMatch[bulletParam.room].push(bullet);
-  
+  bullet=null;
   }
  
 
@@ -615,7 +615,7 @@ function movePlayer(i){
    element.collision.pos.y = element.posicionY;
    if(element.left==true)
    {
-     console.log('left');
+     
    element.collision.pos.x += 16; 
    }
    if(element.up==true)
