@@ -824,14 +824,13 @@ main.prototype = {
 										}
 							}
 							//caso especial apra la bala especial no le da tiempo a destruirse antes de genrar las otras balas
-							if(balasMatch[i].special2==true && balasMatch[i].rotation == 0.012345)
+							if(balasMatch[i].special2==true && balasMatch[i].rotation == 2.012345)
 							{
-							
+							console.log("destroy");
 							balasSpriteMatch[i].body.kinematic = true;
 							balasSpriteMatch[i].body.x = -200;
 							balasSpriteMatch[i].body.y = -200;
 							balasSpriteMatch[i].destroy();
-
 							balasSpriteMatch[i] = null;
 
 							}
@@ -842,8 +841,7 @@ main.prototype = {
 							balasSpriteMatch[i].body.kinematic = true;
 							balasSpriteMatch[i].body.x = -200;
 							balasSpriteMatch[i].body.y = -200;
-							balasSpriteMatch[i].destroy();
-
+							balasSpriteMatch[i].destroy();	
 							balasSpriteMatch[i] = null;
 
 						}

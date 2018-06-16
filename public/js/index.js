@@ -91,6 +91,7 @@ function activateSockets(){
     })
     socket.on('updateBullets', function(data) {     
         balasMatch = data;
+        console.log(data);
         if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
             {   
@@ -107,6 +108,7 @@ function activateSockets(){
                     balasSpriteMatch[i].body.miBala = balasMatch[i].id;
                     balasSpriteMatch[i].body.rol = balasMatch[i].rol;
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
+                   
                     }
                     //solo para balas especial
                     else if (balasMatch[i].special==true){
@@ -114,7 +116,8 @@ function activateSockets(){
                         balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');        
                         else
                         balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletRed');
-                       
+                       console.log("special");
+                        
                         game.physics.p2.enable(balasSpriteMatch[i], true);
 
                          if(balasSpriteMatch[i]!=null && balasSpriteMatch[i].body!=null)
