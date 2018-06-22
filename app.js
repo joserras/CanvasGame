@@ -337,6 +337,7 @@ function secondSkillBullets(bulletParam){
   bullet.destroy = false;
   
   aux=aux-0.8;
+  if(bulletsMatch[bulletParam.room]!=null)
   bulletsMatch[bulletParam.room].push(bullet);
   bullet=null;
   }
@@ -483,8 +484,12 @@ function createBullet(player){
 function movePlayer(i){
   if(playersMatch[i]!=null){
   playersMatch[i].forEach(element => { 
+    element.movementup=false;
+    element.movementdown=false;
+    element.movementright=false;
+    element.movementleft=false;
       if(element.up==true && element.posicionY>100){
-   
+     
         if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
@@ -500,6 +505,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionY-=4;
+        element.movementup=true;
         
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
@@ -522,7 +528,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionY+=4;
-       
+        element.movementdown=true;
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
         //   element.posicionY-=16;
@@ -544,6 +550,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionX+=4;
+        element.movementright=true;
       
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
@@ -566,7 +573,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionX-=4;
-        
+        element.movementleft=true;
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
         //   element.posicionX+=32;
@@ -983,7 +990,7 @@ if(bulletsMatch[i]!=null)
   });
 
 
-  if(bulletsMatchSpecial[i]!=null)
+  if(bulletsMatchSpecial[i]!=null && bulletsMatchSpecial[i]!=undefined)
   bulletsMatchSpecial[i].forEach(element => {
     element.x+=6*Math.cos(element.rotation-1.5);
     element.y+=6*Math.sin(element.rotation-1.5);
@@ -1004,9 +1011,9 @@ if(bulletsMatch[i]!=null)
      {
       
        var copy = Object.assign({}, element);
-       var posicion = bulletsMatch[i].indexOf(element);
-       delete bulletsMatch[i][posicion];
-       bulletsMatch[i] = bulletsMatch[i].filter(Boolean);
+       var posicion = bulletsMatchSpecial[i].indexOf(element);
+       delete bulletsMatchSpecial[i][posicion];
+       bulletsMatchSpecial[i] = bulletsMatchSpecial[i].filter(Boolean);
        
        if(copy.special==true)
         secondSkillBullets(copy);

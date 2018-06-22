@@ -823,17 +823,7 @@ main.prototype = {
 
 										}
 							}
-							//caso especial apra la bala especial no le da tiempo a destruirse antes de genrar las otras balas
-							if(balasMatch[i].special2==true && balasMatch[i].rotation == 2.012345)
-							{
-							console.log("destroy");
-							balasSpriteMatch[i].body.kinematic = true;
-							balasSpriteMatch[i].body.x = -200;
-							balasSpriteMatch[i].body.y = -200;
-							balasSpriteMatch[i].destroy();
-							balasSpriteMatch[i] = null;
-
-							}
+						
 
 							
 						}
@@ -848,6 +838,47 @@ main.prototype = {
 						
 					}
 					balasMatch=null;
+
+
+						//MOVIMIENTOD E LAS BALAS
+			if (balasSpriteMatchSpecial != null)
+			if (balasMatchSpecial != null)
+				for (i = 0; i < balasSpriteMatchSpecial.length; i++) {
+					if (balasSpriteMatchSpecial[i] != null && balasMatchSpecial[i] != null) {
+						if (balasSpriteMatchSpecial[i].body != null) {
+					
+							balasSpriteMatchSpecial[i].body.x = balasMatchSpecial[i].x;
+							balasSpriteMatchSpecial[i].body.y = balasMatchSpecial[i].y;
+							
+							if (spriteBarrierBlueSkill != null)
+								if (balasSpriteMatchSpecial[i].body.rol != 0)
+									if (checkOverlap(spriteBarrierBlueSkill, balasSpriteMatchSpecial[i])) {
+
+										socket.emit('bulletHit', { bullet: balasMatchSpecial[i], ship: null });
+									}
+							if (spriteBarrierRedSkill != null)
+								if (balasSpriteMatchSpecial[i].body.rol != 0)
+									if (checkOverlap(spriteBarrierRedSkill, balasSpriteMatchSpecial[i])) {
+										socket.emit('bulletHit', { bullet: balasMatchSpecial[i], ship: null });
+
+
+									}
+						}
+						
+
+						
+					}
+					else if (balasSpriteMatchSpecial[i] != null) {
+						balasSpriteMatchSpecial[i].body.kinematic = true;
+						balasSpriteMatchSpecial[i].body.x = -200;
+						balasSpriteMatchSpecial[i].body.y = -200;
+						balasSpriteMatchSpecial[i].destroy();	
+						balasSpriteMatchSpecial[i] = null;
+
+					}
+					
+				}
+				balasMatchSpecial=null;
 			if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 			
 				//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);		
@@ -930,10 +961,25 @@ main.prototype = {
 			if (player.rol == 0) {
 				if ((players[0] != null)) {
 
+					
+					//ship.body.x = players[0].posicionX;
+					//ship.body.y = players[0].posicionY;
+					if(players[0].movementup==true)
+					{
+					ship.body.moveUp(250);
+					console.log(players[0].movementup);
+					}
+					if(players[0].movementdown==true)
+					ship.body.moveDown(250);
+					if(players[0].movementright==true)
+					ship.body.moveRight(250);
+					if(players[0].movementleft==true)
+					ship.body.moveLeft(250);
 
-					ship.body.x = players[0].posicionX;
-					ship.body.y = players[0].posicionY;
-
+					players[0].movementup = false;
+					players[0].movementright = false;
+					players[0].movementleft = false;
+					players[0].movementdown = false;
 					//SECOND SKILL ROL 0
 					if (spriteBarrierRedSkill != null) {
 						spriteBarrierRedSkill.body.x = players[0].posicionX;
@@ -1298,6 +1344,7 @@ function shotTwo() {
 }
 
 function blockHit(body, bodyB, shapeA, shapeB, equation) {
+	if(body!=null)
 	if (body.platform == null)
 		collision = true;
 }

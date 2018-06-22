@@ -10,6 +10,7 @@ var ship2;
 var ship3;
 var cursors;
 var balasMatch;
+var balasMatchSpecial;
 //weapons
 var weapon;
 var fireButton;
@@ -22,6 +23,9 @@ var spriteBarrierRedSkill;
 var spriteBarrierBlueSkill;
 var startTime;
 
+
+var balasSpriteMatch=[];
+var balasSpriteMatchSpecial=[];
 
 //rellenamos los consejos
 advises[0] = "Wait a moment, looking for a match!";
@@ -67,7 +71,7 @@ function login(data){
 
        
 }
-var balasSpriteMatch=[];
+
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
@@ -89,17 +93,14 @@ function activateSockets(){
       
             
     })
-    socket.on('updateBullets', function(data) {     
+    socket.on('updateBullets', function(data,data1) {     
         balasMatch = data;
-        console.log(data);
+        balasMatchSpecial=data1;
         if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
             {   
-                if(balasMatch[i]!=null && balasSpriteMatch[i]==null){
-                    if(balasMatch[i].special==null)
-                    {
-                    balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');
-                    
+                if(balasMatch[i]!=null && balasSpriteMatch[i]==null){                   
+                    balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'bullet');                   
                     game.physics.p2.enable(balasSpriteMatch[i], true);
                    //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
                     balasSpriteMatch[i].checkWorldBounds = true;               
@@ -109,35 +110,57 @@ function activateSockets(){
                     balasSpriteMatch[i].body.rol = balasMatch[i].rol;
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
                    
-                    }
-                    //solo para balas especial
-                    else if (balasMatch[i].special==true){
-                        if(balasMatch[i].team==1)
-                        balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');        
-                        else
-                        balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletRed');
-                       console.log("special");
+                    
+                    // //solo para balas especial
+                    // else if (balasMatch[i].special==true){
+                    //     if(balasMatch[i].team==1)
+                    //     balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletBlue');        
+                    //     else
+                    //     balasSpriteMatch[i]=game.add.sprite(balasMatch[i].x, balasMatch[i].y, 'secondSkillBulletRed');
+                    //    console.log("special");
                         
-                        game.physics.p2.enable(balasSpriteMatch[i], true);
+                    //     game.physics.p2.enable(balasSpriteMatch[i], true);
 
-                         if(balasSpriteMatch[i]!=null && balasSpriteMatch[i].body!=null)
-                        {
+                    //      if(balasSpriteMatch[i]!=null && balasSpriteMatch[i].body!=null)
+                    //     {
                         
-                        balasSpriteMatch[i].body.rotation = player.rotation;
-                        }
-                    //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
-                        balasSpriteMatch[i].checkWorldBounds = true;               
-                        balasSpriteMatch[i].body.setCircle(9);
-                        balasSpriteMatch[i].body.static= true;
-                        balasSpriteMatch[i].body.miBala = balasMatch[i].id;
-                        balasSpriteMatch[i].body.rol = balasMatch[i].rol;
-                        balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
-                    }
+                    //     balasSpriteMatch[i].body.rotation = player.rotation;
+                    //     }
+                    // //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);  
+                    //     balasSpriteMatch[i].checkWorldBounds = true;               
+                    //     balasSpriteMatch[i].body.setCircle(9);
+                    //     balasSpriteMatch[i].body.static= true;
+                    //     balasSpriteMatch[i].body.miBala = balasMatch[i].id;
+                    //     balasSpriteMatch[i].body.rol = balasMatch[i].rol;
+                    //     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
+                    // }
                                             
                     
                 }
             }
-      
+            if(balasMatchSpecial!=null)
+            for(i=0;i<balasMatchSpecial.length;i++)
+            {   
+                if(balasMatchSpecial[i]!=null && balasSpriteMatchSpecial[i]==null){
+                    if(balasMatchSpecial[i].team==1)                   
+                    balasSpriteMatchSpecial[i]=game.add.sprite(balasMatchSpecial[i].x, balasMatchSpecial[i].y, 'secondSkillBulletBlue');
+                    else
+                    balasSpriteMatchSpecial[i]=game.add.sprite(balasMatchSpecial[i].x, balasMatchSpecial[i].y, 'secondSkillBulletRed'); 
+
+                    game.physics.p2.enable(balasSpriteMatchSpecial[i], true);
+                  
+                   balasSpriteMatchSpecial[i].checkWorldBounds = true;               
+                   balasSpriteMatchSpecial[i].body.setCircle(6);
+                   balasSpriteMatchSpecial[i].body.static= true;
+                   balasSpriteMatchSpecial[i].body.miBala = balasMatchSpecial[i].id;
+                   balasSpriteMatchSpecial[i].body.rol = balasMatchSpecial[i].rol;
+                   balasSpriteMatchSpecial[i].body.onBeginContact.add(blockHitBullet, this);
+                   
+                    
+                          
+                    
+                }
+            }
            
             
     })
