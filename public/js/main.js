@@ -713,7 +713,7 @@ main.prototype = {
 					
 		 		shipCircle4.x = game.camera.x + (game.camera.width / 1.27) + 100 + (ship4.body.x / 14.38) - 5;
 		 		shipCircle4.y = game.camera.y + (game.camera.height / 1.808) + 100 + (ship4.body.y / 14.5);
-				 console.log(shipCircle4);
+				
 			}
 				else { shipCircle4.alpha = 0; }
 		 		if (ship5!=null && ship5.body.x > -100) {
