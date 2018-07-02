@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();  
 var server = require('http').Server(app);  
 var io = require('socket.io')(server);
-var MongoClient = require('mongodb').MongoClient;
+// var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/mydb";
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
@@ -100,7 +100,7 @@ io.on('connection', function(socket) {
               if(player.up==false)
               player.collision.pos.y -= 16;
               player.up=true;
-             
+             console.log(player);
               break;
               case 'down':
               if(player.down==false)
@@ -489,7 +489,8 @@ function movePlayer(i){
     element.movementright=false;
     element.movementleft=false;
       if(element.up==true && element.posicionY>100){
-     
+     console.log(element.team);
+     console.log(SAT.testPolygonCircle(baseUp, element.collision, response));
         if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
@@ -497,7 +498,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
-        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false
+        || element.team == 1 && SAT.testPolygonCircle(baseDown, element.collision, response)==false
         && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
@@ -506,7 +507,8 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionY-=4;
         element.movementup=true;
-        
+        console.log('asdasd');
+        console.log(element);
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
         //   element.posicionY+=32;
@@ -521,7 +523,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
-        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false&& SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseDown, element.collision, response)==false&& SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
@@ -543,7 +545,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
-        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false&& SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseDown, element.collision, response)==false&& SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
@@ -566,7 +568,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito5, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false 
-        || element.team == 1 && SAT.testPolygonCircle(baseUp, element.collision, response)==false && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
+        || element.team == 1 && SAT.testPolygonCircle(baseDown, element.collision, response)==false && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito3, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito4, element.collision, responseBaseCollision)==false 
@@ -839,7 +841,7 @@ function joinInRoom(socket){
   fillPlayer(socket);
   if(io.sockets.adapter.rooms[room]!=null){
     //hay que cambiarlo a ==6
-    if(io.sockets.adapter.rooms[room].length==3){
+    if(io.sockets.adapter.rooms[room].length==6){
       var data;
       data=playersMatch[room];
       console.log("start game");
@@ -1128,26 +1130,26 @@ app.post('/login', function (req, res) {
   var myobj = { username: req.body.usuario, socketID: req.body.id };
   var query = { username: req.body.usuario };
   //CONEXION A MONGO
-MongoClient.connect(url, function(err, db) {
-  db.collection("usuarios").find(query).toArray(function(err, result) {
-    if (err) throw err; 
-    console.log(result.length);
-    if(result.length == 0)
-      {
-         db.collection("usuarios").insertOne(myobj, function(err, res) {
-            if (err) throw err;
-            console.log("1 document inserted");
-            db.close();
-        });
-      }
-      else{console.log("usuario escogido");}
-    db.close();
-  });
+// MongoClient.connect(url, function(err, db) {
+//   db.collection("usuarios").find(query).toArray(function(err, result) {
+//     if (err) throw err; 
+//     console.log(result.length);
+//     if(result.length == 0)
+//       {
+//          db.collection("usuarios").insertOne(myobj, function(err, res) {
+//             if (err) throw err;
+//             console.log("1 document inserted");
+//             db.close();
+//         });
+//       }
+//       else{console.log("usuario escogido");}
+//     db.close();
+//   });
 
 
- });
+//  });
 
-	res.send(req.body);
+// 	res.send(req.body);
  
 });
 
