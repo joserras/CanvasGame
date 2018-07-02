@@ -51,7 +51,7 @@ function myTimer() {
 //http://battleshipa.herokuapp.com/
 //Envía el nombre de usuario y su socket.id al servidor
 function login(data){
-    socket = io.connect('http://battleshipa.herokuapp.com/', { 'forceNew': true });
+    socket = io.connect('https://battleshipa.herokuapp.com/', { 'forceNew': true });
     var usuario = data.nickname.value;
     loading();
     activateSockets();
