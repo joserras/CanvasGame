@@ -57,7 +57,7 @@ function login(data){
     activateSockets();
       $.ajax({
             type: "POST", 
-            url: "/login", 
+            url: "https://battleshipa.herokuapp.com/login", 
             //hay que quitar de ahi el socket no es seguro
             data: JSON.stringify({"usuario" : usuario,"id": socket.id}), 
             contentType: "application/json", 

@@ -35,6 +35,7 @@ var HPActual;
 var pointBarBlue;
 var pointBarRed;
 var ship, ship2, ship3,ship4, ship5, ship6;
+var text;
 // this is the main game state
 var main = function (game) {
 };
@@ -555,7 +556,7 @@ main.prototype = {
 
 
 
-		var text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center" });
+	  text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center" });
 		text.anchor.setTo(0.5, 0.5);
 
 		//cursores mas contacto +background
@@ -1448,6 +1449,7 @@ function checkPlatform(body1, body2) {
 
 var i = setInterval(function () {
 	totalTimer--;
+	if(text!=null){
 	text.setText('Empieza en: ' + totalTimer + '!');
 	if (totalTimer == 0) {
 		anim1.play(10, false);
@@ -1473,6 +1475,7 @@ var i = setInterval(function () {
 
 		key2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 		key2.onDown.add(shotTwo, this);
+	}
 		setInterval(i);
 	}
 }, 1000);
