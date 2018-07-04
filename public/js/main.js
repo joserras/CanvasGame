@@ -639,7 +639,8 @@ main.prototype = {
 		
 	
 		game.world.sendToBack(tileSprite);
-
+		
+		startTime = Date.now();
 		socket.emit('latency', 'data');
 
 		HPTotal = player.life;
@@ -890,7 +891,7 @@ main.prototype = {
 			
 				//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);		
 				if (ship.body.x > 100 && collision == false) {
-					startTime = Date.now();
+					
 					//ship.body.moveLeft(game.time.fps*4);	
 					
 					socket.emit('movement', 'left');

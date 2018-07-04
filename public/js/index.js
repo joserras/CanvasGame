@@ -167,6 +167,7 @@ function activateSockets(){
     socket.on('latency', function(data) {
         if(startTime !=null){ 
             latency = Date.now() - startTime; 
+            console.log(latency);
         }
        
             
