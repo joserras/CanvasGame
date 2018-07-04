@@ -104,7 +104,7 @@ main.prototype = {
 		});
 		this.game.scale.refresh();
 		game.time.advancedTiming = true;
-		sleep(2000);
+		sleep(1000);
 	},
 	//this function is fired once when we load the game
 	create: function () {

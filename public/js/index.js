@@ -142,20 +142,20 @@ function activateSockets(){
             for(i=0;i<balasMatchSpecial.length;i++)
             {   
                 if(balasMatchSpecial[i]!=null && balasSpriteMatchSpecial[i]==null){
-                    if(balasMatchSpecial[i].team==1)                   
+                    if(balasMatchSpecial[i].team==1)                                     
                     balasSpriteMatchSpecial[i]=game.add.sprite(balasMatchSpecial[i].x, balasMatchSpecial[i].y, 'secondSkillBulletBlue');
                     else
                     balasSpriteMatchSpecial[i]=game.add.sprite(balasMatchSpecial[i].x, balasMatchSpecial[i].y, 'secondSkillBulletRed'); 
-
+                    
                     game.physics.p2.enable(balasSpriteMatchSpecial[i], true);
                   
                    balasSpriteMatchSpecial[i].checkWorldBounds = true;               
-                   balasSpriteMatchSpecial[i].body.setCircle(6);
+                   balasSpriteMatchSpecial[i].body.setCircle(9);
                    balasSpriteMatchSpecial[i].body.static= true;
                    balasSpriteMatchSpecial[i].body.miBala = balasMatchSpecial[i].id;
                    balasSpriteMatchSpecial[i].body.rol = balasMatchSpecial[i].rol;
                    balasSpriteMatchSpecial[i].body.onBeginContact.add(blockHitBullet, this);
-                   
+                   balasSpriteMatchSpecial[i].body.rotation = balasMatchSpecial[i].rotation;
                     
                           
                     

@@ -492,8 +492,7 @@ function movePlayer(i){
     element.movementright=false;
     element.movementleft=false;
       if(element.up==true && element.posicionY>100){
-     console.log(element.team);
-     console.log(SAT.testPolygonCircle(baseUp, element.collision, response));
+  
         if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito1, element.collision, responseBaseCollision)==false 
         && SAT.testCircleCircle(meteorito2, element.collision, responseBaseCollision)==false 
@@ -510,8 +509,7 @@ function movePlayer(i){
         && SAT.testCircleCircle(meteorito6, element.collision, responseBaseCollision)==false ){
         element.posicionY-=4;
         element.movementup=true;
-        console.log('asdasd');
-        console.log(element);
+      
         }
         // else if(element.team == 0 && SAT.testPolygonCircle(baseUp, element.collision, responseBaseCollision)==true){
         //   element.posicionY+=32;
