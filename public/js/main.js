@@ -555,7 +555,7 @@ main.prototype = {
 
 
 
-		text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center" });
+		var text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center" });
 		text.anchor.setTo(0.5, 0.5);
 
 		//cursores mas contacto +background
@@ -639,7 +639,7 @@ main.prototype = {
 	
 		game.world.sendToBack(tileSprite);
 
-
+		socket.emit('latency', 'data');
 
 		HPTotal = player.life;
 	

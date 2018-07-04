@@ -172,8 +172,11 @@ io.on('connection', function(socket) {
             }
         }
         //mayor   que >
-          io.to(findPlayer(socket.id).room).emit('latency', 'data');
+         
       })
+      socket.on('latency', function(data) {
+        io.to(findPlayer(socket.id).room).emit('latency', 'data');   
+    })
   //rotation
       socket.on('rotation', function(data) {
         rotatePlayer(socket.id,data);    
