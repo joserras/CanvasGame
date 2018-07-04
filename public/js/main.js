@@ -104,7 +104,7 @@ main.prototype = {
 		});
 		this.game.scale.refresh();
 		game.time.advancedTiming = true;
-
+		sleep(2000);
 	},
 	//this function is fired once when we load the game
 	create: function () {
@@ -639,7 +639,7 @@ main.prototype = {
 		
 	
 		game.world.sendToBack(tileSprite);
-		
+
 		startTime = Date.now();
 		socket.emit('latency', 'data');
 
@@ -1427,6 +1427,12 @@ function platformHitEndLeft(body, bodyB, shapeA, shapeB, equation) {
 	console.log("hitEP");
 
 }
+function sleep(miliseconds) {
+	var currentTime = new Date().getTime();
+  
+	while (currentTime + miliseconds >= new Date().getTime()) {
+	}
+  }
 function checkPlatform(body1, body2) {
 
 	//  To explain - the post broadphase event has collected together all potential collision pairs in the world
