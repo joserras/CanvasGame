@@ -174,7 +174,7 @@ function activateSockets(){
     })
     socket.on('secondSkillSpy', function(data) {
         console.log('spia activo');
-
+        game.camera.flash(0x00F4E90, 500);
 if(player!=null)
   if(player.team==0){ 
       shipCircle4.alpha = 1.0;
@@ -248,7 +248,7 @@ if(player!=null)
 
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
-console.log('golpeo');
+
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
         if(balasMatch!=null)
@@ -265,27 +265,26 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
         }
     
     }
-     else{
-        
-        if(balasMatch!=null)
-        for(i=0;i<balasMatch.length;i++)
-        {         
-            if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
-            {                        
-             
-                if(body!=null){           
-                socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+            else{
+            
+            if(balasMatch!=null)
+            for(i=0;i<balasMatch.length;i++)
+            {         
+                if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
+                {                        
+                    
+                    if(body!=null){           
+                    socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+                    }
                 }
             }
+            
+            }
         }
-     
-     }
-}
-
 
 
             
-        }
+}
     
 
 function barrierHitBullet(body, bodyB, shapeA, shapeB, equation){
