@@ -271,7 +271,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
                 console.log('b3bbemit'); 
             if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
-            {         
+            {          console.log('onil'); 
                 if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
                 {                        
                     console.log('equationb');
