@@ -258,7 +258,8 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
             {         
                 if(body!=null){        
                 balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
-				balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
+                balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
+                console.log('emit'); 
                 socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
                 }
             }
@@ -273,7 +274,8 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
                 if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
                 {                        
                     
-                    if(body!=null){           
+                    if(body!=null){  
+                        console.log('emit');         
                     socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
                     }
                 }

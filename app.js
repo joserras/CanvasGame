@@ -100,7 +100,6 @@ io.on('connection', function(socket) {
               if(player.up==false)
               player.collision.pos.y -= 16;
               player.up=true;
-             console.log(player);
               break;
               case 'down':
               if(player.down==false)
