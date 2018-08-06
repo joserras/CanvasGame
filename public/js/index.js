@@ -249,9 +249,10 @@ if(player!=null)
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
     console.log('bbbbemit'); 
+    console.log(balasMatch);
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
-        console.log('b2bbemit'); 
+         
         if(balasMatch!=null)
         for(i=0;i<balasMatch.length;i++)
         {
@@ -268,13 +269,13 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
     
     }
             else{
-                console.log('b3bbemit'); 
+                
             if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
-            {          console.log('onil'); 
+            {          
                 if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
                 {                        
-                    console.log('equationb');
+                   
                     if(body!=null){  
                         console.log('emitb');         
                     socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
