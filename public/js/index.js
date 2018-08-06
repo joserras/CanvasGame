@@ -251,6 +251,7 @@ function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {
     console.log('bbbbemit'); 
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
+        console.log('b2bbemit'); 
         if(balasMatch!=null)
         for(i=0;i<balasMatch.length;i++)
         {
@@ -267,7 +268,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
     
     }
             else{
-            
+                console.log('b3bbemit'); 
             if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
             {         
