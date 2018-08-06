@@ -95,6 +95,7 @@ function activateSockets(){
     })
     socket.on('updateBullets', function(data,data1) {     
         balasMatch = data;
+        console.log(balasMatch);
         balasMatchSpecial=data1;
         if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
