@@ -94,8 +94,9 @@ function activateSockets(){
             
     })
     socket.on('updateBullets', function(data,data1) {     
+
         balasMatch = data;
-        console.log(balasMatch);
+        
         balasMatchSpecial=data1;
         if(balasMatch!=null)
             for(i=0;i<balasMatch.length;i++)
@@ -249,7 +250,7 @@ if(player!=null)
 
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
-    console.log('bbbbemit'); 
+
     console.log(balasMatch);
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
@@ -258,7 +259,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
         for(i=0;i<balasMatch.length;i++)
         {
             if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
-            {         console.log('equation');
+            {        
                 if(body!=null){        
                 balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
                 balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
