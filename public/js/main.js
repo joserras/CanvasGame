@@ -877,7 +877,7 @@ var i = setInterval(function () {
 						}
 						
 					}
-					balasMatch=null;
+					//balasMatch=null;
 
 
 						//MOVIMIENTOD E LAS BALAS
