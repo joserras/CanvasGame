@@ -9,7 +9,7 @@ game = new Phaser.Game(canvas_width, canvas_height, Phaser.CANVAS,
 
 var gameState = new Phaser.Stage(game);
 
-
+var target;
 var gameProperties = {
 	//this is the actual game size to determine the boundary of 
 	//the world
