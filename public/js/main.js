@@ -114,7 +114,7 @@ main.prototype = {
 		game.physics.startSystem(Phaser.Physics.P2JS);
 		console.log("client started");
 
-
+		console.log(players)
 		
 
 
