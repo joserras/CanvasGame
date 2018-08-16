@@ -247,7 +247,7 @@ io.on('connection', function(socket) {
                 }
                 if(player.team==1){
                   player.posicionX = 1300;
-                  player.posicionY = 2885;
+                  player.posicionY = 485;
                   player.life = 200;
                   player.inmuneClock = clockit.start();
                   player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
@@ -263,8 +263,8 @@ io.on('connection', function(socket) {
                }
                //TODO cambiar posiciones de muerte equipo 1
                if(player.team==1){
-                player.posicionX = 1300;
-                player.posicionY = 2885;
+                player.posicionX = 1500;
+                player.posicionY = 485;
                 player.life = 100;
                 player.inmuneClock = clockit.start();
                 player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
@@ -279,8 +279,8 @@ io.on('connection', function(socket) {
                   player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
                }
                if(player.team==1){
-                player.posicionX = 1300;
-                player.posicionY = 2885;
+                player.posicionX = 1700;
+                player.posicionY = 485;
                 player.life = 70;
                 player.inmuneClock = clockit.start();
                 player.collision=new SAT.Circle(new SAT.Vector(player.posicionX,player.posicionY),16);
@@ -877,20 +877,20 @@ function updateRoom(i)
  //si cualquier del equi 0 esta en la paltaforma left y ninguno del equipo 1
   if(roomMatch[i][0].r01 == true || roomMatch[i][0].r02 == true || roomMatch[i][0].r03 == true)
     if(roomMatch[i][0].r11 == false && roomMatch[i][0].r12 == false && roomMatch[i][0].r13 == false)
-       roomMatch[i][0].team0 +=0.0625;
+       roomMatch[i][0].team0 +=0.2625;
  //si cualquier del equi 0 esta en la paltaforma right y ninguno del equipo 1      
   if(roomMatch[i][1].r01 == true || roomMatch[i][1].r02 == true || roomMatch[i][1].r03 == true)
     if(roomMatch[i][1].r11 == false && roomMatch[i][1].r12 == false && roomMatch[i][1].r13 == false)
-       roomMatch[i][0].team0 +=0.0625;  
+       roomMatch[i][0].team0 +=0.2625;  
   //si cualquier del equi 0 esta en la paltaforma left y ninguno del equipo 1
   if(roomMatch[i][0].r11 == true || roomMatch[i][0].r12 == true || roomMatch[i][0].r13 == true)
     if(roomMatch[i][0].r01 == false && roomMatch[i][0].r02 == false && roomMatch[i][0].r03 == false)
-      roomMatch[i][0].team1 +=0.0625;
+      roomMatch[i][0].team1 +=0.2625;
 
   //si cualquier del equi 0 esta en la paltaforma right y ninguno del equipo 1      
   if(roomMatch[i][1].r11 == true || roomMatch[i][1].r12 == true || roomMatch[i][1].r13 == true)
     if(roomMatch[i][1].r01 == false && roomMatch[i][1].r02 == false && roomMatch[i][1].r03 == false)
-      roomMatch[i][0].team1 +=0.0625;  
+      roomMatch[i][0].team1 +=0.2625;  
 
 }
 

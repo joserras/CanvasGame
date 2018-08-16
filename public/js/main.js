@@ -918,7 +918,7 @@ var i = setInterval(function () {
 					}
 					
 				}
-				balasMatchSpecial=null;
+				//balasMatchSpecial=null;
 			if (game.input.keyboard.isDown(Phaser.Keyboard.A)) {
 			
 				//game.physics.arcade.accelerationFromRotation(ship.rotation, 300, ship.acceleration);		
