@@ -423,7 +423,7 @@ function createBullet(player){
        bullet.rol = 0;
        bullet.team = player.team;
        bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-       bullet.x0 = player.posicionX+40*Math.cos(player.rotation-1.5);
+       bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
        bullet.y0 = player.posicionY+40*Math.sin(player.rotation-1.5);
        bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
        bullet.x = bullet.x0;
@@ -439,15 +439,15 @@ function createBullet(player){
       bullet.rol = 1;
       bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
-      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.x0 = player.posicionX+150*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+150*Math.sin(player.rotation-1.5);
       bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
       bullet.rotation = player.rotation;
       bullet.destroy = false;
       bullet.room = player.room;
-    
+    //pendiente revisar player.collision
       break;
       case 2:
       bullet.damage = 5;
@@ -455,8 +455,8 @@ function createBullet(player){
       bullet.rol = 2;
       bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
-      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
+      bullet.x0 = player.posicionX+150*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+150*Math.sin(player.rotation-1.5);
       bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;

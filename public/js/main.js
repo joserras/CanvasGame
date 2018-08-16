@@ -695,7 +695,7 @@ var i = setInterval(function () {
 		ship5.body.setZeroVelocity();
 		ship6.body.setZeroVelocity();
 
-		var lerp = 0.05;
+		var lerp = 0.01;
 		cameraPos.x += (player.posicionX - cameraPos.x) * lerp;
 		cameraPos.y += (player.posicionY - cameraPos.y) * lerp;
 		this.game.camera.focusOnXY(cameraPos.x, cameraPos.y);
