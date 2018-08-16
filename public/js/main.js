@@ -36,6 +36,8 @@ var pointBarBlue;
 var pointBarRed;
 var ship, ship2, ship3,ship4, ship5, ship6;
 var text;
+var cameraPos;
+
 // this is the main game state
 var main = function (game) {
 };
@@ -115,7 +117,7 @@ main.prototype = {
 		console.log("client started");
 
 		console.log(players)
-		
+		cameraPos = new Phaser.Point(0, 0), target;
 
 
 		game.physics.p2.setPostBroadphaseCallback(checkBullet, this);
@@ -437,14 +439,18 @@ main.prototype = {
 
 		//camera
 		if(player.team==0)
-		game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
+		target = ship;
+		//game.camera.follow(ship, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
 		else{
 			if(player.rol==0)
-			game.camera.follow(ship4, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
+			target = ship4;
+			//game.camera.follow(ship4, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
 			if(player.rol==1)
-			game.camera.follow(ship5, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
+			target = ship5;
+			//game.camera.follow(ship5, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
 			if(player.rol==2)
-			game.camera.follow(ship6, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
+			target = ship6;
+			//game.camera.follow(ship6, Phaser.Camera.FOLLOW_LOCKON , 0.1, 0.1);
 		}
 		
 		game.camera.roundPx = true;
@@ -688,6 +694,12 @@ var i = setInterval(function () {
 		ship4.body.setZeroVelocity();
 		ship5.body.setZeroVelocity();
 		ship6.body.setZeroVelocity();
+
+		var lerp = 0.05;
+		cameraPos.x += (player.posicionX - cameraPos.x) * lerp;
+		cameraPos.y += (player.posicionY - cameraPos.y) * lerp;
+		this.game.camera.focusOnXY(cameraPos.x, cameraPos.y);
+
 		//reglas de trois para actualizar bars
 		barraHP.width = (94 * player.life) / HPTotal;
 		pointBarRed.width = (239 * room[0].team0) / 3000;
