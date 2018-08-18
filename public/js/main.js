@@ -23,7 +23,7 @@ var rec;
 var barraSalud;
 var barraEspecial;
 var circle;
-var totalTimer;
+
 var barrer;
 var anim;
 var barraHP;

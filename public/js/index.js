@@ -8,6 +8,7 @@ var players;
 var ship;
 var ship2;
 var ship3;
+var totalTimer;
 var cursors;
 var balasMatch;
 var balasMatchSpecial;
