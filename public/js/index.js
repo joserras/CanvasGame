@@ -348,9 +348,11 @@ function activateGame(){
     timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
     totalTimer-=timeAux2;
     var i =setInterval(function () {
-        console.log("tudel");
-        totalTimer--;
+      
         if(text!=null){
+             console.log("tudel");
+             console.log(totalTimer);
+        totalTimer--; 
         text.setText('Empieza en: ' + totalTimer + '!');
         if (totalTimer == 0) {
             anim1.play(10, false);
