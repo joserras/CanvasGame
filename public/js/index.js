@@ -90,6 +90,12 @@ function activateSockets(){
        
             
     })
+    socket.on('finishMatch', function(data) {
+
+
+    
+          
+    })
     socket.on('updateRoom', function(data) {     
         room = data;    
       
@@ -341,6 +347,7 @@ function activateGame(){
     timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
     totalTimer-=timeAux2;
     var i =setInterval(function () {
+        console.log("tudel");
         totalTimer--;
         if(text!=null){
         text.setText('Empieza en: ' + totalTimer + '!');
