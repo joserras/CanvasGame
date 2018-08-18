@@ -22,7 +22,8 @@ var game = null;
 var spriteBarrierRedSkill;
 var spriteBarrierBlueSkill;
 var startTime;
-
+var timeAux1;
+var timeAux2;
 
 var balasSpriteMatch=[];
 var balasSpriteMatchSpecial=[];
@@ -75,6 +76,7 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
+        timeAux1=new Date().getTime() / 1000;
        findPlayer(data,socket.id);
        players = data;   
        console.log(players);
@@ -326,6 +328,7 @@ function loading(){
 
 
 function activateGame(){
+
     var div = document.createElement("div");
     div.id = "gameDiv";
     var script = document.createElement("script");
@@ -335,7 +338,9 @@ function activateGame(){
     document.getElementsByTagName("head")[0].appendChild(script);
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
-    setInterval(function () {
+    timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
+    totalTimer-=timeAux2;
+    var i =setInterval(function () {
         totalTimer--;
         if(text!=null){
         text.setText('Empieza en: ' + totalTimer + '!');
