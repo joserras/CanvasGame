@@ -424,7 +424,7 @@ function createBullet(player){
        bullet.team = player.team;
        bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
        bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
-       bullet.y0 = player.posicionY+40*Math.sin(player.rotation-1.5);
+       bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
        bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+40*Math.cos(player.rotation-1.5),player.posicionY+40*Math.sin(player.rotation-1.5), 8));
        bullet.x = bullet.x0;
        bullet.y = bullet.y0;
@@ -439,8 +439,8 @@ function createBullet(player){
       bullet.rol = 1;
       bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-      bullet.x0 = player.posicionX+150*Math.cos(player.rotation-1.5);
-      bullet.y0 = player.posicionY+150*Math.sin(player.rotation-1.5);
+      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
       bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
@@ -455,8 +455,8 @@ function createBullet(player){
       bullet.rol = 2;
       bullet.team = player.team;
       bullet.id = player.id+(((1+Math.random())*0x10000)|0).toString(16).substring(1);
-      bullet.x0 = player.posicionX+150*Math.cos(player.rotation-1.5);
-      bullet.y0 = player.posicionY+150*Math.sin(player.rotation-1.5);
+      bullet.x0 = player.posicionX+100*Math.cos(player.rotation-1.5);
+      bullet.y0 = player.posicionY+100*Math.sin(player.rotation-1.5);
       bullet.collision = new SAT.Circle(new SAT.Vector(player.posicionX+100*Math.cos(player.rotation-1.5),player.posicionY+100*Math.sin(player.rotation-1.5), 8));
       bullet.x = bullet.x0;
       bullet.y = bullet.y0;
@@ -904,8 +904,8 @@ if(bulletsMatch[i]!=null)
     switch(element.rol){
   
     case 0:
-    element.x+=2*Math.cos(element.rotation-1.5);
-    element.y+=2*Math.sin(element.rotation-1.5);
+    element.x+=4*Math.cos(element.rotation-1.5);
+    element.y+=4*Math.sin(element.rotation-1.5);
     element.collision.pos.x=element.x;
     element.collision.pos.y=element.y;
     var a = element.x-element.x0;
@@ -931,8 +931,8 @@ if(bulletsMatch[i]!=null)
  
      }
     case 1:
-    element.x+=4*Math.cos(element.rotation-1.5);
-    element.y+=4*Math.sin(element.rotation-1.5);
+    element.x+=6*Math.cos(element.rotation-1.5);
+    element.y+=6*Math.sin(element.rotation-1.5);
     element.collision.pos.x=element.x;
     element.collision.pos.y=element.y;
     var a = element.x-element.x0;
@@ -958,8 +958,8 @@ if(bulletsMatch[i]!=null)
      }
 
     case 2:
-    element.x+=6*Math.cos(element.rotation-1.5);
-    element.y+=6*Math.sin(element.rotation-1.5);
+    element.x+=8*Math.cos(element.rotation-1.5);
+    element.y+=8*Math.sin(element.rotation-1.5);
     element.collision.pos.x=element.x;
     element.collision.pos.y=element.y;
     var a = element.x-element.x0;
@@ -994,8 +994,8 @@ if(bulletsMatch[i]!=null)
 
   if(bulletsMatchSpecial[i]!=null && bulletsMatchSpecial[i]!=undefined)
   bulletsMatchSpecial[i].forEach(element => {
-    element.x+=6*Math.cos(element.rotation-1.5);
-    element.y+=6*Math.sin(element.rotation-1.5);
+    element.x+=8*Math.cos(element.rotation-1.5);
+    element.y+=8*Math.sin(element.rotation-1.5);
     element.collision.pos.x=element.x;
     element.collision.pos.y=element.y;
     var a = element.x-element.x0;

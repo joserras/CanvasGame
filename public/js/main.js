@@ -644,38 +644,38 @@ main.prototype = {
 	
 		
 	
-var i = setInterval(function () {
-	totalTimer--;
-	if(text!=null){
-	text.setText('Empieza en: ' + totalTimer + '!');
-	if (totalTimer == 0) {
-		anim1.play(10, false);
-		anim2.play(10, false);
-		anim3.play(10, false);
-		anim4.play(10, false);
-		anim5.play(10, false);
-		anim6.play(10, false);
-		anim7.play(10, false);
-		anim8.play(10, false);
-		animBlue1.play(10, false);
-		animBlue2.play(10, false);
-		animBlue3.play(10, false);
-		animBlue4.play(10, false);
-		animBlue5.play(10, false);
-		animBlue6.play(10, false);
-		animBlue7.play(10, false);
-		animBlue8.play(10, false);
-		text.destroy();
-		// console.log(game.input.activePointer.leftButton.isDown);
-		// key1 = game.input.mouse.addKey(Phaser.Mouse.LEFT_BUTTON);
-		// key1.onDown.add(shotOne, this);
+// var i = setInterval(function () {
+// 	totalTimer--;
+// 	if(text!=null){
+// 	text.setText('Empieza en: ' + totalTimer + '!');
+// 	if (totalTimer == 0) {
+// 		anim1.play(10, false);
+// 		anim2.play(10, false);
+// 		anim3.play(10, false);
+// 		anim4.play(10, false);
+// 		anim5.play(10, false);
+// 		anim6.play(10, false);
+// 		anim7.play(10, false);
+// 		anim8.play(10, false);
+// 		animBlue1.play(10, false);
+// 		animBlue2.play(10, false);
+// 		animBlue3.play(10, false);
+// 		animBlue4.play(10, false);
+// 		animBlue5.play(10, false);
+// 		animBlue6.play(10, false);
+// 		animBlue7.play(10, false);
+// 		animBlue8.play(10, false);
+// 		text.destroy();
+// 		// console.log(game.input.activePointer.leftButton.isDown);
+// 		// key1 = game.input.mouse.addKey(Phaser.Mouse.LEFT_BUTTON);
+// 		// key1.onDown.add(shotOne, this);
 
-		key2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		key2.onDown.add(shotTwo, this);
-	}
-		setInterval(i);
-	}
-}, 1000);
+// 		key2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+// 		key2.onDown.add(shotTwo, this);
+// 	}
+// 		setInterval(i);
+// 	}
+// }, 1000);
 		game.world.sendToBack(tileSprite);
 
 		startTime = Date.now();
@@ -706,6 +706,7 @@ var i = setInterval(function () {
 		pointBarBlue.width = (239 * room[0].team1) / 3000;
 		text.x = game.camera.view.centerX;
 		text.y = game.camera.view.centerY;
+		console.log(pointBarRed.width);
 		//barraHP.x += 232-barraHP.width;
 		if (player.clock != null) {
 			barraES.alpha = 0.5;
