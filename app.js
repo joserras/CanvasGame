@@ -154,7 +154,7 @@ io.on('connection', function(socket) {
               break;
               case 'down':
              
-              if(player.posicionY < 1000)
+              if(player.posicionY < 500)
               player.down=true;
               break;
               case 'right':
