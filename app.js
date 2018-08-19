@@ -201,7 +201,7 @@ io.on('connection', function(socket) {
       player.clock = clockit.start();  
       if(player.rol==0){ secondSkillBarrier(player.room,player.team); }
       if(player.rol==1){ secondSkillSpy(player.room,player.team); }
-      if(player.rol==2 && SAT.testPolygonCircle(baseUp, player.collision, response)==false){ createBulletSpecial(player); }
+      if((player.rol==2 && SAT.testPolygonCircle(baseUp, player.collision, response )==false && SAT.testPolygonCircle(baseDown, player.collision, response )==false)){ createBulletSpecial(player); }
 
     }
     player.special=true;
@@ -1018,7 +1018,7 @@ if(bulletsMatch[i]!=null)
      || SAT.testCircleCircle(meteorito5, element.collision, response)==true
      || SAT.testCircleCircle(meteorito6, element.collision, response)==true)
      {
-      
+      //REVISAR
        var copy = Object.assign({}, element);
        var posicion = bulletsMatchSpecial[i].indexOf(element);
        delete bulletsMatchSpecial[i][posicion];

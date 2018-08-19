@@ -695,7 +695,7 @@ main.prototype = {
 		ship5.body.setZeroVelocity();
 		ship6.body.setZeroVelocity();
 
-		var lerp = 0.01;
+		var lerp = 0.03;
 		cameraPos.x += (player.posicionX - cameraPos.x) * lerp;
 		cameraPos.y += (player.posicionY - cameraPos.y) * lerp;
 		this.game.camera.focusOnXY(cameraPos.x, cameraPos.y);
@@ -908,12 +908,13 @@ main.prototype = {
 							if (spriteBarrierBlueSkill != null)
 								if (balasSpriteMatchSpecial[i].body.rol != 0)
 									if (checkOverlap(spriteBarrierBlueSkill, balasSpriteMatchSpecial[i])) {
-
+										console.log("spritebb");
 										socket.emit('bulletHit', { bullet: balasMatchSpecial[i], ship: null });
 									}
 							if (spriteBarrierRedSkill != null)
 								if (balasSpriteMatchSpecial[i].body.rol != 0)
 									if (checkOverlap(spriteBarrierRedSkill, balasSpriteMatchSpecial[i])) {
+										console.log("spritebr");
 										socket.emit('bulletHit', { bullet: balasMatchSpecial[i], ship: null });
 
 

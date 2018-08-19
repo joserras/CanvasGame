@@ -165,7 +165,7 @@ function activateSockets(){
                    balasSpriteMatchSpecial[i].body.static= true;
                    balasSpriteMatchSpecial[i].body.miBala = balasMatchSpecial[i].id;
                    balasSpriteMatchSpecial[i].body.rol = balasMatchSpecial[i].rol;
-                   balasSpriteMatchSpecial[i].body.onBeginContact.add(blockHitBullet, this);
+                   balasSpriteMatchSpecial[i].body.onBeginContact.add(blockHitBulletSpecial, this);
                    balasSpriteMatchSpecial[i].body.rotation = balasMatchSpecial[i].rotation;
                     
                           
@@ -260,7 +260,7 @@ if(player!=null)
 
 function blockHitBullet (body, bodyB, shapeA, shapeB, equation) {	
 
-    console.log(balasMatch);
+   
 if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
     if(equation[0].shapeB.body.parent.miBala!=null){  
          
@@ -272,7 +272,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
                 if(body!=null){        
                 balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
                 balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
-                console.log('emit'); 
+               
                 socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
                 }
             }
@@ -288,7 +288,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
                 {                        
                    
                     if(body!=null){  
-                        console.log('emitb');         
+                          
                     socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
                     }
                 }
@@ -301,6 +301,50 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
             
 }
     
+
+
+function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {	
+
+   
+    if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
+        if(equation[0].shapeB.body.parent.miBala!=null){  
+             
+            if(balasMatch!=null)
+            for(i=0;i<balasMatch.length;i++)
+            {
+                if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
+                {        
+                    if(body!=null){        
+                    balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
+                    balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
+                   
+                    socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+                    }
+                }
+            }
+        
+        }
+                else{
+                    
+                if(balasMatch!=null)
+                for(i=0;i<balasMatch.length;i++)
+                {          
+                    if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
+                    {                        
+                       
+                        if(body!=null){  
+                              
+                        socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+                        }
+                    }
+                }
+                
+                }
+            }
+    
+    
+                
+    }
 
 function barrierHitBullet(body, bodyB, shapeA, shapeB, equation){
     console.log('hit');
@@ -350,7 +394,8 @@ function activateGame(){
     var i =setInterval(function () {
       
         if(text!=null){
-             console.log("tudel");
+            console.log(timeAux2);
+             console.log("totaltimer");
              console.log(totalTimer);
         totalTimer--; 
         text.setText('Empieza en: ' + totalTimer + '!');
