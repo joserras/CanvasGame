@@ -1095,12 +1095,12 @@ main.prototype = {
 					if (players[0].clock != null && players[0].clock.ms > 3000) {
 						if (spriteBarrierRedSkill != null)
 							spriteBarrierRedSkill.destroy();
-						spriteBarrierRedSkill = null;
+						//spriteBarrierRedSkill = null;
 					}
 					if (players[0].clock == null && players[0].special==false) {
 						if (spriteBarrierRedSkill != null)
 							spriteBarrierRedSkill.destroy();
-						spriteBarrierRedSkill = null;
+						//spriteBarrierRedSkill = null;
 						
 					}
 					//if(24<players[0].posicionX-ship.body.x){
