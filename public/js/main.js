@@ -1087,9 +1087,17 @@ main.prototype = {
 					// players[0].movementdown = false;
 					//SECOND SKILL ROL 0
 					if (spriteBarrierRedSkill != null) {
+						if (spriteBarrierRedSkill.body != null){
+							try {
 						spriteBarrierRedSkill.body.x = players[0].posicionX;
 						spriteBarrierRedSkill.body.y = players[0].posicionY;
-						
+							}
+							catch(err)
+							{
+								if (spriteBarrierRedSkill != null)
+								spriteBarrierRedSkill.destroy();
+							}
+						}
 					}
 
 					if (players[0].clock != null && players[0].clock.ms > 3000) {
