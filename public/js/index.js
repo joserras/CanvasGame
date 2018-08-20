@@ -310,7 +310,8 @@ function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {
             {
                 if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatchSpecial[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatchSpecial[i].y))
                 {        
-                    if(body!=null){        
+                    if(body!=null){  
+                        console.log("detritus");      
                         balasMatchSpecial[i].body.x =-Math.floor((Math.random() * 10000) + 1);
                         balasMatchSpecial[i].body.y =-Math.floor((Math.random() * 10000) + 1);                 
                     socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
