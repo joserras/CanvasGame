@@ -304,7 +304,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
 
 
 function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {	
-
+console.log("special");
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
@@ -374,6 +374,7 @@ function activateGame(){
     var i =setInterval(function () {
       
         if(text!=null){
+            console.log(timeAux1);
             console.log(timeAux2);
              console.log("totaltimer");
              console.log(totalTimer);
@@ -403,6 +404,7 @@ function activateGame(){
     
             key2 = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
             key2.onDown.add(shotTwo, this);
+            clearInterval(i);
         }
             setInterval(i);
         }
