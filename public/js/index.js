@@ -305,6 +305,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
 
 function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {	
 console.log("special");
+console.log(balasMatchSpecial);
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
@@ -374,7 +375,7 @@ function activateGame(){
      console.log(timeAux1);
             console.log(timeAux2);
              console.log("totaltimer");
-             
+
     var i =setInterval(function () {
       
         if(text!=null){
