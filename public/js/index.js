@@ -311,10 +311,10 @@ console.log(balasMatchSpecial);
             {
                 console.log(equation[0].shapeB.body.parent.x); 
                 console.log(balasMatchSpecial[i].x); 
-                if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatchSpecial[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatchSpecial[i].y))
-                {        console.log("bonasera"); 
+                if(Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x>-60 && equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x<60 ) )
+                {      
                     if(body!=null){  
-                        console.log("detritus");      
+                           
                         balasMatchSpecial[i].body.x =-Math.floor((Math.random() * 10000) + 1);
                         balasMatchSpecial[i].body.y =-Math.floor((Math.random() * 10000) + 1);                 
                     socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
