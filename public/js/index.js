@@ -309,15 +309,15 @@ console.log(balasMatchSpecial);
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
-                console.log(equation[0].shapeB.body.parent.x); 
-                console.log(balasMatchSpecial[i].x); 
+               
                 if((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x))>-100 && equation[0].shapeB.body.parent.x-Math.trunc(balasMatchSpecial[i].x)<100 ) 
                 {      
                     if(body!=null){  
-                           
+                           if(balasMatchSpecial[i]!=null){
                         balasMatchSpecial[i].body.x =-Math.floor((Math.random() * 10000) + 1);
                         balasMatchSpecial[i].body.y =-Math.floor((Math.random() * 10000) + 1);                 
                     socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
+                           }
                     }
                 }
             }
