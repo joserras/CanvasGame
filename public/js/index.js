@@ -311,7 +311,7 @@ console.log(balasMatchSpecial);
             {
                 console.log(equation[0].shapeB.body.parent.x); 
                 console.log(balasMatchSpecial[i].x); 
-                if(Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x>-60 && equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x<60 ) )
+                if((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x))>-100 && equation[0].shapeB.body.parent.x-Math.trunc(balasMatchSpecial[i].x)<100 ) 
                 {      
                     if(body!=null){  
                            
