@@ -371,12 +371,14 @@ function activateGame(){
     document.getElementById('content').style.display="none";
     timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
     totalTimer-=timeAux2;
+     console.log(timeAux1);
+            console.log(timeAux2);
+             console.log("totaltimer");
+             
     var i =setInterval(function () {
       
         if(text!=null){
-            console.log(timeAux1);
-            console.log(timeAux2);
-             console.log("totaltimer");
+           
              console.log(totalTimer);
         totalTimer--; 
         text.setText('Empieza en: ' + totalTimer + '!');
