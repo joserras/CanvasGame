@@ -208,6 +208,19 @@ io.on('connection', function(socket) {
    
 
 })
+socket.on('bulletHitSpecial', function(data) {
+
+  var bullet = findBullet(data.bullet.id,data.bullet.room);
+ if(bullet!=null)
+ {
+
+  var player = findPlayer(data.ship);
+  var response = new SAT.Response();
+  collided = SAT.testCircleCircle(player.collision, bullet.collision, response);
+  bullet.destroy = collided; 
+ }
+
+})
     socket.on('bulletHit', function(data) {
       //rotatePlayer(socket.id);   
       //findPlayer(socket.id).fire=true; 
@@ -363,6 +376,14 @@ function findBullet(socketID,i){
   {
     if(bulletsMatch[i][x].id==socketID)
       return bulletsMatch[i][x];
+  }
+}
+function findBulletSpecial(socketID,i){
+
+  for(var x=0;x<bulletsMatchSpecial[i].length;x++)
+  {
+    if(bulletsMatchSpecial[i][x].id==socketID)
+      return bulletsMatchSpecial[i][x];
   }
 }
 setInterval( function() { confirmBullet(); }, 500);

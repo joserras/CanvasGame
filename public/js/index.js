@@ -305,42 +305,21 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
 
 function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {	
 
-   
-    if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!=null){   
-        if(equation[0].shapeB.body.parent.miBala!=null){  
-             
-            if(balasMatch!=null)
-            for(i=0;i<balasMatch.length;i++)
+    if(balasMatchSpecial!=null)
+            for(i=0;i<balasMatchSpecial.length;i++)
             {
-                if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatch[i].y))
+                if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatchSpecial[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatchSpecial[i].y))
                 {        
                     if(body!=null){        
                     balasSpriteMatch[i].body.x =-Math.floor((Math.random() * 10000) + 1);
-                    balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);
-                   
-                    socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
+                    balasSpriteMatch[i].body.y =-Math.floor((Math.random() * 10000) + 1);                 
+                    socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
                     }
                 }
             }
         
-        }
-                else{
-                    
-                if(balasMatch!=null)
-                for(i=0;i<balasMatch.length;i++)
-                {          
-                    if(Math.trunc(equation[0].shapeA.body.parent.x)==Math.trunc(balasMatch[i].x) && Math.trunc(equation[0].shapeA.body.parent.y)==Math.trunc(balasMatch[i].y))
-                    {                        
-                       
-                        if(body!=null){  
-                              
-                        socket.emit('bulletHit',{bullet:balasMatch[i], ship:body.idPlayer });
-                        }
-                    }
-                }
-                
-                }
-            }
+        
+               
     
     
                 
