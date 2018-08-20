@@ -309,8 +309,10 @@ console.log(balasMatchSpecial);
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
+                console.log(equation[0].shapeB.body.parent.x); 
+                console.log(balasMatchSpecial[i].x); 
                 if(Math.trunc(equation[0].shapeB.body.parent.x)==Math.trunc(balasMatchSpecial[i].x) && Math.trunc(equation[0].shapeB.body.parent.y)==Math.trunc(balasMatchSpecial[i].y))
-                {        
+                {        console.log("bonasera"); 
                     if(body!=null){  
                         console.log("detritus");      
                         balasMatchSpecial[i].body.x =-Math.floor((Math.random() * 10000) + 1);
