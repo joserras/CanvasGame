@@ -309,11 +309,11 @@ function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {
             for(i=0;i<balasMatchSpecial.length;i++)
             {
                
-                if((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x))>-100 && equation[0].shapeB.body.parent.x-Math.trunc(balasMatchSpecial[i].x)<100 ) 
+                if((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x))>-300 && equation[0].shapeB.body.parent.x-Math.trunc(balasMatchSpecial[i].x)<300 ) 
                 {      
                     if(body!=null){  
                            if(balasMatchSpecial[i]!=null){
-                                
+                                console.log("colision");
                     socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
                            }
                     }
@@ -373,7 +373,7 @@ function activateGame(){
     timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
     totalTimer-=(player.inmuneClock.ms/1000);
     totalTimer=Math.trunc(totalTimer);
-
+    console.log("totalTimer");
     console.log(totalTimer);
 
     var i =setInterval(function () {
