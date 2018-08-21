@@ -77,7 +77,7 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        totalTimer=new Date().getTime() ;
+        totalTimer=10000 ;
        findPlayer(data,socket.id);
        players = data;   
        console.log(players);
@@ -370,7 +370,7 @@ function activateGame(){
     document.getElementsByTagName("head")[0].appendChild(script);
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
-    totalTimer-=(player.inmuneClock.ms/1000);
+    totalTimer-=(player.inmuneClock.ms);
     totalTimer=Math.trunc(totalTimer);
     console.log("totalTimer");
     console.log(totalTimer);

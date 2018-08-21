@@ -210,13 +210,15 @@ io.on('connection', function(socket) {
 })
 socket.on('bulletHitSpecial', function(data) {
 
-  var bullet = findBullet(data.bullet.id,data.bullet.room);
+  var bullet = findBulletSpecial(data.bullet.id,data.bullet.room);
+ if(bullet!=null)
+ {
 
   var player = findPlayer(data.ship);
   var response = new SAT.Response();
   collided = SAT.testCircleCircle(player.collision, bullet.collision, response);
   bullet.destroy = collided; 
- 
+ }
 
 })
     socket.on('bulletHit', function(data) {
