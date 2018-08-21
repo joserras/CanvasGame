@@ -304,8 +304,7 @@ if(equation!=null && equation[0].shapeB!=null && equation[0].shapeB.body.parent!
 
 
 function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {	
-console.log("special");
-console.log(balasMatchSpecial);
+
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
@@ -314,8 +313,7 @@ console.log(balasMatchSpecial);
                 {      
                     if(body!=null){  
                            if(balasMatchSpecial[i]!=null){
-                        balasMatchSpecial[i].body.x =-Math.floor((Math.random() * 10000) + 1);
-                        balasMatchSpecial[i].body.y =-Math.floor((Math.random() * 10000) + 1);                 
+                                
                     socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
                            }
                     }
