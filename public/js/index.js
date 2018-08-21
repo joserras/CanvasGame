@@ -77,7 +77,7 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        timeAux1=new Date().getTime() / 1000;
+        totalTimer=new Date().getTime() ;
        findPlayer(data,socket.id);
        players = data;   
        console.log(players);
@@ -308,12 +308,12 @@ function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
-               console.log((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x)));
+              
                 if((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x))>-300 && equation[0].shapeB.body.parent.x-Math.trunc(balasMatchSpecial[i].x)<300 ) 
-                {       console.log("truncar");
+                {       
                     if(body!=null){  
                            if(balasMatchSpecial[i]!=null){
-                                console.log("colision");
+                               
                     socket.emit('bulletHitSpecial',{bullet:balasMatchSpecial[i], ship:body.idPlayer });
                            }
                     }
@@ -370,7 +370,6 @@ function activateGame(){
     document.getElementsByTagName("head")[0].appendChild(script);
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
-    timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
     totalTimer-=(player.inmuneClock.ms/1000);
     totalTimer=Math.trunc(totalTimer);
     console.log("totalTimer");
