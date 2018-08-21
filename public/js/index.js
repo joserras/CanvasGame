@@ -371,16 +371,16 @@ function activateGame(){
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
     timeAux2=Math.trunc((new Date().getTime() / 1000)-timeAux1);
-    totalTimer-=timeAux2;
-     console.log(timeAux1);
-            console.log(timeAux2);
-             console.log("totaltimer");
+    totalTimer-=(player.inmuneClock.ms/1000);
+    totalTimer=Math.trunc(totalTimer);
+
+    console.log(totalTimer);
 
     var i =setInterval(function () {
       
         if(text!=null){
            
-             console.log(totalTimer);
+             
         totalTimer--; 
         text.setText('Empieza en: ' + totalTimer + '!');
         if (totalTimer == 0) {
