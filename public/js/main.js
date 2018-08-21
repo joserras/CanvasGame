@@ -1434,8 +1434,9 @@ main.prototype = {
 
 //overlap sprites
 function checkOverlap(spriteA, spriteB) {
-
+if(spriteA!=null)
 	var boundsA = spriteA.getBounds();
+	if(spriteB!=null)
 	var boundsB = spriteB.getBounds();
 
 	return Phaser.Rectangle.intersects(boundsA, boundsB);
