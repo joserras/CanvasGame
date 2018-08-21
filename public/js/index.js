@@ -308,9 +308,9 @@ function blockHitBulletSpecial (body, bodyB, shapeA, shapeB, equation) {
     if(balasMatchSpecial!=null)
             for(i=0;i<balasMatchSpecial.length;i++)
             {
-               
+               console.log((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x)));
                 if((Math.trunc(equation[0].shapeB.body.parent.x)-Math.trunc(balasMatchSpecial[i].x))>-300 && equation[0].shapeB.body.parent.x-Math.trunc(balasMatchSpecial[i].x)<300 ) 
-                {      
+                {       console.log("truncar");
                     if(body!=null){  
                            if(balasMatchSpecial[i]!=null){
                                 console.log("colision");
