@@ -916,12 +916,16 @@ function updateRoom(i)
   if(roomMatch[i][0].team1>3000)
   {
     io.to(i).emit('finishMatch',1); 
+    setTimeout(saludo(i),3000);
   }
   if(roomMatch[i][0].team0>3000){
     io.to(i).emit('finishMatch',0); 
+    setTimeout(saludo(i),3000);
   }
 }
+function setTimeout(i){
 
+}
 
 function updateBullet(i){
 if(bulletsMatch[i]!=null)

@@ -100,7 +100,7 @@ if(data==1)
 }
 else
 {
-    text = game.add.text(game.world.centerX, game.world.centerY, '¡El equipo azul ha ganado!', { font: "64px Arial", fill: "#ffffff", align: "center" });
+    text = game.add.text(game.world.centerX, game.world.centerY, '¡El equipo rojo ha ganado!', { font: "64px Arial", fill: "#ffffff", align: "center" });
     text.anchor.setTo(0.5, 0.5);
 }
 
