@@ -699,7 +699,7 @@ main.prototype = {
 		cameraPos.x += (player.posicionX - cameraPos.x) * lerp;
 		cameraPos.y += (player.posicionY - cameraPos.y) * lerp;
 		this.game.camera.focusOnXY(cameraPos.x, cameraPos.y);
-
+		console.log(pointBarRed);
 		//reglas de trois para actualizar bars
 		barraHP.width = (94 * player.life) / HPTotal;
 		if(pointBarRed.width<2012)
