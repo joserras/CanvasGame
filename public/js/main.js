@@ -702,9 +702,9 @@ main.prototype = {
 		console.log(pointBarRed);
 		//reglas de trois para actualizar bars
 		barraHP.width = (94 * player.life) / HPTotal;
-		if(pointBarRed.width<2012)
+		if(pointBarRed.width<235)
 		pointBarRed.width = (239 * room[0].team0) / 3000;
-		if(pointBarBlue.width<2012)
+		if(pointBarBlue.width<235)
 		pointBarBlue.width = (239 * room[0].team1) / 3000;
 		text.x = game.camera.view.centerX;
 		text.y = game.camera.view.centerY;
