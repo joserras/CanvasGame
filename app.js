@@ -913,11 +913,11 @@ function updateRoom(i)
     if(roomMatch[i][1].r01 == false && roomMatch[i][1].r02 == false && roomMatch[i][1].r03 == false)
       roomMatch[i][0].team1 +=0.2625;  
 
-  if(roomMatch[i][0].team1>3012)
+  if(roomMatch[i][0].team1>3000)
   {
     io.to(i).emit('finishMatch',1); 
   }
-  if(roomMatch[i][0].team0>3012){
+  if(roomMatch[i][0].team0>3000){
     io.to(i).emit('finishMatch',0); 
   }
 }
