@@ -77,7 +77,7 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        totalTimer=12000 ;
+        totalTimer=8000 ;
        findPlayer(data,socket.id);
        players = data;   
        console.log(players);
