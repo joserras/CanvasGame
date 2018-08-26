@@ -118,7 +118,7 @@ else
     })
     socket.on('deathPlayer', function(data) { 
         console.log(data);    
-        death = game.add.sprite(data.posicionX, data.posicionY, 'ship0');  
+        death = game.add.sprite(data.posicionX, data.posicionY, 'explosion');  
         death.animations.add('walk');
 
         death.animations.play('walk', 10, false);
