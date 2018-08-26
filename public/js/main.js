@@ -1574,6 +1574,7 @@ document.addEventListener('keyup', function (event) {
 		ship3.body.debug=false;
 		ship4.body.debug=false;
 		ship5.body.debug=false;
+		ship6.body.debug=false;
 
 	}
 });
