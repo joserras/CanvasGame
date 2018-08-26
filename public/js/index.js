@@ -77,7 +77,7 @@ function login(data){
 //Activamos los sockets en escucha
 function activateSockets(){
     socket.on('startGame', function(data) {
-        totalTimer=10000 ;
+        totalTimer=12000 ;
        findPlayer(data,socket.id);
        players = data;   
        console.log(players);
@@ -114,6 +114,14 @@ else
     socket.on('updateRoom', function(data) {     
         room = data;    
       
+            
+    })
+    socket.on('deathPlayer', function(data) { 
+        console.log(data);    
+        death = game.add.sprite(data.posicionX, data.posicionY, 'ship0');  
+        death.animations.add('walk');
+
+        death.animations.play('walk', 10, false);
             
     })
     socket.on('updateBullets', function(data,data1) {     

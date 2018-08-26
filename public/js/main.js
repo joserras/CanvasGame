@@ -72,6 +72,8 @@ main.prototype = {
 		game.load.image("pointBarRed", "sprites/pointBarRed.png");
 		game.load.atlasJSONHash('barrer', 'sprites/barrer.png', 'sprites/barrer.json');
 
+		game.load.atlasJSONHash('explosion', 'sprites/explosion.png', 'sprites/explosion.json');
+
 		game.load.atlasJSONHash('barrerSkillRed', 'sprites/spriteBarrierRed.png', 'sprites/spriteBarrierRed.json');
 		game.load.atlasJSONHash('barrerSkillBlue', 'sprites/spriteBarrierBlue.png', 'sprites/spriteBarrierBlue.json');
 		gameState.stage.disableVisibilityChange = true;

@@ -302,6 +302,8 @@ socket.on('bulletHitSpecial', function(data) {
                 
 
               }
+              io.to(player.room).emit('deathPlayer',player);
+              
           }
           
 
