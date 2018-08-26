@@ -119,10 +119,10 @@ else
     socket.on('deathPlayer', function(data) { 
         console.log("death");  
         console.log(data);    
-        death = game.add.sprite(data.posicionX, data.posicionY, 'explosion');  
+        death = game.add.sprite(data.aposicionX, data.aposicionY, 'explosion');  
         death.animations.add('walk');
 
-        death.animations.play('walk', 10, false);
+        death.animations.play('walk', 10, false,true);
             
     })
     socket.on('updateBullets', function(data,data1) {     

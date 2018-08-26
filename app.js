@@ -249,6 +249,8 @@ socket.on('bulletHitSpecial', function(data) {
           player.life -= bullet.damage;
          
           if(player.life <=0){
+            player.aposicionX=player.posicionX;
+            player.aposicionY=player.posicionY;
               switch(player.rol){
                 case 0:
                 if(player.team==0){
