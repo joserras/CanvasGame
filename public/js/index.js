@@ -104,8 +104,11 @@ else
     text.anchor.setTo(0.5, 0.5);
 }
 
-    
-          
+    setTimeout(saludo(socket),3000);
+          function saludo (socket){
+            location.reload();
+
+          }
     })
     socket.on('updateRoom', function(data) {     
         room = data;    
