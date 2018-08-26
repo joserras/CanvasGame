@@ -429,7 +429,7 @@ main.prototype = {
 		ship2.animations.play('walk', 10, true);
 		ship3.animations.play('walk', 10, true);
 
-		totalTimer = 10;
+		totalTimer = 12;
 
 		//true indica que se mueve con la rotacion
 		weapon.trackSprite(ship, 0, 0, true);
@@ -1566,6 +1566,12 @@ document.addEventListener('keyup', function (event) {
 
 	if (key === 'Escape' || key === 'Esc' || key === 27) {
 		console.log(ship.body);
+		ship.body.debug=false;
+		ship2.body.debug=false;
+		ship3.body.debug=false;
+		ship4.body.debug=false;
+		ship5.body.debug=false;
+
 	}
 });
 
