@@ -1568,6 +1568,7 @@ document.addEventListener('keyup', function (event) {
 
 	if (key === 'Escape' || key === 'Esc' || key === 27) {
 		console.log(ship.body);
+		game.debug.stop();
 		ship.body.debug=false;
 		ship2.body.debug=false;
 		ship3.body.debug=false;
