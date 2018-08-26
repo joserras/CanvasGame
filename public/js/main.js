@@ -561,7 +561,6 @@ main.prototype = {
 
 
 
-
 	  text = game.add.text(game.world.centerX, game.world.centerY, '', { font: "64px Arial", fill: "#ffffff", align: "center" });
 		text.anchor.setTo(0.5, 0.5);
 
@@ -1556,6 +1555,19 @@ function resizePolygon(originalPhysicsKey, newPhysicsKey, shapeKey, scale, moveX
 	game.load.physics(newPhysicsKey, '', item);
 
 }
+
+
+document.addEventListener('keyup', function (event) {
+	if (event.defaultPrevented) {
+		return;
+	}
+
+	var key = event.key || event.keyCode;
+
+	if (key === 'Escape' || key === 'Esc' || key === 27) {
+		console.log(ship.body);
+	}
+});
 
 // wrap the game states.
 var gameBootstrapper = {

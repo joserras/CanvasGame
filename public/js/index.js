@@ -106,6 +106,7 @@ else
 
     setTimeout(saludo(socket),3000);
           function saludo (socket){
+              socket.disconnect();
             location.reload();
 
           }
