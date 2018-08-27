@@ -96,18 +96,18 @@ function activateSockets(){
 if(data==1)
 {
     if(player.rol==1)
-    var victoria = game.add.sprite(game.world.centerX, game.world.centerY, 'victoria');
+    var victoria = game.add.sprite(player.posicionX, player.posicionY, 'victoria');
     else{
-    var derrota = game.add.sprite(game.world.centerX, game.world.centerY, 'derrota');
+    var derrota = game.add.sprite(player.posicionX,  player.posicionY, 'derrota');
     }
   
 }
 else
 {
     if(player.rol==0)
-    var victoria = game.add.sprite(game.world.centerX, game.world.centerY, 'victoria');
+    var victoria = game.add.sprite(player.posicionX,  player.posicionY, 'victoria');
     else{
-    var derrota = game.add.sprite(game.world.centerX, game.world.centerY, 'derrota');
+    var derrota = game.add.sprite(player.posicionX,  player.posicionY, 'derrota');
     }
 }
 
@@ -136,13 +136,19 @@ else
             
     })
     socket.on('deathPlayerFlash', function(data) { 
+        var myinterval;
+        myinterval=setInterval(myFunction, 2500);
+        function myFunction()
+        {
+           game.camera.flash(0xff0000, 2500,true);
          
-        game.camera.flash(0xff0000, 2500,true);
-        setTimeout(saludo(socket),10000);
-        function saludo (socket){
-            game.camera.ResetFX();
-
-        }
+         if(player.inmuneClock>=10000){
+            clearInterval(myinterval);
+        game.camera.ResetFX();
+         }
+        } 
+        
+     
     })
     socket.on('updateBullets', function(data,data1) {     
 
