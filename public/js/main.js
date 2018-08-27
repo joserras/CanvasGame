@@ -1144,7 +1144,8 @@ main.prototype = {
 
 			if ((players[3] != null)) {
 
-
+				ship4.rotation = players[3].rotation;
+				ship4.body.rotation = players[3].rotation;
 				ship4.body.x = players[3].posicionX;
 				ship4.body.y = players[3].posicionY;
 
@@ -1238,7 +1239,8 @@ main.prototype = {
 			else if(ship3!=null){ ship3.body.x = -200; }
 			if ((players[3] != null)) {
 
-
+				ship4.rotation = players[3].rotation;
+				ship4.body.rotation = players[3].rotation;
 				ship4.body.x = players[3].posicionX;
 				ship4.body.y = players[3].posicionY;
 
@@ -1335,7 +1337,8 @@ main.prototype = {
 			else if(ship3!=null){ ship3.body.x = -200; }
 			if ((players[3] != null)) {
 
-
+				ship4.rotation = players[3].rotation;
+				ship4.body.rotation = players[3].rotation;
 				ship4.body.x = players[3].posicionX;
 				ship4.body.y = players[3].posicionY;
 
@@ -1435,11 +1438,16 @@ main.prototype = {
 
 //overlap sprites
 function checkOverlap(spriteA, spriteB) {
+	try{
 if(spriteA!=null)
 	var boundsA = spriteA.getBounds();
 	if(spriteB!=null)
 	var boundsB = spriteB.getBounds();
-
+}
+catch(err){
+console.log(err);
+return false;
+}
 	return Phaser.Rectangle.intersects(boundsA, boundsB);
 
 }

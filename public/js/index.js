@@ -393,7 +393,7 @@ function activateGame(){
     document.getElementsByTagName("head")[0].appendChild(script);
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
-    totalTimer-=(player.inmuneClock.ms);
+    
     totalTimer=Math.trunc(totalTimer);
     console.log("totalTimer");
     console.log(totalTimer);
