@@ -109,11 +109,11 @@ if(data==1)
 else
 {
     if(player.rol==0){
-    var victoria = game.add.sprite(player.posicionX,  player.posicionY, 'victoria');
+    var victoria = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
 }
     else{
-    var derrota = game.add.sprite(player.posicionX,  player.posicionY, 'derrota');
+    var derrota = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'derrota');
     derrota.anchor.setTo(0.5, 0.5);
     }
 }
@@ -145,12 +145,13 @@ else
     socket.on('deathPlayerFlash', function(data) { 
         var myinterval;
         myinterval=setInterval(myFunction, 2500);
+        var i=0;
         function myFunction()
-        {
+        { i++;
             console.log("flash");
            game.camera.flash(0xff0000, 2500,true);
          
-         if(player.inmuneClock>=10000){
+         if(i==3){
              console.log("celar");
             clearInterval(myinterval);
         game.camera.ResetFX();
