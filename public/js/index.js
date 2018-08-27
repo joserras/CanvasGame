@@ -18,7 +18,7 @@ var fireButton;
 var game = null;
 //make a phaser game
 
-
+var flashI=0;
 //fisrt skill
 var spriteBarrierRedSkill;
 var spriteBarrierBlueSkill;
@@ -145,9 +145,9 @@ else
     socket.on('deathPlayerFlash', function(data) { 
         var myinterval;
         myinterval=setInterval(myFunction, 2500);
-        var i=0;
+        game.camera.flash(0xff0000, 2500,true);
         function myFunction()
-        { i++;
+        { flashI++;
             console.log("flash");
            game.camera.flash(0xff0000, 2500,true);
          
@@ -429,7 +429,7 @@ function activateGame(){
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
     
-    totalTimer=Math.trunc(totalTimer);
+    totalTimer=Math.trunc(totalTimer-player.inmuneClock);
     console.log("totalTimer");
     console.log(totalTimer);
 

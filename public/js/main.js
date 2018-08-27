@@ -433,7 +433,7 @@ main.prototype = {
 		ship2.animations.play('walk', 10, true);
 		ship3.animations.play('walk', 10, true);
 
-		totalTimer = 12;
+		
 
 		//true indica que se mueve con la rotacion
 		weapon.trackSprite(ship, 0, 0, true);
