@@ -95,13 +95,20 @@ function activateSockets(){
 
 if(data==1)
 {
-    text = game.add.text(game.world.centerX, game.world.centerY, '¡El equipo azul ha ganado!', { font: "64px Arial", fill: "#ffffff", align: "center" });
-    text.anchor.setTo(0.5, 0.5);  
+    if(player.rol==1)
+    var victoria = game.add.sprite(game.world.centerX, game.world.centerY, 'victoria');
+    else{
+    var derrota = game.add.sprite(game.world.centerX, game.world.centerY, 'derrota');
+    }
+  
 }
 else
 {
-    text = game.add.text(game.world.centerX, game.world.centerY, '¡El equipo rojo ha ganado!', { font: "64px Arial", fill: "#ffffff", align: "center" });
-    text.anchor.setTo(0.5, 0.5);
+    if(player.rol==0)
+    var victoria = game.add.sprite(game.world.centerX, game.world.centerY, 'victoria');
+    else{
+    var derrota = game.add.sprite(game.world.centerX, game.world.centerY, 'derrota');
+    }
 }
 
     setTimeout(saludo(socket),3000);
@@ -123,7 +130,19 @@ else
         death.animations.add('walk');
 
         death.animations.play('walk', 10, false,true);
+
+
+        
             
+    })
+    socket.on('deathPlayerFlash', function(data) { 
+         
+        game.camera.flash(0xff0000, 2500,true);
+        setTimeout(saludo(socket),10000);
+        function saludo (socket){
+            game.camera.ResetFX();
+
+        }
     })
     socket.on('updateBullets', function(data,data1) {     
 

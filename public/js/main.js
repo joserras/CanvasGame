@@ -56,6 +56,8 @@ main.prototype = {
 		game.load.image("meteorito4", "sprites/meteorito4.png");
 		game.load.image("meteorito5", "sprites/meteorito5.png");
 		game.load.image("meteorito6", "sprites/meteorito6.png");
+		game.load.image("victoria", "sprites/victoria.png");
+		game.load.image("derrota", "sprites/derrota.png");
 		
 
 		game.load.image("barrera", "sprites/barrera.png");
