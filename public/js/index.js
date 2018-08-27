@@ -96,18 +96,25 @@ function activateSockets(){
 if(data==1)
 {
     if(player.rol==1)
+    {
     var victoria = game.add.sprite(player.posicionX, player.posicionY, 'victoria');
+    victoria.anchor.setTo(0.5, 0.5);
+    }
     else{
     var derrota = game.add.sprite(player.posicionX,  player.posicionY, 'derrota');
+    derrota.anchor.setTo(0.5, 0.5);
     }
   
 }
 else
 {
-    if(player.rol==0)
+    if(player.rol==0){
     var victoria = game.add.sprite(player.posicionX,  player.posicionY, 'victoria');
+    victoria.anchor.setTo(0.5, 0.5);
+}
     else{
     var derrota = game.add.sprite(player.posicionX,  player.posicionY, 'derrota');
+    derrota.anchor.setTo(0.5, 0.5);
     }
 }
 
@@ -140,9 +147,11 @@ else
         myinterval=setInterval(myFunction, 2500);
         function myFunction()
         {
+            console.log("flash");
            game.camera.flash(0xff0000, 2500,true);
          
          if(player.inmuneClock>=10000){
+             console.log("celar");
             clearInterval(myinterval);
         game.camera.ResetFX();
          }
