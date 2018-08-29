@@ -188,7 +188,7 @@ else
                     balasSpriteMatch[i].body.miBala = balasMatch[i].id;
                     balasSpriteMatch[i].body.rol = balasMatch[i].rol;
                     balasSpriteMatch[i].body.onBeginContact.add(blockHitBullet, this);
-                   
+                    balasSpriteMatch[i].body.debug=false;
                     
                     // //solo para balas especial
                     // else if (balasMatch[i].special==true){
@@ -231,6 +231,7 @@ else
                    balasSpriteMatchSpecial[i].checkWorldBounds = true;               
                    balasSpriteMatchSpecial[i].body.setCircle(9);
                    balasSpriteMatchSpecial[i].body.static= true;
+                   balasSpriteMatchSpecial[i].body.debug=false;
                    balasSpriteMatchSpecial[i].body.miBala = balasMatchSpecial[i].id;
                    balasSpriteMatchSpecial[i].body.rol = balasMatchSpecial[i].rol;
                    balasSpriteMatchSpecial[i].body.onBeginContact.add(blockHitBulletSpecial, this);
@@ -292,9 +293,11 @@ if(player!=null)
         if(data==0){
         spriteBarrierRedSkill = game.add.sprite(players[0].posicionX, players[0].posicionY, 'barrerSkillRed');
         spriteBarrierRedSkill.alpha = 0.4;
+       
         game.physics.p2.enable(spriteBarrierRedSkill, true);
         //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);             
         spriteBarrierRedSkill.body.setCircle(90);
+         spriteBarrierRedSkill.body.debug=false;
         spriteBarrierRedSkill.body.static= true;
         var spbared = spriteBarrierRedSkill.animations.add('walk');
         spriteBarrierRedSkill.animations.play('walk', 10, true);
@@ -308,8 +311,10 @@ if(player!=null)
         else if(data==1){  
             spriteBarrierBlueSkill = game.add.sprite(players[3].posicionX, players[3].posicionY, 'barrerSkillBlue');  
             spriteBarrierBlueSkill.alpha = 0.4;
+            
             game.physics.p2.enable(spriteBarrierBlueSkill, true);
-            //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);             
+            //balasSpriteMatch[i].body.collidesWith([ship,ship2,ship3]);   
+            spriteBarrierBlueSkill.body.debug=false;          
             spriteBarrierBlueSkill.body.setCircle(90);
             spriteBarrierBlueSkill.body.static= true;
             var spbared = spriteBarrierBlueSkill.animations.add('walk');
