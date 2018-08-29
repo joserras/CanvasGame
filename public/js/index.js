@@ -97,17 +97,18 @@ if(data==1)
 {
     if(player.rol==1)
     {
-    var victoria = game.add.sprite(player.posicionX, player.posicionY, 'victoria');
+    var victoria = game.add.sprite(game.world.CenterX, game.world.CenterY, 'derrota');
     victoria.anchor.setTo(0.5, 0.5);
     }
     else{
-    var derrota = game.add.sprite(player.posicionX,  player.posicionY, 'derrota');
+    var derrota = game.add.sprite(game.world.CenterXonX,  game.world.CenterY, 'victoria');
     derrota.anchor.setTo(0.5, 0.5);
     }
   
 }
 else
 {
+    console.log("else");
     if(player.rol==0){
     var victoria = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
@@ -430,8 +431,7 @@ function activateGame(){
     document.getElementById('content').style.display="none";
     
     totalTimer=Math.trunc(totalTimer-player.inmuneClock);
-    console.log("totalTimer");
-    console.log(totalTimer);
+    
 
     var i =setInterval(function () {
       
