@@ -438,7 +438,7 @@ function activateGame(){
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
     
-    totalTimer=Math.trunc(totalTimer-player.inmuneClock.ms);
+    totalTimer=Math.trunc((totalTimer-player.inmuneClock.ms)/1000);
     
 
     var i =setInterval(function () {
