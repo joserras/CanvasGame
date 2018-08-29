@@ -97,13 +97,13 @@ if(data==1)
 {
     if(player.rol==1)
     {
-    var victoria = game.add.sprite(game.world.CenterX, game.world.CenterY, 'derrota');
+    var victoria = game.add.sprite(game.camera.view.centerX, game.camera.view.centerY, 'derrota');
     victoria.anchor.setTo(0.5, 0.5);
     victoria.width=800;
     victoria.heigh=600;
     }
     else{
-    var derrota = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
+    var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'victoria');
     derrota.anchor.setTo(0.5, 0.5);
     derrota.width=800;
     derrota.heigh=600;
@@ -114,13 +114,13 @@ else
 {
     console.log("else");
     if(player.rol==0){
-    var victoria = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
+    var victoria = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
     victoria.width=800;
     victoria.heigh=600;
 }
     else{
-    var derrota = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'derrota');
+    var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'derrota');
     derrota.anchor.setTo(0.5, 0.5);
     derrota.width=800;
     derrota.heigh=600;
