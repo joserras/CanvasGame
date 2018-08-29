@@ -99,10 +99,14 @@ if(data==1)
     {
     var victoria = game.add.sprite(game.world.CenterX, game.world.CenterY, 'derrota');
     victoria.anchor.setTo(0.5, 0.5);
+    victoria.width=800;
+    victoria.heigh=600;
     }
     else{
     var derrota = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
     derrota.anchor.setTo(0.5, 0.5);
+    derrota.width=800;
+    derrota.heigh=600;
     }
   
 }
@@ -112,10 +116,14 @@ else
     if(player.rol==0){
     var victoria = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
+    victoria.width=800;
+    victoria.heigh=600;
 }
     else{
     var derrota = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'derrota');
     derrota.anchor.setTo(0.5, 0.5);
+    derrota.width=800;
+    derrota.heigh=600;
     }
 }
 
