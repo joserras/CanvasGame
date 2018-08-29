@@ -95,15 +95,15 @@ function activateSockets(){
 
 if(data==1)
 {
-    if(player.rol==1)
+    if(player.team==1)
     {
-    var victoria = game.add.sprite(game.camera.view.centerX, game.camera.view.centerY, 'derrota');
+    var victoria = game.add.sprite(game.camera.view.centerX, game.camera.view.centerY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
-    victoria.width=400;
-    victoria.heigh=300;
+    victoria.width=500;
+    victoria.heigh=400;
     }
     else{
-    var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'victoria');
+    var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'derrota');
     derrota.anchor.setTo(0.5, 0.5);
     derrota.width=400;
     derrota.heigh=300;
@@ -113,11 +113,11 @@ if(data==1)
 else
 {
     console.log("else");
-    if(player.rol==0){
+    if(player.team==0){
     var victoria = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
-    victoria.width=400;
-    victoria.heigh=300;
+    victoria.width=500;
+    victoria.heigh=400;
 }
     else{
     var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'derrota');
