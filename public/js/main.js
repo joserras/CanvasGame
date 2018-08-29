@@ -3,7 +3,7 @@
 //to the browser
 canvas_width = window.innerWidth * window.devicePixelRatio;
 canvas_height = window.innerHeight * window.devicePixelRatio;
-var totalTimer = 8000;
+var totalTimer = 8;
 game = new Phaser.Game(canvas_width, canvas_height, Phaser.CANVAS,
 	'gameDiv');
 
