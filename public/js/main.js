@@ -909,13 +909,11 @@ main.prototype = {
 							balasSpriteMatchSpecial[i].body.y = balasMatchSpecial[i].y;
 							
 							if (spriteBarrierBlueSkill != null)
-								if (balasSpriteMatchSpecial[i].body.rol != 0)
 									if (checkOverlap(spriteBarrierBlueSkill, balasSpriteMatchSpecial[i])) {
 										console.log("spritebb");
 										socket.emit('bulletHit', { bullet: balasMatchSpecial[i], ship: null });
 									}
 							if (spriteBarrierRedSkill != null)
-								if (balasSpriteMatchSpecial[i].body.rol != 0)
 									if (checkOverlap(spriteBarrierRedSkill, balasSpriteMatchSpecial[i])) {
 										console.log("spritebr");
 										socket.emit('bulletHit', { bullet: balasMatchSpecial[i], ship: null });
