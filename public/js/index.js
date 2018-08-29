@@ -152,6 +152,7 @@ else
             
     })
     socket.on('deathPlayerFlash', function(data) { 
+        flashI=0;
         var myinterval;
         myinterval=setInterval(myFunction, 2500);
         game.camera.flash(0xff0000, 2500,true);
