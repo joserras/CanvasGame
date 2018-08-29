@@ -101,7 +101,7 @@ if(data==1)
     victoria.anchor.setTo(0.5, 0.5);
     }
     else{
-    var derrota = game.add.sprite(game.world.CenterXonX,  game.world.CenterY, 'victoria');
+    var derrota = game.add.sprite(game.world.CenterX,  game.world.CenterY, 'victoria');
     derrota.anchor.setTo(0.5, 0.5);
     }
   
@@ -152,7 +152,7 @@ else
             console.log("flash");
            game.camera.flash(0xff0000, 2500,true);
          
-         if(i==3){
+         if(flashI==3){
              console.log("celar");
             clearInterval(myinterval);
         game.camera.ResetFX();
@@ -430,7 +430,7 @@ function activateGame(){
     document.getElementById('footer').style.display="none";
     document.getElementById('content').style.display="none";
     
-    totalTimer=Math.trunc(totalTimer-player.inmuneClock);
+    totalTimer=Math.trunc(totalTimer-player.inmuneClock.ms);
     
 
     var i =setInterval(function () {
