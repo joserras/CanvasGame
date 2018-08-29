@@ -99,14 +99,14 @@ if(data==1)
     {
     var victoria = game.add.sprite(game.camera.view.centerX, game.camera.view.centerY, 'derrota');
     victoria.anchor.setTo(0.5, 0.5);
-    victoria.width=800;
-    victoria.heigh=600;
+    victoria.width=400;
+    victoria.heigh=300;
     }
     else{
     var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'victoria');
     derrota.anchor.setTo(0.5, 0.5);
-    derrota.width=800;
-    derrota.heigh=600;
+    derrota.width=400;
+    derrota.heigh=300;
     }
   
 }
@@ -116,14 +116,14 @@ else
     if(player.rol==0){
     var victoria = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'victoria');
     victoria.anchor.setTo(0.5, 0.5);
-    victoria.width=800;
-    victoria.heigh=600;
+    victoria.width=400;
+    victoria.heigh=300;
 }
     else{
     var derrota = game.add.sprite(game.camera.view.centerX,  game.camera.view.centerY, 'derrota');
     derrota.anchor.setTo(0.5, 0.5);
-    derrota.width=800;
-    derrota.heigh=600;
+    derrota.width=400;
+    derrota.heigh=300;
     }
 }
 
